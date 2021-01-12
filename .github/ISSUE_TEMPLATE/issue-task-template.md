@@ -1,7 +1,7 @@
 ---
 name: Issue Task Template
 about: Describe this issue template's purpose here.
-title: ''
+title: "[type] commit 내용 간단히 "
 labels: ''
 assignees: ''
 
