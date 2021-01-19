@@ -1,22 +1,45 @@
-import {SET_MY_WORKOUTS, Workout, TypeSetMyWorkoutsAction} from '../actions'
+const SET_MY_WORKOUTS = 'SET_MY_WORKOUTS'
+const ADD_MY_WORKOUTS = 'ADD_MY_WORKOUTS'
 
-// State Type
-interface MyWorkoutsState {
-    myWorkouts:Array<Workout>
+export interface Workout {
+    id:number;
+    title:string;
+    desc:string;
+    image:string[];
+    set:number;
+    count:number;
+    breakTime: number;
+    calrorie: number;
+    tool: string;
 }
 
-// Reducer
-const initialState:MyWorkoutsState = {
-    myWorkouts:[]
+export interface ActionMyWorkouts {
+    type:string;
+    payload: Workout | Array<Workout>
 }
 
-const myWorkoutsReducer = (state=initialState, action:TypeSetMyWorkoutsAction):MyWorkoutsState => {
+// Action Creator - myWorkouts
+export const actionSetMyWorkouts = (payload:Array<Workout>):ActionMyWorkouts => ({
+    type:SET_MY_WORKOUTS,
+    payload
+})
+
+export const actionAddMyWorkouts = (payload:Workout):ActionMyWorkouts => ({
+    type:SET_MY_WORKOUTS,
+    payload
+})
+
+const initialState:Array<Workout> = []
+
+const myWorkouts = (state=initialState, action:ActionMyWorkouts):Array<Workout> => {
     switch(action.type) {
         case SET_MY_WORKOUTS:
-            return {...state, myWorkouts:action.myWorkouts}
+            return state.concat(action.payload)
+        case ADD_MY_WORKOUTS:
+            return state.concat(action.payload)
         default:
             return state
     }
 }
 
-export default myWorkoutsReducer;
+export default myWorkouts;
