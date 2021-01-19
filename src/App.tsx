@@ -17,12 +17,9 @@ import {
 } from './_components/main';
 import DashboardContainers from './containers/page/DashboardContainers';
 
-const App = ({
-  match,
-  history,
-  location,
-}: RouteComponentProps): JSX.Element => {
-  console.log(location.pathname);
+
+const App = ({match, history, location}: RouteComponentProps):JSX.Element => {
+  console.log(location.pathname)
 
   const FeaturePage = () => {
     return (

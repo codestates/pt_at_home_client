@@ -22,11 +22,11 @@ const GlobalStyle = createGlobalStyle`
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />
-      {/* <Provider store={store}> */}
+      <Provider store={store}>
         <BrowserRouter>
           <App />
         </BrowserRouter>
-      {/* </Provider> */}
+      </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
 );
