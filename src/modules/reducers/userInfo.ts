@@ -1,27 +1,45 @@
-import {SET_USER_INFO, UserInfo, TypeUserInfoAction} from '../actions'
+const SET_USER_INFO = 'SET_USER_INFO'
+const UPDATE_USER_INFO = 'UPDATE_USER_INFO'
 
-// State Type
-interface UserInfoState {
-    userInfo:UserInfo
+export interface UserInfo {
+    id?:number;
+    userName: string;
+    email: string;
+    token?: string;
 }
 
-// Reducer
-const initialState:UserInfoState = {
-    userInfo:{
-        id:0,
-        userName:'',
-        email:'',
-        token:''
-    }
+export interface ActionUserInfo {
+    type: string;
+    payload:UserInfo
 }
 
-const userInfoReducer = (state=initialState, action:TypeUserInfoAction):UserInfoState => {
+const initialState:UserInfo = {
+    id:0,
+    userName:'',
+    email:'',
+    token:''
+}
+
+// Action Creator - userInfo
+export const actionSetUserInfo = (payload:UserInfo):ActionUserInfo => ({
+    type:SET_USER_INFO,
+    payload
+})
+
+export const actionUpdateUserInfo = (payload:UserInfo):ActionUserInfo => ({
+    type:UPDATE_USER_INFO,
+    payload
+})
+
+const userInfo = (state=initialState, action:ActionUserInfo):UserInfo => {
     switch(action.type) {
         case SET_USER_INFO:
-            return {...state, userInfo:action.userInfo}
+            return action.payload
+        case UPDATE_USER_INFO:
+            return {...state,...action.payload}
         default:
             return state
     }
 }
 
-export default userInfoReducer
+export default userInfo;

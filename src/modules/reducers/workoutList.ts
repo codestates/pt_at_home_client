@@ -1,22 +1,37 @@
-import {SET_WORKOUT_LIST, Workout, TypeSetWorkoutListAction} from '../actions'
+const SET_WORKOUT_LIST = 'SET_WORKOUT_LIST'
 
-// State Type
-interface WorkoutListState {
-    workoutList:Array<Workout>
+export interface Workout {
+    id:number;
+    title:string;
+    desc:string;
+    image:string[];
+    set:number;
+    count:number;
+    breakTime: number;
+    calrorie: number;
+    tool: string;
 }
 
-// Reducer
-const initialState:WorkoutListState = {
-    workoutList:[]
+export interface ActionWorkoutList {
+    type:string;
+    payload:Array<Workout>;
 }
 
-const workoutListReducer = (state=initialState, action:TypeSetWorkoutListAction):WorkoutListState => {
+// Action Creator - workoutList
+export const actionSetWorkoutList = (payload:Array<Workout>):ActionWorkoutList => ({
+    type:SET_WORKOUT_LIST,
+    payload
+})
+
+const initialState:Array<Workout> = []
+
+const workoutList = (state=initialState, action:ActionWorkoutList):Array<Workout> => {
     switch(action.type) {
         case SET_WORKOUT_LIST:
-            return {...state, workoutList:action.workoutList}
+            return action.payload
         default:
             return state
     }
 }
 
-export default workoutListReducer;
+export default workoutList;
