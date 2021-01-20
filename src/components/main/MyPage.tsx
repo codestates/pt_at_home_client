@@ -13,3 +13,4 @@ const MyPage = ({userInfo, updateUserInfo}:MyPageProps):JSX.Element => {
 };
 
 export default MyPage;
+

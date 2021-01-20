@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
-import { useForm } from 'react-hook-form';
 import { BiX, BiSearch } from 'react-icons/bi';
+import { useOnClickDocument } from '../../../hooks/useOnClickDocument';
+import { BsFillCaretDownFill } from 'react-icons/bs';
 
 const Wrap = styled.div`
   display: flex;
@@ -11,46 +12,45 @@ const FilterWrap = styled.div`
   display: flex;
   flex: 1;
 `;
-const Form = styled.form`
-  display: flex;
-`;
-const Select = styled.select`
-  display: none;
-  background-color: #212330;
-  border: none;
-  outline: none;
-  border-radius: 5px;
-  color: #f0f0f0;
-  padding: 5px;
-  margin-right: 15px;
-`;
-const Dropdown = styled.div`
-  background-color: #212330;
-  border: none;
-  outline: none;
-  border-radius: 5px;
-  color: #f0f0f0;
-  padding: 5px;
-  margin-right: 15px;
-`;
+
 const CustomSelect = styled.div`
   background-color: #212330;
   border: none;
   outline: none;
-  border-radius: 0 0 5px 5px;
+  border-radius: 5px;
   color: #f0f0f0;
   padding: 5px;
   margin-right: 15px;
+  cursor: pointer;
+  position: relative;
 `;
-const Option = styled.option`
+const CustomOptionItem = styled.div`
+  padding: 5px;
   display: ${(props: { isdefault: boolean }) =>
     props.isdefault ? 'none' : 'block'};
+  &:hover {
+    background-color: #30323d;
+    &:nth-child(2) {
+      border-radius: 5px 5px 0 0;
+    }
+    &:last-child {
+      border-radius: 0 0 5px 5px;
+    }
+  }
 `;
+
 const CustomOption = styled.div`
-  display: ${(props: { isdefault: boolean }) =>
-    props.isdefault ? 'none' : 'block'};
+  position: absolute;
+  left: 0;
+  top: ${(props: { width: number; height: number }) => `${props.height}px`};
+  width: ${(props: { width: number; height: number }) => `${props.width}px`};
+  background-color: #212330;
+  text-align: center;
+  border-radius: 5px;
 `;
+
 const SearchInputWrap = styled.div``;
+
 const SearchInput = styled.input`
   background: #202230;
   border: none;
@@ -93,11 +93,30 @@ const Search = styled(BiSearch)`
   font-size: 20px;
   color: #f0f0f0;
 `;
-const filterModels = [
+
+const Arrow = styled(BsFillCaretDownFill)``;
+interface IFilterOption {
+  label: string;
+  value: string;
+  isDefault?: boolean;
+}
+
+interface IFilter {
+  id: number;
+  name: string;
+  label: string;
+  ref?: React.MutableRefObject<any> | null;
+  isShow: boolean;
+  options: IFilterOption[];
+}
+
+const filterModels: IFilter[] = [
   {
     id: 0,
     name: 'excercises',
     label: 'EXCERCISES',
+    ref: null,
+    isShow: false,
     options: [
       {
         label: 'EXCERCISES',
@@ -126,6 +145,8 @@ const filterModels = [
     id: 1,
     name: 'equipment',
     label: 'EQUIPMENT',
+    ref: null,
+    isShow: false,
     options: [
       {
         label: 'EQUIPMENT',
@@ -144,54 +165,89 @@ const filterModels = [
   },
 ];
 const HeaderBottom = () => {
-  const { register, setValue, watch } = useForm();
+  const dropdownRefs = [useRef(), useRef()];
   const [filterArr, setFilterArr] = useState<string[]>([]);
-  const onChangeSelect = (
-    e: React.ChangeEvent<HTMLSelectElement>,
-    name: string,
-  ) => {
-    e.preventDefault();
-    setFilterArr((props) => [...props, e.target.value]);
-    setValue(name, name);
+  const [dropdownModels, setDropdownModels] = useState(() => {
+    return filterModels.map((filter) => {
+      filter.ref = dropdownRefs[filter.id];
+      return filter;
+    });
+  });
+  const allClose = () => {
+    setDropdownModels(
+      dropdownModels.map((model) => {
+        model.isShow = false;
+        return model;
+      }),
+    );
   };
+  useOnClickDocument(dropdownRefs[0], (event) => {
+    if (event.target === dropdownRefs[0].current) {
+      return;
+    }
+    allClose();
+  });
+  useOnClickDocument(dropdownRefs[1], (event) => {
+    if (event.target === dropdownRefs[1].current) {
+      return;
+    }
+    allClose();
+  });
+  const onChangeSelect = (id: number, value: string) => {
+    toggleDropdwon(id);
+    setFilterArr((props) => [...props, value]);
+  };
+  const toggleDropdwon = (id: number) => {
+    setDropdownModels(
+      dropdownModels.map((model) => {
+        if (model.isShow && model.id === id) {
+          model.isShow = false;
+        } else {
+          model.isShow = model.id === id;
+        }
+        return model;
+      }),
+    );
+  };
+
   return (
     <>
       <Wrap>
         <FilterWrap>
-          <Form>
-            {filterModels.map((model) => {
-              return (
-                <div key={model.id}>
-                  <Select
-                    defaultValue={model.name}
-                    name={model.name}
-                    onChange={(e) => {
-                      onChangeSelect(e, model.name);
-                    }}
-                    ref={register}
-                  >
-                    {model.options.map((op) => (
-                      <Option
-                        key={op.value}
-                        value={op.value}
-                        isdefault={!!op.isDefault}
-                      >
-                        {op.label}
-                      </Option>
-                    ))}
-                  </Select>
-                  <Dropdown>{watch(model.name)}</Dropdown>
-                  <CustomSelect>
-                    {model.options.map((op) => (
-                      <CustomOption key={op.value} isdefault={!!op.isDefault}>
-                        {op.label}
-                      </CustomOption>
-                    ))}
-                  </CustomSelect>
-                </div>
-              );
-            })}
-          </Form>
+          {dropdownModels.map((model) => {
+            return (
+              <div key={model.id}>
+                <CustomSelect
+                  ref={model.ref}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleDropdwon(model.id);
+                  }}
+                >
+                  {model.label}
+                  {model.isShow && (
+                    <CustomOption
+                      width={model.ref?.current.offsetWidth}
+                      height={model.ref?.current.offsetHeight}
+                    >
+                      {model.options.map((op) => (
+                        <CustomOptionItem
+                          key={op.value}
+                          isdefault={!!op.isDefault}
+                          onClick={() => {
+                            onChangeSelect(model.id, op.value);
+                          }}
+                        >
+                          {op.label}
+                        </CustomOptionItem>
+                      ))}
+                    </CustomOption>
+                  )}{' '}
+                  <Arrow />
+                </CustomSelect>
+              </div>
+            );
+          })}
         </FilterWrap>
         <SearchInputWrap>
           <SearchInput placeholder="검색어를 입력해주세요." />

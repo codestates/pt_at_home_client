@@ -3,9 +3,8 @@ import styled from 'styled-components';
 import { GoHeart } from 'react-icons/go';
 import Img from '../../img/urbanbrush-20190214083430029790.png';
 const Warp = styled.div`
-  height: 100%;
+  height: 100vh;
   background-color: #13141c;
-  overflow-y: scroll;
 `;
 const BodyWrap = styled.div`
   width: 1480px;
