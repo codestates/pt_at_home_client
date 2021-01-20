@@ -5,17 +5,16 @@ import {
   withRouter,
   RouteComponentProps,
 } from 'react-router-dom';
-import Root from './_components/Root';
-import SideBar from './_components/sidebar/SideBar';
-import Header from './_components/header/Header';
+import Root from './components/Root';
+import SideBar from './components/sidebar/SideBar';
+import Header from './components/header/Header';
 import {
   CreateRoutine,
   Dashboard,
   MyPage,
   UsersRoutine,
   Workout,
-} from './_components/main';
-import DashboardContainers from './containers/page/DashboardContainers';
+} from './components/main';
 
 
 const App = ({match, history, location}: RouteComponentProps):JSX.Element => {
@@ -32,7 +31,6 @@ const App = ({match, history, location}: RouteComponentProps):JSX.Element => {
         </div>
         <div className="main">
           <Switch>
-            <Route path={'/dashboard'} component={DashboardContainers} />
             <Route path={'/createRoutine'} component={CreateRoutine} />
             <Route path={'/usersroutine'} component={UsersRoutine} />
             <Route path={'/workout'} component={Workout} />
