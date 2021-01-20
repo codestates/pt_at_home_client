@@ -1,11 +1,11 @@
-import { actionSignup, actionLogin, actionLogout, ActionIsLogin } from './reducers/isLogin'
-import { actionSetUserInfo, actionUpdateUserInfo, UserInfo, ActionUserInfo } from './reducers/userInfo'
-import { actionSetWorkoutList, Workout, ActionWorkoutList } from './reducers/workoutList'
-import { actionSetMyWorkouts, actionAddMyWorkouts, ActionMyWorkouts } from './reducers/myWorkouts'
-import { actionSetRoutineList, WorkoutOfRoutine, Routine, ActionRoutineList } from './reducers/routineList'
-import { actionSetMyRoutines, actionAddMyRoutines, ActionMyRoutines } from './reducers/myRoutines'
+import { actionSignup, actionLogin, actionLogout } from './reducers/isLogin'
+import { actionSetUserInfo, actionUpdateUserInfo } from './reducers/userInfo'
+import { actionSetWorkoutList } from './reducers/workoutList'
+import { actionSetMyWorkouts, actionAddMyWorkouts } from './reducers/myWorkouts'
+import { actionSetRoutineList } from './reducers/routineList'
+import { actionSetMyRoutines, actionAddMyRoutines } from './reducers/myRoutines'
 
-export const actions = {
+export {
     actionSignup,
     actionLogin,
     actionLogout,
@@ -18,3 +18,5 @@ export const actions = {
     actionSetMyRoutines,
     actionAddMyRoutines
 }
+
+

@@ -93,7 +93,7 @@ const Marker = styled(GoHeart)`
   }
 `;
 
-const DashboardMain = () => {
+const Dashboard = () => {
   return (
     <Warp>
       <BodyWrap>
@@ -125,4 +125,4 @@ const DashboardMain = () => {
   );
 };
 
-export default DashboardMain;
+export default Dashboard;
