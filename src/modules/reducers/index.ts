@@ -6,7 +6,7 @@ import myWorkouts from './myWorkouts'
 import routineList from './routineList'
 import myRoutines from './myRoutines'
 
-export default combineReducers({
+export const rootReducer =  combineReducers({
     isLogin,
     userInfo,
     workoutList,
@@ -14,3 +14,5 @@ export default combineReducers({
     routineList,
     myRoutines
 })
+
+export type RootState = ReturnType<typeof rootReducer>
