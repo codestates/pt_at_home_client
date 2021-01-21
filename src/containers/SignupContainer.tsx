@@ -39,6 +39,7 @@ const SignupContainer = ():JSX.Element => {
     const signupHandler = (signupData:SignupData):void => {
         axios.post<SignupResponse>(`${URI}/users/signup`, signupData, {headers:{'Content-Type':'application/json'}})
             .then(res => {
+                console.log('signup', res)
                 if (res.data.message === 'signup success') {
                     dispatch(actionSignup(true))
                     dispatch(actionSetUserInfo(res.data.data))

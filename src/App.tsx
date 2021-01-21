@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {
   Switch,
   Route,
@@ -6,18 +6,18 @@ import {
   RouteComponentProps,
 } from 'react-router-dom';
 import Root from './components/Root';
-import SideBar from './components/sidebar/SideBar';
-import Header from './components/header/Header';
 import {
-  CreateRoutine,
-  UsersRoutine,
+  MyRoutines,
   Workout,
 } from './components/main';
 import {
   DashboardContainer,
   MyPageContainer,
   LoginContainer,
-  SignupContainer
+  SignupContainer,
+  HeaderContainer,
+  SideBarContainer,
+  CreateRoutineContainer
 } from './containers'
 import styled from 'styled-components';
 
@@ -26,22 +26,22 @@ const App = ({
   history,
   location,
 }: RouteComponentProps): JSX.Element => {
-  console.log(location.pathname);
-  const FeaturePage = () => {
+
+  const FeaturePage = ():JSX.Element => {
     return (
       <Wrap>
         <Side className="side-bar">
-          <SideBar />
+          <SideBarContainer />
         </Side>
         <Main className="wrap">
           <HeaderStyle className="header">
-            <Header />
+            <HeaderContainer />
           </HeaderStyle>
           <div className="main">
             <Switch>
               <Route path={'/dashboard'} component={DashboardContainer} />
-              <Route path={'/createRoutine'} component={CreateRoutine} />
-              <Route path={'/usersroutine'} component={UsersRoutine} />
+              <Route path={'/createRoutine'} component={CreateRoutineContainer} />
+              <Route path={'/usersroutine'} component={MyRoutines} />
               <Route path={'/workout'} component={Workout} />
               <Route path={'/mypage'} component={MyPageContainer} />
             </Switch>

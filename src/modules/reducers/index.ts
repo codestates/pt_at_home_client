@@ -5,6 +5,8 @@ import workoutList from './workoutList'
 import myWorkouts from './myWorkouts'
 import routineList from './routineList'
 import myRoutines from './myRoutines'
+import isDashboardRoutine from './isDashboardRoutine'
+import currentRoutine from './currentRoutine'
 
 export const rootReducer =  combineReducers({
     isLogin,
@@ -12,7 +14,9 @@ export const rootReducer =  combineReducers({
     workoutList,
     myWorkouts,
     routineList,
-    myRoutines
+    myRoutines,
+    isDashboardRoutine,
+    currentRoutine
 })
 
 export type RootState = ReturnType<typeof rootReducer>

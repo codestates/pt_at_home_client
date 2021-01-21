@@ -1,6 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const HeaderMiddle = ():JSX.Element => {
+  return (
+    <Wrap>
+      <ItemsDiv>
+        <LeftItem>
+          <MainTitle>Dashboard</MainTitle>
+        </LeftItem>
+      </ItemsDiv>
+      <ItemsDiv>
+        <RightItem></RightItem>
+      </ItemsDiv>
+    </Wrap>
+  );
+};
+
 const Wrap = styled.div`
   display: flex;
   margin-bottom: 25px;
@@ -21,20 +36,5 @@ const MainTitle = styled.span`
   font-size: 32px;
   color: #f0f0f0;
 `;
-
-const HeaderMiddle = () => {
-  return (
-    <Wrap>
-      <ItemsDiv>
-        <LeftItem>
-          <MainTitle>Dashboard</MainTitle>
-        </LeftItem>
-      </ItemsDiv>
-      <ItemsDiv>
-        <RightItem></RightItem>
-      </ItemsDiv>
-    </Wrap>
-  );
-};
 
 export default HeaderMiddle;

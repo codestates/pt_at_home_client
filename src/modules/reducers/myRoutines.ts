@@ -1,11 +1,11 @@
 const SET_MY_ROUTINES = 'SET_MY_ROUTINES' 
-const ADD_MY_ROUTINES = 'ADD_MY_ROUTINES'
 
 interface WorkoutOfRoutine {
     id:number;
     title:string;
     desc:string;
     image:string[];
+    part:string[];
     mySet:number;
     myCount:number;
     myBreakTime: number;
@@ -21,7 +21,7 @@ interface Routine {
 
 export interface ActionMyRoutines {
     type:string,
-    payload:Array<Routine> | Routine
+    payload:Array<Routine>
 }
 
 // Action Creator - routineList
@@ -30,19 +30,13 @@ export const actionSetMyRoutines = (payload:Array<Routine>):ActionMyRoutines => 
     payload
 })
 
-export const actionAddMyRoutines = (payload:Routine):ActionMyRoutines => ({
-    type:ADD_MY_ROUTINES,
-    payload
-})
 
 const initialState:Array<Routine> = []
 
 const myRoutines = (state=initialState, action:ActionMyRoutines):Array<Routine> => {
     switch(action.type) {
         case SET_MY_ROUTINES:
-            return state.concat(action.payload)
-        case ADD_MY_ROUTINES:
-            return state.concat(action.payload)
+            return action.payload
         default:
             return state
     }

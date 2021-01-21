@@ -1,9 +1,16 @@
 import React from 'react';
+import CreateRoutineCard from '../component/CreateRoutineCard'
+import RoutineBox from '../component/RoutineBox'
 
-const CreateRoutine = () => {
+const CreateRoutine = ():JSX.Element => {
     return (
         <div>
-            CreateRoutine
+            <div>
+                <CreateRoutineCard />
+            </div>
+            <div>
+                <RoutineBox />
+            </div>
         </div>
     );
 };

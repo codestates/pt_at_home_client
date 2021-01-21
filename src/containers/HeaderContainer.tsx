@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../components/header/Header'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../modules/reducers'
-import { actionLogout, actionSetWorkoutList, actionSetRoutineList } from '../modules/actions'
+import { actionLogout, actionSetWorkoutList, actionSetRoutineList, actionToggleDashboardType } from '../modules/actions'
 import { URI } from '../index'
 import axios from 'axios'
 axios.defaults.withCredentials = true
@@ -12,6 +12,7 @@ interface Workout {
     title:string;
     desc:string;
     image:string[];
+    part:string[];
     set:number;
     count:number;
     breakTime: number;
@@ -19,8 +20,33 @@ interface Workout {
     tool: string;
 }
 
+interface WorkoutOfRoutine {
+    id:number;
+    title:string;
+    desc:string;
+    image:string[];
+    part:string[];
+    mySet:number;
+    myCount:number;
+    myBreakTime: number;
+    calrorie: number;
+    tool: string;
+}
+
+interface Routine {
+    routineId:number;
+    title:string;
+    workout:Array<WorkoutOfRoutine>;
+}
+
 interface KeywordData {
     keyword:string;
+}
+
+interface FilterData {
+    category:string;
+    tool:Array<string>;
+    part:Array<string>;
 }
 
 interface SearchResponse {
@@ -28,29 +54,84 @@ interface SearchResponse {
     message:string;
 }
 
+interface FilterResponse {
+    data:Array<Workout>;
+    message:string;
+}
+
+interface RoutineResponse {
+    data:Array<Routine>;
+    message:string;
+}
+
+interface LogoutResponse {
+    message:string
+}
+
 export interface HeaderProps {
     isLogin:boolean;
+    userName:string;
+    searchHandler(keywordData:KeywordData):void;
+    clickRoutineHandler():void;
+    logoutHandler():void;
+    filterHandler(filterData:FilterData):void;
 }
 
 const HeaderContainer = ():JSX.Element => {
     const dispatch = useDispatch()
     const isLogin = useSelector((state:RootState) => state.isLogin)
+    const userName = useSelector((state:RootState) => state.userInfo.userName)
+    const isDashboardRoutine = useSelector((state:RootState) => state.isDashboardRoutine)
 
     const searchHandler = (keywordData:KeywordData):void => {
         axios.post<SearchResponse>(`${URI}/main/search`, keywordData, {headers:{'Content-Type':'application/json'}})
             .then(res => {
                 if (res.data.message === 'ok') {
                     dispatch(actionSetWorkoutList(res.data.data))
+                    if (isDashboardRoutine) dispatch(actionToggleDashboardType(false))
+                }
+            })
+    }
+
+    const filterHandler = (filterData:FilterData):void => {
+        axios.post<FilterResponse>(`${URI}/main/filter`, filterData, {headers:{'Content-Type':'application/json'}})
+            .then(res => {
+                if (res.data.message === 'ok') {
+                    actionSetWorkoutList(res.data.data)
+                    if (isDashboardRoutine) dispatch(actionToggleDashboardType(false))
+                }
+            })
+    }
+
+    const clickRoutineHandler = ():void => {
+        axios.get<RoutineResponse>(`${URI}/main/routine`, {headers:{'Content-Type':'application/json'}})
+            .then(res => {
+                if (res.data.message === 'ok') {
+                    dispatch(actionSetRoutineList(res.data.data))
+                    dispatch(actionToggleDashboardType(true))
+                }
+            })
+    }
+
+    const logoutHandler = ():void => {
+        axios.get<LogoutResponse>(`${URI}/users/signout`, {headers:{'Content-Type':'application/json'}})
+            .then(res => {
+                console.log('logout', res)
+                if (res.data.message === 'signout success') {
+                    dispatch(actionLogout(false))
                 }
             })
     }
     
-
-
-
-
     return (
-        <Header />
+        <Header 
+            isLogin={isLogin}
+            userName={userName}
+            searchHandler={searchHandler}
+            clickRoutineHandler={clickRoutineHandler}
+            logoutHandler={logoutHandler}
+            filterHandler={filterHandler}
+        />
     );
 };
 
