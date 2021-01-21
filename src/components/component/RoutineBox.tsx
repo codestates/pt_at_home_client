@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RoutineBox = () => {
+const RoutineBox = ():JSX.Element => {
     return (
         <div>
             RoutineBox

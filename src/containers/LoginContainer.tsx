@@ -35,6 +35,7 @@ const LoginContainer = ():JSX.Element => {
     const loginHandler = (loginData:LoginData):void => {
         axios.post<SigninResponse>(`${URI}/users/signin`, loginData, {headers:{'Content-Type':'application/json'}})
             .then(res => {
+                console.log('login', res)
                 if (res.data.message === 'signin success') {
                     dispatch(actionLogin(true))
                     dispatch(actionSetUserInfo(res.data.data))

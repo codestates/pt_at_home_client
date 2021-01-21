@@ -4,7 +4,7 @@ const LOGOUT = 'LOGOUT'
 
 export interface ActionIsLogin {
     type:string,
-    payload:boolean
+    payload:boolean;
 } 
 
 export const actionSignup = (payload:boolean):ActionIsLogin => ({

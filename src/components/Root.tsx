@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 
-const _Root = () => {
+const _Root = ():JSX.Element => {
     return (
         <div>
             Root

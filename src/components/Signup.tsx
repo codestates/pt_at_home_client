@@ -21,7 +21,7 @@ const Signup = ({signupHandler}:SignupProps):JSX.Element => {
                 <input type="text" name='userName' placeholder='User Name' value={userName} onChange={handleChange}/>
                 <input type="password" name='password' placeholder='Password' value={password} onChange={handleChange}/>
                 <input type="password" name='confirmPW' placeholder='Confirm Password' value={confirmPW} onChange={handleChange}/>
-                <input type="button" value='Signup'/>
+                <input type="button" onClick={ () => signupHandler({email, userName, password}) } value='Signup' />
             </div>
             <div>Github Login</div>
             <div>Google Login</div>

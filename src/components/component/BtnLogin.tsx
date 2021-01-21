@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BtnLogin = () => {
+const BtnLogin = ():JSX.Element => {
     return (
         <div>
             BtnLogin
