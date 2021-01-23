@@ -1,11 +1,7 @@
 import React from 'react';
 
-const Workout = () => {
-    return (
-        <div>
-            Workout
-        </div>
-    );
+const Workout = (): JSX.Element => {
+  return <div>Workout</div>;
 };
 
 export default Workout;

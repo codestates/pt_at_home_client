@@ -3,6 +3,24 @@ import styled from 'styled-components';
 import HeaderBottom from './headerBottom/HeaderBottom';
 import HeaderTop from './headerTop/HeaderTop';
 import HeaderMiddle from './hederMiddle/HeaderMiddle';
+import { HeaderProps } from '../../containers/HeaderContainer';
+
+const Header = ({
+  isLogin,
+  userName,
+  searchHandler,
+  clickRoutineHandler,
+  logoutHandler,
+  title,
+}: HeaderProps): JSX.Element => {
+  return (
+    <HeaderWrap id="asd">
+      <HeaderTop isLogin={isLogin} logoutHandler={logoutHandler} />
+      <HeaderMiddle title={title} />
+      <HeaderBottom />
+    </HeaderWrap>
+  );
+};
 
 const HeaderWrap = styled.div`
   display: flex;
@@ -11,19 +29,5 @@ const HeaderWrap = styled.div`
   box-shadow: 0 1px 30px 0 rgba(2, 2, 3, 0.7);
   padding: 30px;
 `;
-
-interface IHeader {
-  title: string;
-}
-
-const Header = ({ title }: IHeader) => {
-  return (
-    <HeaderWrap id="asd">
-      <HeaderTop />
-      <HeaderMiddle title={title} />
-      <HeaderBottom />
-    </HeaderWrap>
-  );
-};
 
 export default Header;

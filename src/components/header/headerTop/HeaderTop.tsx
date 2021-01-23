@@ -1,5 +1,32 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
+interface HeaderTopProps {
+  isLogin: boolean;
+  logoutHandler(): void;
+}
+
+const HeaderTop = ({ isLogin, logoutHandler }: HeaderTopProps) => {
+  return (
+    <Wrap>
+      <ItemsDiv>
+        <LeftItem></LeftItem>
+      </ItemsDiv>
+      <ItemsDiv>
+        <RightItem>
+          {isLogin ? (
+            <LoginBtn onClick={logoutHandler}>LOGOUT</LoginBtn>
+          ) : (
+            <LoginBtn>
+              <Link to={'/login'}>LOGIN</Link>
+            </LoginBtn>
+          )}
+        </RightItem>
+      </ItemsDiv>
+    </Wrap>
+  );
+};
 
 const Wrap = styled.div`
   display: flex;
@@ -23,20 +50,5 @@ const LeftItem = styled(ItemsDiv)`
 const RightItem = styled(ItemsDiv)`
   justify-content: flex-end;
 `;
-
-const HeaderTop = () => {
-  return (
-    <Wrap>
-      <ItemsDiv>
-        <LeftItem></LeftItem>
-      </ItemsDiv>
-      <ItemsDiv>
-        <RightItem>
-          <LoginBtn>LOGIN</LoginBtn>
-        </RightItem>
-      </ItemsDiv>
-    </Wrap>
-  );
-};
 
 export default HeaderTop;

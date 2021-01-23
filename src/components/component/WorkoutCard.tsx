@@ -3,6 +3,43 @@ import styled from 'styled-components';
 import { GoHeart } from 'react-icons/go';
 import Img from '../../img/urbanbrush-20190214083430029790.png';
 
+interface Workout {
+  id: number;
+  title: string;
+  desc: string;
+  image: string[];
+  part: string[];
+  set: number;
+  count: number;
+  breakTime: number;
+  calrorie: number;
+  tool: string;
+}
+
+interface WorkoutCardProps {
+  workoutCard: Workout;
+}
+
+const WorkoutCard = ({ workoutCard }: WorkoutCardProps): JSX.Element => {
+  return (
+    <CardDiv>
+      <Card>
+        <CardImgWrap>
+          <CardImg src={workoutCard.image[0]} />
+        </CardImgWrap>
+        <CardContents>
+          <Marker />
+          <Title>{workoutCard.title}</Title>
+          <Explanation>{workoutCard.desc}</Explanation>
+        </CardContents>
+        <CardFooter>
+          <CardExercise>{workoutCard.part.map((el) => `${el}, `)}</CardExercise>
+        </CardFooter>
+      </Card>
+    </CardDiv>
+  );
+};
+
 const CardDiv = styled.div`
   color: currentColor;
   text-decoration: none;
@@ -68,29 +105,5 @@ const Marker = styled(GoHeart)`
     color: #ff0000;
   }
 `;
-
-const WorkoutCard = () => {
-  return (
-    <CardDiv>
-      <Card>
-        <CardImgWrap>
-          <CardImg src={Img} />
-        </CardImgWrap>
-        <CardContents>
-          <Marker />
-          <Title>운동 이름</Title>
-          <Explanation>
-            이제 이곳에는 이 운동이 어떤운동인지 설명이나 운동 방법 같은것을
-            적는 공간 일단 왜 때문인지 길게 적어야 할것 같아서 일단 아무말이나
-            적어보는 중
-          </Explanation>
-        </CardContents>
-        <CardFooter>
-          <CardExercise>이곳은 어느 부위인지</CardExercise>
-        </CardFooter>
-      </Card>
-    </CardDiv>
-  );
-};
 
 export default WorkoutCard;

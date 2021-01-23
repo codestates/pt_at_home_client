@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { BrowserRouter} from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import reportWebVitals from './reportWebVitals';
-import { Provider } from 'react-redux'
-import store from './store'
-export let URI:string = 'https://savemehomt.com'
+import { Provider } from 'react-redux';
+import store from './store';
+export let URI: string = 'http://localhost:8080';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -23,11 +23,11 @@ const GlobalStyle = createGlobalStyle`
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />
-      <Provider store={store}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </Provider>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

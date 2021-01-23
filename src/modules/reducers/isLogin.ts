@@ -4,7 +4,7 @@ const LOGOUT = 'LOGOUT'
 
 export interface ActionIsLogin {
     type:string,
-    payload:boolean
+    payload:boolean;
 } 
 
 export const actionSignup = (payload:boolean):ActionIsLogin => ({
@@ -21,6 +21,10 @@ export const actionLogout = (payload:boolean):ActionIsLogin => ({
     type:LOGOUT,
     payload
 })
+
+export const isFetching = () => {
+    
+}
 
 const initialState:boolean = false
 
