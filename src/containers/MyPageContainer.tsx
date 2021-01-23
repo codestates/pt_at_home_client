@@ -35,13 +35,21 @@ const MyPageContainer = ():JSX.Element  => {
 
     
     const updateUserInfo = (userData:UserData):void => {
-        axios.post<UpdateUserInfoResponse>(`${URI}/users/update`, userData, {headers:{'Content-Type':'application/json'}})
+        axios.post<UpdateUserInfoResponse>(
+            `${URI}/users/update`, 
+            userData, 
+            {headers:{
+                'Content-Type':'application/json',
+                'Authorization':`Bearer ${userInfo.token}`
+            }})
             .then(res => {
                 if ( res.data.message === 'update success') {
                     dispatch(actionUpdateUserInfo(res.data.data))
-                }
+                } 
             })
     }
+
+ 
 
     const resignHandler = (userName:string):void => {
         if (userName === userInfo.userName) {

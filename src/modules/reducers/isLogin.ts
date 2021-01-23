@@ -22,6 +22,10 @@ export const actionLogout = (payload:boolean):ActionIsLogin => ({
     payload
 })
 
+export const isFetching = () => {
+    
+}
+
 const initialState:boolean = false
 
 const isLogin = (state=initialState, action:ActionIsLogin):boolean => {

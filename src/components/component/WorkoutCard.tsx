@@ -49,8 +49,7 @@ const CardDiv = styled.div`
   display: inline-table;
 `;
 const Card = styled.div`
-  width: 300px;
-  margin: 5% auto;
+  width: 270px;
   box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
   display: block;
   background-color: #212330;

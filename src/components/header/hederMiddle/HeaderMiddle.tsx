@@ -1,12 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const HeaderMiddle = ():JSX.Element => {
+interface IHeader {
+  title: string;
+}
+
+const HeaderMiddle = ({title}:IHeader):JSX.Element => {
   return (
     <Wrap>
       <ItemsDiv>
         <LeftItem>
-          <MainTitle>Dashboard</MainTitle>
+          <MainTitle>{title}</MainTitle>
         </LeftItem>
       </ItemsDiv>
       <ItemsDiv>

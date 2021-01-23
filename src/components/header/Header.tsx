@@ -5,18 +5,24 @@ import HeaderTop from './headerTop/HeaderTop';
 import HeaderMiddle from './hederMiddle/HeaderMiddle';
 import { HeaderProps } from '../../containers/HeaderContainer'
 
+
+
 const Header = (
   {
     isLogin,
     userName,
     searchHandler,
     clickRoutineHandler,
-    logoutHandler
+    logoutHandler, 
+    title
   }:HeaderProps):JSX.Element => {
+
+
+  
   return (
     <HeaderWrap id="asd">
       <HeaderTop isLogin={isLogin} logoutHandler={logoutHandler}/>
-      <HeaderMiddle />
+      <HeaderMiddle title={title}/>
       <HeaderBottom />
     </HeaderWrap>
   );

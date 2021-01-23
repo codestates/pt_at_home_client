@@ -1,5 +1,5 @@
 import { actionSignup, actionLogin, actionLogout } from './reducers/isLogin'
-import { actionSetUserInfo, actionUpdateUserInfo } from './reducers/userInfo'
+import { actionSetUserInfo, actionUpdateUserInfo, actionRefreshToken } from './reducers/userInfo'
 import { actionSetWorkoutList } from './reducers/workoutList'
 import { actionSetMyWorkouts } from './reducers/myWorkouts'
 import { actionSetRoutineList } from './reducers/routineList'
@@ -13,6 +13,7 @@ export {
     actionLogout,
     actionSetUserInfo,
     actionUpdateUserInfo,
+    actionRefreshToken,
     actionSetWorkoutList,
     actionSetMyWorkouts,
     actionSetRoutineList,
