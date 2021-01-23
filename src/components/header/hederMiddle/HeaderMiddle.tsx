@@ -22,12 +22,16 @@ const MainTitle = styled.span`
   color: #f0f0f0;
 `;
 
-const HeaderMiddle = () => {
+interface IHeaderMiddle {
+  title: string;
+}
+
+const HeaderMiddle = ({ title }: IHeaderMiddle) => {
   return (
     <Wrap>
       <ItemsDiv>
         <LeftItem>
-          <MainTitle>Dashboard</MainTitle>
+          <MainTitle>{title}</MainTitle>
         </LeftItem>
       </ItemsDiv>
       <ItemsDiv>

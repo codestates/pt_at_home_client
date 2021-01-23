@@ -2,37 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { GoHeart } from 'react-icons/go';
 import Img from '../../img/urbanbrush-20190214083430029790.png';
-const Warp = styled.div`
-  height: 100vh;
-  background-color: #13141c;
-`;
-const BodyWrap = styled.div`
-  width: 1480px;
-  display: flex;
-  justify-content: center;
-  margin: 0 auto;
-`;
-const CardWrap = styled.ul`
-  list-style: none;
-  display: flex;
-  width: 100%;
-  height: 100%;
-  flex-wrap: wrap;
-  margin-bottom: 50px;
-`;
-const Cardli = styled.li`
-  width: 300px;
-  height: 372px;
-  margin: 35px;
-`;
+
 const CardDiv = styled.div`
   color: currentColor;
   text-decoration: none;
   display: inline-table;
 `;
 const Card = styled.div`
-  width: 300px;
-  margin: 5% auto;
+  width: 270px;
   box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
   display: block;
   background-color: #212330;
@@ -92,36 +69,28 @@ const Marker = styled(GoHeart)`
   }
 `;
 
-const Dashboard = () => {
+const WorkoutCard = () => {
   return (
-    <Warp>
-      <BodyWrap>
-        <CardWrap>
-          <Cardli>
-            <CardDiv>
-              <Card>
-                <CardImgWrap>
-                  <CardImg src={Img} />
-                </CardImgWrap>
-                <CardContents>
-                  <Marker />
-                  <Title>운동 이름</Title>
-                  <Explanation>
-                    이제 이곳에는 이 운동이 어떤운동인지 설명이나 운동 방법
-                    같은것을 적는 공간 일단 왜 때문인지 길게 적어야 할것 같아서
-                    일단 아무말이나 적어보는 중
-                  </Explanation>
-                </CardContents>
-                <CardFooter>
-                  <CardExercise>이곳은 어느 부위인지</CardExercise>
-                </CardFooter>
-              </Card>
-            </CardDiv>
-          </Cardli>
-        </CardWrap>
-      </BodyWrap>
-    </Warp>
+    <CardDiv>
+      <Card>
+        <CardImgWrap>
+          <CardImg src={Img} />
+        </CardImgWrap>
+        <CardContents>
+          <Marker />
+          <Title>운동 이름</Title>
+          <Explanation>
+            이제 이곳에는 이 운동이 어떤운동인지 설명이나 운동 방법 같은것을
+            적는 공간 일단 왜 때문인지 길게 적어야 할것 같아서 일단 아무말이나
+            적어보는 중
+          </Explanation>
+        </CardContents>
+        <CardFooter>
+          <CardExercise>이곳은 어느 부위인지</CardExercise>
+        </CardFooter>
+      </Card>
+    </CardDiv>
   );
 };
 
-export default Dashboard;
+export default WorkoutCard;

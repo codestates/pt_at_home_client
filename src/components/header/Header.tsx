@@ -12,11 +12,15 @@ const HeaderWrap = styled.div`
   padding: 30px;
 `;
 
-const Header = () => {
+interface IHeader {
+  title: string;
+}
+
+const Header = ({ title }: IHeader) => {
   return (
     <HeaderWrap id="asd">
       <HeaderTop />
-      <HeaderMiddle />
+      <HeaderMiddle title={title} />
       <HeaderBottom />
     </HeaderWrap>
   );

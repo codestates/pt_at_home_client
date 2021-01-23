@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { BiX, BiSearch } from 'react-icons/bi';
 import { useOnClickDocument } from '../../../hooks/useOnClickDocument';
 import { BsFillCaretDownFill } from 'react-icons/bs';
+
 const Wrap = styled.div`
   display: flex;
   margin-bottom: 15px;
@@ -11,6 +12,7 @@ const FilterWrap = styled.div`
   display: flex;
   flex: 1;
 `;
+
 const CustomSelect = styled.div`
   background-color: #212330;
   border: none;
@@ -36,6 +38,7 @@ const CustomOptionItem = styled.div`
     }
   }
 `;
+
 const CustomOption = styled.div`
   position: absolute;
   left: 0;
@@ -45,7 +48,9 @@ const CustomOption = styled.div`
   text-align: center;
   border-radius: 5px;
 `;
+
 const SearchInputWrap = styled.div``;
+
 const SearchInput = styled.input`
   background: #202230;
   border: none;
@@ -88,6 +93,7 @@ const Search = styled(BiSearch)`
   font-size: 20px;
   color: #f0f0f0;
 `;
+
 const Arrow = styled(BsFillCaretDownFill)``;
 interface IFilterOption {
   label: string;
