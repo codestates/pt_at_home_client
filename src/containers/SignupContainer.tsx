@@ -7,8 +7,6 @@ import Signup from '../components/Signup'
 import axios from 'axios'
 axios.defaults.withCredentials = true
 
-
-
 interface SignupData {
     userName:string;
     email:string;

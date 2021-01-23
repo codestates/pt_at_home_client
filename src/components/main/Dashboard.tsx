@@ -27,12 +27,10 @@ const Dashboard = ({
     <Warp>
       <BodyWrap>
         <CardWrap>
-          <Cardli>
             {isDashboardRoutine ? 
-            routineList.map(el => <RoutineCard key={el.routineId} routineCard={el}/>):
-            workoutList.map(el => <WorkoutCard key={el.id} workoutCard={el}/>)
+            routineList.map(el => <Cardli key={el.routineId}><RoutineCard  routineCard={el}/></Cardli>):
+            workoutList.map(el => <Cardli key={el.id}><WorkoutCard  workoutCard={el}/></Cardli>)
             }
-          </Cardli>
         </CardWrap>
       </BodyWrap>
     </Warp>
@@ -40,11 +38,10 @@ const Dashboard = ({
 };
 
 const Warp = styled.div`
-  height: 100vh;
+  height: 100%;
   background-color: #13141c;
 `;
 const BodyWrap = styled.div`
-  width: 1480px;
   display: flex;
   justify-content: center;
   margin: 0 auto;
@@ -58,9 +55,8 @@ const CardWrap = styled.ul`
   margin-bottom: 50px;
 `;
 const Cardli = styled.li`
-  width: 300px;
-  height: 372px;
-  margin: 35px;
+  width: 270px;
+  margin: 25px;
 `;
 
 export default Dashboard;

@@ -1,15 +1,10 @@
 import React from 'react';
-import {
-  Switch,
-  Route,
-  withRouter,
-  RouteComponentProps,
-} from 'react-router-dom';
-import Root from './components/Root';
+import { Route, Switch, withRouter, RouteComponentProps, } from 'react-router-dom'
 import {
   MyRoutines,
   Workout,
 } from './components/main';
+import Root from './components/Root';
 import {
   DashboardContainer,
   MyPageContainer,
@@ -25,7 +20,7 @@ const App = ({
   match,
   history,
   location,
-}: RouteComponentProps): JSX.Element => {
+}: RouteComponentProps):JSX.Element => {
 
   const FeaturePage = ():JSX.Element => {
     return (
@@ -91,3 +86,5 @@ const Main = styled.div`
 `;
 
 export default withRouter(App);
+
+

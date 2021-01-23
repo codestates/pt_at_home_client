@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../components/header/Header'
+import { useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../modules/reducers'
 import { actionLogout, actionSetWorkoutList, actionSetRoutineList, actionToggleDashboardType } from '../modules/actions'
@@ -68,6 +69,14 @@ interface LogoutResponse {
     message:string
 }
 
+enum TitleConstants {
+    Dashboard = 'Dashboard',
+    CreateRoutine = 'Create Routine',
+    UsersRoutine = 'Users Routine',
+    Workout = 'Workout',
+    Mypage = 'Mypage',
+  }
+
 export interface HeaderProps {
     isLogin:boolean;
     userName:string;
@@ -75,6 +84,7 @@ export interface HeaderProps {
     clickRoutineHandler():void;
     logoutHandler():void;
     filterHandler(filterData:FilterData):void;
+    title:string;
 }
 
 const HeaderContainer = ():JSX.Element => {
@@ -82,6 +92,26 @@ const HeaderContainer = ():JSX.Element => {
     const isLogin = useSelector((state:RootState) => state.isLogin)
     const userName = useSelector((state:RootState) => state.userInfo.userName)
     const isDashboardRoutine = useSelector((state:RootState) => state.isDashboardRoutine)
+    const location = useLocation()
+
+    const titleGenerator = ():string => {
+        switch (location.pathname) {
+          case '/dashboard':
+            return TitleConstants.Dashboard;
+          case '/createroutine':
+            return TitleConstants.CreateRoutine;
+          case '/usersroutine':
+            return TitleConstants.UsersRoutine;
+          case '/workout':
+            return TitleConstants.Workout;
+          case '/mypage':
+            return TitleConstants.Mypage;
+          default:
+            return '';
+        }
+      };
+
+    const title = titleGenerator()
 
     const searchHandler = (keywordData:KeywordData):void => {
         axios.post<SearchResponse>(`${URI}/main/search`, keywordData, {headers:{'Content-Type':'application/json'}})
@@ -131,6 +161,7 @@ const HeaderContainer = ():JSX.Element => {
             clickRoutineHandler={clickRoutineHandler}
             logoutHandler={logoutHandler}
             filterHandler={filterHandler}
+            title={title}
         />
     );
 };
