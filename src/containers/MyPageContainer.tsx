@@ -1,5 +1,6 @@
 import React from 'react'
 import { MyPage } from '../components/main'
+import {useHistory} from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../modules/reducers'
 import { UserInfo, UserData } from '../modules/reducers/userInfo'
@@ -16,8 +17,9 @@ const MyPageContainer = ():JSX.Element  => {
     const userInfo:UserInfo = useSelector((state:RootState) => state.userInfo)
     const isLogin:boolean = useSelector((state:RootState) => state.isLogin.isLogin)
     const dispatch = useDispatch()
-
+    const history = useHistory()
     
+    // completed
     const updateUserInfo = (userData:UserData) => {
         dispatch(actionUpdateUserInfo(userData))
         // axios.post<UpdateUserInfoResponse>(
@@ -35,9 +37,10 @@ const MyPageContainer = ():JSX.Element  => {
     }
 
  
-
+    // completed
     const resignHandler = (email:string) => {
         dispatch(actionResignUserInfo(email))
+        history.push('/')
         // if (userName === userInfo.userName) {
         //     axios.post<ResignResponse>(`${URI}/users/resign`, {userName}, {headers:{'Content-Type':'application/json'}})
         //         .then(res => {

@@ -65,7 +65,7 @@ const initialState:CurrentRoutine = {
         image:['three', 'four', 'five'],
         part:['core', 'heap'],
         mySetCount:3,
-        myCount:15,
+        myCount:10,
         myBreakTime: 8,
         calrorie: 1000,
         tool: 'band'
@@ -76,7 +76,7 @@ const initialState:CurrentRoutine = {
         image:['6', '7', '8', '9'],
         part:['core', 'heap'],
         mySetCount:3,
-        myCount:7,
+        myCount:4,
         myBreakTime: 8,
         calrorie: 1000,
         tool: 'band'

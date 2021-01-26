@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { CurrentRoutineProps } from '../../containers/RunRoutineContainer'
+import styled from 'styled-components';
 import CreateRoutineCard from '../component/CreateRoutineCard'
 
 type SetInterval=ReturnType<typeof setInterval>
@@ -9,20 +10,16 @@ const RunRoutine = ({
     currentRoutine,
 
 }:CurrentRoutineProps):JSX.Element => {
-    const initialInterve:SetInterval | any = null
+    const initialInterve:SetInterval | any = undefined
     let {routineId, title, workout} = currentRoutine
     let [counter, setCounter] = useState(0)
-    // let [currentWorkout, setCurrentWorkout] = useState(workout[0])
-    // let [totalCount, setTotalCount] = useState(workout[0].myCount)
     let [routineOrder, setRoutineOrder] = useState(0)
     let [intervCounter, setIntervCounter] = useState(initialInterve)
     let [intervImg, setIntervImg] = useState(initialInterve)
     let [status, setStatus] = useState('ready')
     let [imgIdx, setImgIdx] = useState(0)
-    let [repeat, setRepeat] = useState(false)
+    let [repeat, setRepeat] = useState('ready')
     let imgList = workout[routineOrder].image
-    // let imgListLength = imgList.length
-    // let [currentImg, setCurrentImg] = useState(imgList[imgIdx])
     let currentWorkout = workout[routineOrder]
     let totalCount = workout[routineOrder].myCount
     let breakCount = workout[routineOrder].myBreakTime
@@ -55,67 +52,77 @@ const RunRoutine = ({
     useEffect(() => {
         if (status === 'start') {
             runWorkout()
-        } if (status === 'break') {
+        } else if (status === 'break') {
             breakCounter()
-        } if (status === 'finish') {
+        } else if (status === 'finish') {
             setCounter(0)
             setIntervCounter(clearInterval(intervCounter))
             setIntervImg(clearInterval(intervImg))
-        } if (status === 'resume') {
+        } else if (status === 'resume' && repeat === 'repeat') {
+            setIntervImg(setInterval (() => setImgIdx(imgIdx++), 1500))
+        } else if (status === 'resume') {
             setIntervCounter(setInterval(() => setCounter(counter++), 1000))
-        } if (status === 'pause') {
+        } else if (status === 'pause') {
             setIntervCounter(clearInterval(intervCounter))
             setIntervImg(clearInterval(intervImg))
-        } if (status === 'pauseBreak') {
+        } else if (status === 'pauseBreak') {
             setIntervCounter(clearInterval(intervCounter))
         }
     }, [status])
 
-    useEffect(() => {
-        if (repeat) {
-            setIntervImg(setInterval(() => setImgIdx(imgIdx++), 1500))
-        } 
-    },[imgIdx, repeat])
+
+    // start 를 누르면 status 를 start로 바꾼다
+    // staus 가 start 면 runworkout을 실행한다
+    // runworkout 이 실행 될 때 조건에 의해서 count 방식이 결정된다
+    // count 방식이 초이면 1초 마다 counter 가 1씩 증가한다. 
+    // count 방식이 동작이면 1.5초 마다 이미지 배열에 인덱스가 순서대로 증가한다. 
+    // 이미지 배열을 다 돌면 counter 가 1씩 증가한다. 
+    // counter 가 totalCount 와 같을때 routineOrder 가 workout.length 보다 작으면 routineOrder가 증가한다. 
+    // routineOrder 가 증가하면 현재 운동이 재설정 된다. 
+    // breakTime이 다 돌면 다시 runworkout 이 실행된다. 
 
     let currentImg = imgIdx === imgList.length? imgList[0]:imgList[imgIdx]
     let actionCounter = useMemo(() => counter+1, [counter])
-    // let memoIndex = useMemo(() => imgIdx+1, [imgIdx])
+
     useEffect(() => {
-        if (intervImg === undefined) {
-            setCounter(actionCounter)
+        if (repeat === 'repeat') {
+            console.log('repeat')
+            setIntervImg(setInterval (() => setImgIdx(imgIdx++), 1500))
         }
-    }, [intervImg])
-    
-    useEffect(() => {
-        if (imgIdx  === imgList.length ){
-            setImgIdx(0)
-            // setCounter(counter++)
-            setIntervImg(clearInterval(intervImg))
-            return () => {
-                console.log('초기화')
-                setIntervImg(clearInterval(intervImg))
+        if (repeat === 'next') {
+            if (counter === totalCount) {
+                console.log('next', counter)
+                // setCounter(0)
+                setTimeout(()=>setRepeat('stop'), 1500)
+            } else {
+                setCounter(counter++)
+                setRepeat('repeat')
             }
+        } if (repeat === 'stop') {
+            console.log('stop') 
+            setCounter(0)
+            setRepeat('ready')
+            if (num < workout.length) {
+                setStatus('break')
+            } else {
+                setStatus('finish')
+            }
+            
         }
-        console.log('counter:',counter, 'currentImg:',currentImg, 'imgIdx:', imgIdx, 'imglength:',imgList.length, 'totalCount:', totalCount)
-        return () => {console.log('unmount')}
+    }, [repeat])
+
+    useEffect(() => {
+        if (imgIdx === imgList.length) {
+            setImgIdx(0)
+            setCounter(actionCounter)
+            setRepeat('next')
+            setIntervImg(clearInterval(intervImg))
+        } 
     }, [imgIdx])
 
-    const actionHandler = () => {
-        setIntervImg(setInterval(() => {
-            setImgIdx(imgIdx++)
-        }, 1500))
-    }
-
-    const stopActionHandler = () => {
-        setIntervImg(clearInterval(intervImg))
-    }
-
     const runWorkout = () => {
-        if (currentWorkout.myCount < 30) {
-            setImgIdx(imgIdx++)
-            setIntervImg(setInterval(() => {
-                setImgIdx(imgIdx++)
-            }, 1500))
+        if (currentWorkout.myCount < 5) {
+            setRepeat('repeat')
         } else {
             setCounter(counter++)
             setIntervCounter(setInterval(() => setCounter(counter++), 1000))
@@ -149,25 +156,25 @@ const RunRoutine = ({
 
     return (
         <div>
-            <div>
+            <WhiteText>
                 title
-            </div>
-            <div>
+            </WhiteText>
+            <WhiteText>
                 <div>{currentWorkout.id}</div>
                 <div>Image : {currentImg}</div>
                 <div>{`${counter}/${status === 'break' || status === 'pauseBreak'?breakCount:totalCount}`}</div>
                 <input type="button" value="START" onClick={startHandler}/>
                 <input type="button" value="PAUSE" onClick={pauseHandler}/>
                 <input type="button" value="RESUME" onClick={resumeHandler}/>
-                {/* <input type="button" value="PAUSE-BREAK" onClick={pauseBreakHandler}/>
-                <input type="button" value="RESUME-BREAK" onClick={resumeBreakHandler}/> */}
                 <input type="button" value="RESET"/>
-                <input type="button" value="IMG START" onClick={actionHandler}/>
-                <input type="button" value="IMG STOP" onClick={stopActionHandler}/>
-            </div>
+            </WhiteText>
         </div>
     );
 };
+
+const WhiteText = styled.div`
+    color:white;
+`
 
 export default RunRoutine;
 

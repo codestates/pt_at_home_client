@@ -33,23 +33,23 @@ interface WorkoutOfRoutine {
     tool: string;
 }
 
-interface Routine {
+export interface Routine {
   routineId: number;
   title: string;
   workout: Array<WorkoutOfRoutine>;
 }
 
-interface WorkoutListResponse {
+export interface WorkoutListResponse {
   data: Array<Workout>;
   message: string;
 }
 
-interface MyRoutinesResponse {
+export interface MyRoutinesResponse {
   data: Array<Routine>;
   message: string;
 }
 
-interface MyWorkoutsResponse {
+export interface MyWorkoutsResponse {
   data: Array<Workout>;
   message: string;
 }
@@ -65,19 +65,8 @@ const SideBarContainer = ():JSX.Element => {
     const userInfo = useSelector((state:RootState) => state.userInfo)
     const auth = userInfo.auth
 
+    // completed
     const getWorkoutList = async () => {
-        // dispatch(actionSetWorkoutList([{
-        //     id:1,
-        //     title:'test',
-        //     desc:'코어운동으로써 매트를 깔고 하는게 좋은 운동이다',
-        //     image:['https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80', 'https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80'],
-        //     part:['코어', '복부'],
-        //     set:3,
-        //     count:60,
-        //     breakTime:30,
-        //     calrorie:1000,
-        //     tool:'none'
-        // }]))
         let { token, expDate } = auth
         let isTokenValid = await actionRenewToken(token, expDate, dispatch)
         if (isTokenValid) {
@@ -91,11 +80,10 @@ const SideBarContainer = ():JSX.Element => {
                         dispatch(actionSetWorkoutList(res.data.data))
                     } 
                 })
-        }
-
-       
+        }  
     }
 
+    //completed
     const  getMyRoutines = async () => {
         let { token, expDate } = auth
         let isTokenValid = await actionRenewToken(token, expDate, dispatch)
@@ -113,6 +101,7 @@ const SideBarContainer = ():JSX.Element => {
         }
     }
 
+    // completed
     const getMyWorkouts = async () => {
         let { token, expDate } = auth
         let isTokenValid = await actionRenewToken(token, expDate, dispatch)
