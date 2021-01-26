@@ -3,17 +3,17 @@ import { Dashboard } from '../components/main';
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../modules/reducers'
 import { URI } from '../index'
-import { actionSetMyWorkouts, actionSetMyRoutines } from '../modules/actions'
+import { actionSetMyWorkouts, actionSetMyRoutines, actionRenewToken } from '../modules/actions'
 import axios from 'axios'
 axios.defaults.withCredentials = true
 
 interface Workout {
   id:number;
   title:string;
-  desc:string;
+  instruction:string;
   image:string[];
   part:string[];
-  set:number;
+  setCount:number;
   count:number;
   breakTime: number;
   calrorie: number;
@@ -23,10 +23,10 @@ interface Workout {
 interface WorkoutOfRoutine {
   id:number;
   title:string;
-  desc:string;
+  instruction:string;
   image:string[];
   part:string[];
-  mySet:number;
+  mySetCount:number;
   myCount:number;
   myBreakTime: number;
   calrorie: number;
@@ -70,11 +70,7 @@ export interface DashboardProps {
 
 const DashboardContainer = ():JSX.Element => {
   const dispatch = useDispatch()
-  // const isLogin = useSelector((state:RootState) => state.isLogin)
-  // const workoutList = useSelector((state:RootState) => state.workoutList)
-  // const routineList = useSelector((state:RootState) => state.routineList)
-  // const myWorkouts = useSelector((state:RootState) => state.myWorkouts)
-  // const myRoutines = useSelector((state:RootState) => state.myRoutines)
+  const auth = useSelector((state:RootState) => state.userInfo.auth)
   const {isLogin, workoutList, routineList, myWorkouts, myRoutines, isDashboardRoutine} = useSelector((state:RootState) => state)
   const [workoutDetail, setWorkoutDetail] = useState({})
   const [routineDetail, setRoutineDetail] = useState({})
@@ -102,47 +98,63 @@ const DashboardContainer = ():JSX.Element => {
     setRoutineModal(false)
   }
 
-  const saveOrRemoveWorkout = (id:number):void => {
-    let savedWorkouts = myWorkouts.map(el => el.id)
-    if (savedWorkouts.includes(id)) {
-      axios.post<SaveOrRemoveWorkoutResponse>(`${URI}/myroutine/removeworkout`,{workoutId:id}, {headers:{'Content-Type':'application/json'}})
-        .then(res => {
-          if (res.data.message === 'ok') {
-            actionSetMyWorkouts(res.data.data)
-          }
-        })
-    } else {
-      axios.post<SaveOrRemoveWorkoutResponse>(`${URI}/myroutine/saveworkout`,{workoutId:id}, {headers:{'Content-Type':'application/json'}})
-        .then(res => {
-          if (res.data.message === 'ok') {
-            actionSetMyWorkouts(res.data.data)
-          }
-        })
+  const saveOrRemoveWorkout = async (id:number) => {
+    let { token, expDate } = auth
+    let isTokenValid = await actionRenewToken(token, expDate, dispatch)
+    if (isTokenValid) {
+      let savedWorkouts = myWorkouts.map(el => el.id)
+      if (savedWorkouts.includes(id)) {
+        axios.post<SaveOrRemoveWorkoutResponse>(`${URI}/myroutine/removeworkout`,{workoutId:id}, {
+          headers:{
+            'Content-Type':'application/json',
+            'Authorization':`Bearer ${auth.token}`
+          }})
+          .then(res => {
+            if (res.data.message === 'ok') {
+              actionSetMyWorkouts(res.data.data)
+            }
+          })
+      } else {
+        axios.post<SaveOrRemoveWorkoutResponse>(`${URI}/myroutine/saveworkout`,{workoutId:id}, {
+          headers:{
+            'Content-Type':'application/json',
+            'Authorization':`Bearer ${auth.token}`
+          }})
+          .then(res => {
+            if (res.data.message === 'ok') {
+              actionSetMyWorkouts(res.data.data)
+            }
+          })
+      }
     }
   }
 
-  const saveOrRemoveRoutine = (id:number):void =>  {
-    let savedRoutines = myRoutines.map(el => el.routineId)
-    if (savedRoutines.includes(id)) {
-      axios.post<SaveOrRemoveRoutineResponse>(`${URI}/myroutine/deleteroutine`,{workoutId:id}, {headers:{'Content-Type':'application/json'}})
-        .then(res => {
-          if (res.data.message === 'ok') {
-            actionSetMyRoutines(res.data.data)
-          }
-        })
-    } else {
-      axios.post<SaveOrRemoveRoutineResponse>(`${URI}/myroutine/createroutine`,{workoutId:id}, {headers:{'Content-Type':'application/json'}})
-        .then(res => {
-          if (res.data.message === 'ok') {
-            actionSetMyRoutines(res.data.data)
-          }
-        })
+  const saveOrRemoveRoutine = async (id:number) =>  {
+    let { token, expDate } = auth
+    let isTokenValid = await actionRenewToken(token, expDate, dispatch)
+    if (isTokenValid) {
+      let savedRoutines = myRoutines.map(el => el.routineId)
+      if (savedRoutines.includes(id)) {
+        axios.post<SaveOrRemoveRoutineResponse>(`${URI}/myroutine/deleteroutine`,{workoutId:id}, {headers:{'Content-Type':'application/json'}})
+          .then(res => {
+            if (res.data.message === 'ok') {
+              actionSetMyRoutines(res.data.data)
+            }
+          })
+      } else {
+        axios.post<SaveOrRemoveRoutineResponse>(`${URI}/myroutine/createroutine`,{workoutId:id}, {headers:{'Content-Type':'application/json'}})
+          .then(res => {
+            if (res.data.message === 'ok') {
+              actionSetMyRoutines(res.data.data)
+            }
+          })
+      }
     }
   }
 
   return (
     <Dashboard 
-      isLogin={isLogin}
+      isLogin={isLogin.isLogin}
       workoutList={workoutList}
       routineList={routineList}
       myWorkouts={myWorkouts}

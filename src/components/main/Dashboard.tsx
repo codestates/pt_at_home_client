@@ -39,6 +39,7 @@ const Dashboard = ({
 
 const Warp = styled.div`
   height: 100%;
+  min-height:100vh;
   background-color: #13141c;
 `;
 const BodyWrap = styled.div`

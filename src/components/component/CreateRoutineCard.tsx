@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Img from '../../img/urbanbrush-20190214083430029790.png';
 
-const CreateCard = ():JSX.Element => {
+const CreateRoutineCard = ():JSX.Element => {
   return (
     <CardDiv>
       <Card>
@@ -67,4 +67,4 @@ const Explanation = styled.div`
   padding: 3px 3px 4px 10px;
   border-radius: 5px;
 `;
-export default CreateCard;
+export default CreateRoutineCard;

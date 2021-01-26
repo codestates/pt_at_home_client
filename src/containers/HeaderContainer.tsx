@@ -3,7 +3,7 @@ import Header from '../components/header/Header'
 import { useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../modules/reducers'
-import { actionLogout, actionSetWorkoutList, actionSetRoutineList, actionToggleDashboardType } from '../modules/actions'
+import { actionLogout, actionSetWorkoutList, actionSetRoutineList, actionToggleDashboardType, actionRenewToken } from '../modules/actions'
 import { URI } from '../index'
 import axios from 'axios'
 axios.defaults.withCredentials = true
@@ -11,10 +11,10 @@ axios.defaults.withCredentials = true
 interface Workout {
     id:number;
     title:string;
-    desc:string;
+    instruction:string;
     image:string[];
     part:string[];
-    set:number;
+    setCount:number;
     count:number;
     breakTime: number;
     calrorie: number;
@@ -24,10 +24,10 @@ interface Workout {
 interface WorkoutOfRoutine {
     id:number;
     title:string;
-    desc:string;
+    instruction:string;
     image:string[];
     part:string[];
-    mySet:number;
+    mySetCount:number;
     myCount:number;
     myBreakTime: number;
     calrorie: number;
@@ -90,7 +90,7 @@ export interface HeaderProps {
 const HeaderContainer = ():JSX.Element => {
     const dispatch = useDispatch()
     const isLogin = useSelector((state:RootState) => state.isLogin)
-    const userName = useSelector((state:RootState) => state.userInfo.userName)
+    const { userName, auth } = useSelector((state:RootState) => state.userInfo)
     const isDashboardRoutine = useSelector((state:RootState) => state.isDashboardRoutine)
     const location = useLocation()
 
@@ -113,34 +113,59 @@ const HeaderContainer = ():JSX.Element => {
 
     const title = titleGenerator()
 
-    const searchHandler = (keywordData:KeywordData):void => {
-        axios.post<SearchResponse>(`${URI}/main/search`, keywordData, {headers:{'Content-Type':'application/json'}})
-            .then(res => {
-                if (res.data.message === 'ok') {
-                    dispatch(actionSetWorkoutList(res.data.data))
-                    if (isDashboardRoutine) dispatch(actionToggleDashboardType(false))
-                }
-            })
+    const searchHandler = async (keywordData:KeywordData) => {
+        let { token, expDate } = auth
+        let isTokenValid = await actionRenewToken(token, expDate, dispatch)
+        if (isTokenValid) {
+            axios.post<SearchResponse>(`${URI}/main/search`, keywordData, {
+                headers:{
+                    'Content-Type':'application/json',
+                    'Authorization':`Bearer ${auth.token}`
+                }})
+                .then(res => {
+                    if (res.data.message === 'ok') {
+                        dispatch(actionSetWorkoutList(res.data.data))
+                        if (isDashboardRoutine) dispatch(actionToggleDashboardType(false))
+                    }
+                })
+        }
+
     }
 
-    const filterHandler = (filterData:FilterData):void => {
-        axios.post<FilterResponse>(`${URI}/main/filter`, filterData, {headers:{'Content-Type':'application/json'}})
-            .then(res => {
-                if (res.data.message === 'ok') {
-                    actionSetWorkoutList(res.data.data)
-                    if (isDashboardRoutine) dispatch(actionToggleDashboardType(false))
-                }
-            })
+    const filterHandler = async (filterData:FilterData) => {
+        let { token, expDate } = auth
+        let isTokenValid = await actionRenewToken(token, expDate, dispatch)
+        if (isTokenValid) {
+            axios.post<FilterResponse>(`${URI}/main/filter`, filterData, {
+                headers:{
+                    'Content-Type':'application/json',
+                    'Authorization':`Bearer ${auth.token}`
+                }})
+                .then(res => {
+                    if (res.data.message === 'ok') {
+                        actionSetWorkoutList(res.data.data)
+                        if (isDashboardRoutine) dispatch(actionToggleDashboardType(false))
+                    }
+                })
+        }
     }
 
-    const clickRoutineHandler = ():void => {
-        axios.get<RoutineResponse>(`${URI}/main/routine`, {headers:{'Content-Type':'application/json'}})
-            .then(res => {
-                if (res.data.message === 'ok') {
-                    dispatch(actionSetRoutineList(res.data.data))
-                    dispatch(actionToggleDashboardType(true))
-                }
-            })
+    const clickRoutineHandler = async () => {
+        let { token, expDate } = auth
+        let isTokenValid = await actionRenewToken(token, expDate, dispatch)
+        if (isTokenValid) {
+            axios.get<RoutineResponse>(`${URI}/main/routine`, {
+                headers:{
+                    'Content-Type':'application/json',
+                    'Authorization':`Bearer ${auth.token}`
+                }})
+                .then(res => {
+                    if (res.data.message === 'ok') {
+                        dispatch(actionSetRoutineList(res.data.data))
+                        dispatch(actionToggleDashboardType(true))
+                    }
+                })
+        }
     }
 
     const logoutHandler = ():void => {
@@ -148,14 +173,14 @@ const HeaderContainer = ():JSX.Element => {
             .then(res => {
                 console.log('logout', res)
                 if (res.data.message === 'signout success') {
-                    dispatch(actionLogout(false))
+                    dispatch(actionLogout({isLogin:false}))
                 }
             })
     }
     
     return (
         <Header 
-            isLogin={isLogin}
+            isLogin={isLogin.isLogin}
             userName={userName}
             searchHandler={searchHandler}
             clickRoutineHandler={clickRoutineHandler}

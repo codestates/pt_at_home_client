@@ -6,10 +6,10 @@ import Img from '../../img/urbanbrush-20190214083430029790.png';
 interface Workout {
   id:number;
   title:string;
-  desc:string;
+  instruction:string;
   image:string[];
   part:string[];
-  set:number;
+  setCount:number;
   count:number;
   breakTime: number;
   calrorie: number;
@@ -32,7 +32,7 @@ const WorkoutCard = ({workoutCard}:WorkoutCardProps):JSX.Element => {
           <Marker />
           <Title>{workoutCard.title}</Title>
           <Explanation>
-            {workoutCard.desc}
+            {workoutCard.instruction}
           </Explanation>
         </CardContents>
         <CardFooter>

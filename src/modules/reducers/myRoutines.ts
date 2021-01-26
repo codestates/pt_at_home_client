@@ -3,10 +3,10 @@ const SET_MY_ROUTINES = 'SET_MY_ROUTINES'
 interface WorkoutOfRoutine {
     id:number;
     title:string;
-    desc:string;
+    instruction:string;
     image:string[];
     part:string[];
-    mySet:number;
+    mySetCount:number;
     myCount:number;
     myBreakTime: number;
     calrorie: number;

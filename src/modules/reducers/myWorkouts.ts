@@ -3,10 +3,10 @@ const SET_MY_WORKOUTS = 'SET_MY_WORKOUTS'
 export interface Workout {
     id:number;
     title:string;
-    desc:string;
+    instruction:string;
     image:string[];
     part:string[];
-    set:number;
+    setCount:number;
     count:number;
     breakTime: number;
     calrorie: number;

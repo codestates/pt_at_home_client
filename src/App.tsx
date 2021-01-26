@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Switch, withRouter, RouteComponentProps, } from 'react-router-dom'
 import {
   MyRoutines,
-  Workout,
 } from './components/main';
 import Root from './components/Root';
 import {
@@ -12,7 +11,8 @@ import {
   SignupContainer,
   HeaderContainer,
   SideBarContainer,
-  CreateRoutineContainer
+  CreateRoutineContainer,
+  RunRoutineContainer
 } from './containers'
 import styled from 'styled-components';
 
@@ -37,7 +37,7 @@ const App = ({
               <Route path={'/dashboard'} component={DashboardContainer} />
               <Route path={'/createRoutine'} component={CreateRoutineContainer} />
               <Route path={'/usersroutine'} component={MyRoutines} />
-              <Route path={'/workout'} component={Workout} />
+              <Route path={'/workout'} component={RunRoutineContainer} />
               <Route path={'/mypage'} component={MyPageContainer} />
             </Switch>
           </div>
