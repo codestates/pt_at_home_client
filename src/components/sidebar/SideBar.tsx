@@ -41,10 +41,14 @@ const StyledLink = styled(Link)`
   color: #f0f0f0;
   text-decoration: none;
   font-size: 25px;
+  width: 100%;
+  display: block;
+  height: 50px;
+  padding: 10px;
+  box-sizing: border-box;
 `;
 
 const LinkWrap = styled.div`
-  padding: 10px;
   &:hover {
     background-color: #30323d;
   }

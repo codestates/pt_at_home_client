@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
   /* other styles */
   html, body, #root {
     height: 100%;
+    background-color: #13141c;
   }
   * {
     box-sizing: border-box;

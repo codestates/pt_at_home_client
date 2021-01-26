@@ -1,28 +1,54 @@
 import React from 'react';
+import { Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import Img from '../../img/urbanbrush-20190214083430029790.png';
 
-const CreateCard = (): JSX.Element => {
+interface ICreateCard {
+  draggableId: string;
+  index: number;
+}
+const CreateRoutineCard = ({
+  draggableId,
+  index,
+}: ICreateCard): JSX.Element => {
   return (
-    <CardDiv>
-      <Card>
-        <CardImgWrap>
-          <CardImg src={Img} />
-        </CardImgWrap>
-        <CardContents>
-          <>
-            <Title>PLANK</Title>
-          </>
-          <ExplanationWrap>
-            <Explanation>60s</Explanation>
-            <Explanation>3set</Explanation>
-            <Explanation>코어, 복근</Explanation>
-          </ExplanationWrap>
-        </CardContents>
-      </Card>
-    </CardDiv>
+    <Draggable draggableId={draggableId} index={index}>
+      {(provided) => (
+        <DraggableWrap
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          <Card>
+            <CardImgWrap>
+              <CardImg src={Img} />
+            </CardImgWrap>
+            <CardContents>
+              <>
+                <Title>PLANK</Title>
+              </>
+              <ExplanationWrap>
+                <Explanation>60s</Explanation>
+                <Explanation>3set</Explanation>
+                <Explanation>코어, 복근</Explanation>
+              </ExplanationWrap>
+            </CardContents>
+          </Card>
+        </DraggableWrap>
+      )}
+    </Draggable>
   );
 };
+
+const DraggableWrap = styled.div`
+  color: currentColor;
+  text-decoration: none;
+  display: inline-table;
+  outline: none;
+  margin: 0 30px 15px 0;
+  width: 280px;
+  height: 130px;
+`;
 
 const CardDiv = styled.div`
   color: currentColor;
@@ -30,7 +56,6 @@ const CardDiv = styled.div`
   display: inline-table;
 `;
 const Card = styled.div`
-  margin: 5% auto;
   box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
@@ -67,4 +92,4 @@ const Explanation = styled.div`
   padding: 3px 3px 4px 10px;
   border-radius: 5px;
 `;
-export default CreateCard;
+export default CreateRoutineCard;

@@ -37,11 +37,11 @@ const App = ({
         <Side className="side-bar">
           <SideBarContainer />
         </Side>
-        <Main className="wrap">
+        <MainWrap className="wrap">
           <HeaderStyle className="header">
             <HeaderContainer />
           </HeaderStyle>
-          <div className="main">
+          <Main className="main">
             <Switch>
               <Route path={'/dashboard'} component={DashboardContainer} />
               <Route
@@ -52,8 +52,8 @@ const App = ({
               <Route path={'/workout'} component={Workout} />
               <Route path={'/mypage'} component={MyPageContainer} />
             </Switch>
-          </div>
-        </Main>
+          </Main>
+        </MainWrap>
       </Wrap>
     );
   };
@@ -95,9 +95,15 @@ const HeaderStyle = styled.div`
   background-color: #13141c;
   box-shadow: 0 1px 30px 0 rgba(2, 2, 3, 0.7);
   width: 100%;
+  z-index: 99;
+  position: sticky;
+  top: 0;
+`;
+const MainWrap = styled.div`
+  width: 100%;
 `;
 const Main = styled.div`
-  width: 100%;
+  height: calc(100% - 220px);
 `;
 
 export default withRouter(App);
