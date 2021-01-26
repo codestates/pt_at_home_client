@@ -1,16 +1,16 @@
 const SET_MY_ROUTINES = 'SET_MY_ROUTINES';
 
 interface WorkoutOfRoutine {
-  id: number;
-  title: string;
-  desc: string;
-  image: string[];
-  part: string[];
-  mySet: number;
-  myCount: number;
-  myBreakTime: number;
-  calrorie: number;
-  tool: string;
+    id:number;
+    title:string;
+    instruction:string;
+    image:string[];
+    part:string[];
+    mySetCount:number;
+    myCount:number;
+    myBreakTime: number;
+    calrorie: number;
+    tool: string;
 }
 
 interface Routine {

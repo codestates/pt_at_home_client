@@ -1,42 +1,37 @@
 import React from 'react';
-import Header from '../components/header/Header';
-import { useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../modules/reducers';
-import {
-  actionLogout,
-  actionSetWorkoutList,
-  actionSetRoutineList,
-  actionToggleDashboardType,
-} from '../modules/actions';
-import { URI } from '../index';
-import axios from 'axios';
-axios.defaults.withCredentials = true;
+import Header from '../components/header/Header'
+import { useLocation } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from '../modules/reducers'
+import { actionLogout, actionSetWorkoutList, actionSetRoutineList, actionToggleDashboardType, actionRenewToken } from '../modules/actions'
+import { URI } from '../index'
+import axios from 'axios'
+axios.defaults.withCredentials = true
 
 interface Workout {
-  id: number;
-  title: string;
-  desc: string;
-  image: string[];
-  part: string[];
-  set: number;
-  count: number;
-  breakTime: number;
-  calrorie: number;
-  tool: string;
+    id:number;
+    title:string;
+    instruction:string;
+    image:string[];
+    part:string[];
+    setCount:number;
+    count:number;
+    breakTime: number;
+    calrorie: number;
+    tool: string;
 }
 
 interface WorkoutOfRoutine {
-  id: number;
-  title: string;
-  desc: string;
-  image: string[];
-  part: string[];
-  mySet: number;
-  myCount: number;
-  myBreakTime: number;
-  calrorie: number;
-  tool: string;
+    id:number;
+    title:string;
+    instruction:string;
+    image:string[];
+    part:string[];
+    mySetCount:number;
+    myCount:number;
+    myBreakTime: number;
+    calrorie: number;
+    tool: string;
 }
 
 interface Routine {
@@ -92,97 +87,108 @@ export interface HeaderProps {
   title: string;
 }
 
-const HeaderContainer = (): JSX.Element => {
-  const dispatch = useDispatch();
-  const isLogin = useSelector((state: RootState) => state.isLogin);
-  const userName = useSelector((state: RootState) => state.userInfo.userName);
-  const isDashboardRoutine = useSelector(
-    (state: RootState) => state.isDashboardRoutine,
-  );
-  const location = useLocation();
+const HeaderContainer = ():JSX.Element => {
+    const dispatch = useDispatch()
+    const isLogin = useSelector((state:RootState) => state.isLogin)
+    const { userName, auth } = useSelector((state:RootState) => state.userInfo)
+    const isDashboardRoutine = useSelector((state:RootState) => state.isDashboardRoutine)
+    const location = useLocation()
 
-  const titleGenerator = (): string => {
-    switch (location.pathname) {
-      case '/dashboard':
-        return TitleConstants.Dashboard;
-      case '/createroutine':
-        return TitleConstants.CreateRoutine;
-      case '/usersroutine':
-        return TitleConstants.UsersRoutine;
-      case '/workout':
-        return TitleConstants.Workout;
-      case '/mypage':
-        return TitleConstants.Mypage;
-      default:
-        return '';
+    const titleGenerator = ():string => {
+        switch (location.pathname) {
+          case '/dashboard':
+            return TitleConstants.Dashboard;
+          case '/createroutine':
+            return TitleConstants.CreateRoutine;
+          case '/usersroutine':
+            return TitleConstants.UsersRoutine;
+          case '/workout':
+            return TitleConstants.Workout;
+          case '/mypage':
+            return TitleConstants.Mypage;
+          default:
+            return '';
+        }
+      };
+
+    const title = titleGenerator()
+
+    const searchHandler = async (keywordData:KeywordData) => {
+        let { token, expDate } = auth
+        let isTokenValid = await actionRenewToken(token, expDate, dispatch)
+        if (isTokenValid) {
+            axios.post<SearchResponse>(`${URI}/main/search`, keywordData, {
+                headers:{
+                    'Content-Type':'application/json',
+                    'Authorization':`Bearer ${auth.token}`
+                }})
+                .then(res => {
+                    if (res.data.message === 'ok') {
+                        dispatch(actionSetWorkoutList(res.data.data))
+                        if (isDashboardRoutine) dispatch(actionToggleDashboardType(false))
+                    }
+                })
+        }
+
     }
-  };
 
-  const title = titleGenerator();
-
-  const searchHandler = (keywordData: KeywordData): void => {
-    axios
-      .post<SearchResponse>(`${URI}/main/search`, keywordData, {
-        headers: { 'Content-Type': 'application/json' },
-      })
-      .then((res) => {
-        if (res.data.message === 'ok') {
-          dispatch(actionSetWorkoutList(res.data.data));
-          if (isDashboardRoutine) dispatch(actionToggleDashboardType(false));
+    const filterHandler = async (filterData:FilterData) => {
+        let { token, expDate } = auth
+        let isTokenValid = await actionRenewToken(token, expDate, dispatch)
+        if (isTokenValid) {
+            axios.post<FilterResponse>(`${URI}/main/filter`, filterData, {
+                headers:{
+                    'Content-Type':'application/json',
+                    'Authorization':`Bearer ${auth.token}`
+                }})
+                .then(res => {
+                    if (res.data.message === 'ok') {
+                        actionSetWorkoutList(res.data.data)
+                        if (isDashboardRoutine) dispatch(actionToggleDashboardType(false))
+                    }
+                })
         }
-      });
-  };
+    }
 
-  const filterHandler = (filterData: FilterData): void => {
-    axios
-      .post<FilterResponse>(`${URI}/main/filter`, filterData, {
-        headers: { 'Content-Type': 'application/json' },
-      })
-      .then((res) => {
-        if (res.data.message === 'ok') {
-          actionSetWorkoutList(res.data.data);
-          if (isDashboardRoutine) dispatch(actionToggleDashboardType(false));
+    const clickRoutineHandler = async () => {
+        let { token, expDate } = auth
+        let isTokenValid = await actionRenewToken(token, expDate, dispatch)
+        if (isTokenValid) {
+            axios.get<RoutineResponse>(`${URI}/main/routine`, {
+                headers:{
+                    'Content-Type':'application/json',
+                    'Authorization':`Bearer ${auth.token}`
+                }})
+                .then(res => {
+                    if (res.data.message === 'ok') {
+                        dispatch(actionSetRoutineList(res.data.data))
+                        dispatch(actionToggleDashboardType(true))
+                    }
+                })
         }
-      });
-  };
+    }
 
-  const clickRoutineHandler = (): void => {
-    axios
-      .get<RoutineResponse>(`${URI}/main/routine`, {
-        headers: { 'Content-Type': 'application/json' },
-      })
-      .then((res) => {
-        if (res.data.message === 'ok') {
-          dispatch(actionSetRoutineList(res.data.data));
-          dispatch(actionToggleDashboardType(true));
-        }
-      });
-  };
-
-  const logoutHandler = (): void => {
-    axios
-      .get<LogoutResponse>(`${URI}/users/signout`, {
-        headers: { 'Content-Type': 'application/json' },
-      })
-      .then((res) => {
-        console.log('logout', res);
-        if (res.data.message === 'signout success') {
-          dispatch(actionLogout(false));
-        }
-      });
-  };
-
-  return (
-    <Header
-      isLogin={isLogin}
-      userName={userName}
-      searchHandler={searchHandler}
-      clickRoutineHandler={clickRoutineHandler}
-      logoutHandler={logoutHandler}
-      filterHandler={filterHandler}
-      title={title}
-    />
-  );
+    const logoutHandler = ():void => {
+        axios.get<LogoutResponse>(`${URI}/users/signout`, {headers:{'Content-Type':'application/json'}})
+            .then(res => {
+                console.log('logout', res)
+                if (res.data.message === 'signout success') {
+                    dispatch(actionLogout({isLogin:false}))
+                }
+            })
+    }
+    
+    return (
+        <Header 
+            isLogin={isLogin.isLogin}
+            userName={userName}
+            searchHandler={searchHandler}
+            clickRoutineHandler={clickRoutineHandler}
+            logoutHandler={logoutHandler}
+            filterHandler={filterHandler}
+            title={title}
+        />
+    );
 };
 
 export default HeaderContainer;

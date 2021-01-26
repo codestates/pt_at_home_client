@@ -1,16 +1,16 @@
 const SET_MY_WORKOUTS = 'SET_MY_WORKOUTS';
 
 export interface Workout {
-  id: number;
-  title: string;
-  desc: string;
-  image: string[];
-  part: string[];
-  set: number;
-  count: number;
-  breakTime: number;
-  calrorie: number;
-  tool: string;
+    id:number;
+    title:string;
+    instruction:string;
+    image:string[];
+    part:string[];
+    setCount:number;
+    count:number;
+    breakTime: number;
+    calrorie: number;
+    tool: string;
 }
 
 export interface ActionMyWorkouts {

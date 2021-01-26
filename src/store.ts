@@ -6,6 +6,6 @@ import ReduxThunk from 'redux-thunk'
 import renewAccessToken from './middlewares/renewAccessToken'
 
 
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(logger, ReduxThunk, renewAccessToken)))
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(logger, ReduxThunk)))
 
 export default store;

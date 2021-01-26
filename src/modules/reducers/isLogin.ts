@@ -1,41 +1,54 @@
-const SIGNUP = 'SIGNUP'
 const LOGIN = 'LOGIN'
 const LOGOUT = 'LOGOUT'
+export const TOKEN_EXPIRED = 'EXPIRED'
 
 export interface ActionIsLogin {
     type:string,
-    payload:boolean;
+    payload:IsLogin;
 } 
 
-export const actionSignup = (payload:boolean):ActionIsLogin => ({
-    type:SIGNUP,
-    payload
-})
+interface ActionIsExpired {
+    type:string,
+    payload:IsExpired
+}
 
-export const actionLogin = (payload:boolean):ActionIsLogin => ({
+interface IsExpired {
+    isExpired:boolean
+}
+
+export interface IsLogin {
+    isLogin:boolean;
+    isExpired?:boolean;
+}
+
+export const actionLogin = (payload:IsLogin):ActionIsLogin => ({
     type:LOGIN,
     payload
 })
 
-export const actionLogout = (payload:boolean):ActionIsLogin => ({
+export const actionLogout = (payload:IsLogin):ActionIsLogin => ({
     type:LOGOUT,
     payload
 })
 
-export const isFetching = () => {
-    
+export const actionExpired = (payload:IsExpired):ActionIsExpired => ({
+    type:TOKEN_EXPIRED,
+    payload
+})
+
+const initialState:IsLogin = {
+    isLogin:false,
+    isExpired:false
 }
 
-const initialState:boolean = false
-
-const isLogin = (state=initialState, action:ActionIsLogin):boolean => {
+const isLogin = (state=initialState, action:ActionIsLogin):IsLogin => {
     switch(action.type) {
-        case SIGNUP:
-            return action.payload
         case LOGIN:
-            return action.payload
+            return Object.assign({}, state, action.payload)
         case LOGOUT:
-            return action.payload
+            return Object.assign({}, state, action.payload)
+        case TOKEN_EXPIRED:
+            return Object.assign({}, state, action.payload)
         default:
             return state;
     }

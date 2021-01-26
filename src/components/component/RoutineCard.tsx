@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface WorkoutOfRoutine {
-  id: number;
-  title: string;
-  desc: string;
-  image: string[];
-  part: string[];
-  mySet: number;
-  myCount: number;
+  id:number;
+  title:string;
+  instruction:string;
+  image:string[];
+  part:string[];
+  mySetCount:number;
+  myCount:number;
   myBreakTime: number;
   calrorie: number;
   tool: string;

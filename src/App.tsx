@@ -5,7 +5,7 @@ import {
   withRouter,
   RouteComponentProps,
 } from 'react-router-dom';
-import { MyRoutines, Workout } from './components/main';
+import { MyRoutines } from './components/main';
 import Root from './components/Root';
 import {
   DashboardContainer,
@@ -15,7 +15,8 @@ import {
   HeaderContainer,
   SideBarContainer,
   CreateRoutineContainer,
-} from './containers';
+  RunRoutineContainer
+} from './containers'
 import styled from 'styled-components';
 
 enum TitleConstants {
@@ -49,7 +50,7 @@ const App = ({
                 component={CreateRoutineContainer}
               />
               <Route path={'/usersroutine'} component={MyRoutines} />
-              <Route path={'/workout'} component={Workout} />
+              <Route path={'/workout'} component={RunRoutineContainer} />
               <Route path={'/mypage'} component={MyPageContainer} />
             </Switch>
           </Main>
