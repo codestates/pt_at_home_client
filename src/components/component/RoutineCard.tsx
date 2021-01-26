@@ -2,31 +2,30 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface WorkoutOfRoutine {
-  id:number;
-  title:string;
-  desc:string;
-  image:string[];
-  part:string[];
-  mySet:number;
-  myCount:number;
+  id: number;
+  title: string;
+  desc: string;
+  image: string[];
+  part: string[];
+  mySet: number;
+  myCount: number;
   myBreakTime: number;
   calrorie: number;
   tool: string;
 }
 
 interface Routine {
-  routineId:number;
-  title:string;
-  workout:Array<WorkoutOfRoutine>;
+  routineId: number;
+  title: string;
+  workout: Array<WorkoutOfRoutine>;
 }
 
 interface RoutineCardProps {
-  routineCard:Routine
+  routineCard: Routine;
 }
 
-const RoutineCard = ({routineCard}:RoutineCardProps):JSX.Element => {
+const RoutineCard = ({ routineCard }: RoutineCardProps): JSX.Element => {
   return (
-    
     <Card>
       <>
         <Title>아침운동</Title>
@@ -107,6 +106,5 @@ const Sub = styled.div`
   margin: 0 0 4px 0px;
   padding: 3px 0 4px;
 `;
-
 
 export default RoutineCard;

@@ -1,45 +1,49 @@
-const SET_MY_ROUTINES = 'SET_MY_ROUTINES' 
+const SET_MY_ROUTINES = 'SET_MY_ROUTINES';
 
 interface WorkoutOfRoutine {
-    id:number;
-    title:string;
-    desc:string;
-    image:string[];
-    part:string[];
-    mySet:number;
-    myCount:number;
-    myBreakTime: number;
-    calrorie: number;
-    tool: string;
+  id: number;
+  title: string;
+  desc: string;
+  image: string[];
+  part: string[];
+  mySet: number;
+  myCount: number;
+  myBreakTime: number;
+  calrorie: number;
+  tool: string;
 }
 
 interface Routine {
-    routineId:number;
-    title:string;
-    workout:Array<WorkoutOfRoutine>;
+  routineId: number;
+  title: string;
+  workout: Array<WorkoutOfRoutine>;
 }
 
 export interface ActionMyRoutines {
-    type:string,
-    payload:Array<Routine>
+  type: string;
+  payload: Array<Routine>;
 }
 
 // Action Creator - routineList
-export const actionSetMyRoutines = (payload:Array<Routine>):ActionMyRoutines => ({
-    type:SET_MY_ROUTINES,
-    payload
-})
+export const actionSetMyRoutines = (
+  payload: Array<Routine>,
+): ActionMyRoutines => ({
+  type: SET_MY_ROUTINES,
+  payload,
+});
 
+const initialState: Array<Routine> = [];
 
-const initialState:Array<Routine> = []
-
-const myRoutines = (state=initialState, action:ActionMyRoutines):Array<Routine> => {
-    switch(action.type) {
-        case SET_MY_ROUTINES:
-            return action.payload
-        default:
-            return state
-    }
-}
+const myRoutines = (
+  state = initialState,
+  action: ActionMyRoutines,
+): Array<Routine> => {
+  switch (action.type) {
+    case SET_MY_ROUTINES:
+      return action.payload;
+    default:
+      return state;
+  }
+};
 
 export default myRoutines;

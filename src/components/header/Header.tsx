@@ -3,26 +3,20 @@ import styled from 'styled-components';
 import HeaderBottom from './headerBottom/HeaderBottom';
 import HeaderTop from './headerTop/HeaderTop';
 import HeaderMiddle from './hederMiddle/HeaderMiddle';
-import { HeaderProps } from '../../containers/HeaderContainer'
+import { HeaderProps } from '../../containers/HeaderContainer';
 
-
-
-const Header = (
-  {
-    isLogin,
-    userName,
-    searchHandler,
-    clickRoutineHandler,
-    logoutHandler, 
-    title
-  }:HeaderProps):JSX.Element => {
-
-
-  
+const Header = ({
+  isLogin,
+  userName,
+  searchHandler,
+  clickRoutineHandler,
+  logoutHandler,
+  title,
+}: HeaderProps): JSX.Element => {
   return (
     <HeaderWrap id="asd">
-      <HeaderTop isLogin={isLogin} logoutHandler={logoutHandler}/>
-      <HeaderMiddle title={title}/>
+      <HeaderTop isLogin={isLogin} logoutHandler={logoutHandler} />
+      <HeaderMiddle title={title} />
       <HeaderBottom />
     </HeaderWrap>
   );

@@ -1,13 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface HeaderTopProps {
-  isLogin:boolean
-  logoutHandler():void;
+  isLogin: boolean;
+  logoutHandler(): void;
 }
 
-const HeaderTop = ({isLogin, logoutHandler}:HeaderTopProps) => {
+const HeaderTop = ({ isLogin, logoutHandler }: HeaderTopProps) => {
   return (
     <Wrap>
       <ItemsDiv>
@@ -15,9 +15,13 @@ const HeaderTop = ({isLogin, logoutHandler}:HeaderTopProps) => {
       </ItemsDiv>
       <ItemsDiv>
         <RightItem>
-          {isLogin?
-          <LoginBtn onClick={logoutHandler}>LOGOUT</LoginBtn> :
-          <LoginBtn><Link to={'/login'}>LOGIN</Link></LoginBtn>}
+          {isLogin ? (
+            <LoginBtn onClick={logoutHandler}>LOGOUT</LoginBtn>
+          ) : (
+            <LoginBtn>
+              <Link to={'/login'}>LOGIN</Link>
+            </LoginBtn>
+          )}
         </RightItem>
       </ItemsDiv>
     </Wrap>

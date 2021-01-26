@@ -4,24 +4,23 @@ import { GoHeart } from 'react-icons/go';
 import Img from '../../img/urbanbrush-20190214083430029790.png';
 
 interface Workout {
-  id:number;
-  title:string;
-  desc:string;
-  image:string[];
-  part:string[];
-  set:number;
-  count:number;
+  id: number;
+  title: string;
+  desc: string;
+  image: string[];
+  part: string[];
+  set: number;
+  count: number;
   breakTime: number;
   calrorie: number;
   tool: string;
 }
 
 interface WorkoutCardProps {
-  workoutCard:Workout
+  workoutCard: Workout;
 }
 
-
-const WorkoutCard = ({workoutCard}:WorkoutCardProps):JSX.Element => {
+const WorkoutCard = ({ workoutCard }: WorkoutCardProps): JSX.Element => {
   return (
     <CardDiv>
       <Card>
@@ -31,12 +30,10 @@ const WorkoutCard = ({workoutCard}:WorkoutCardProps):JSX.Element => {
         <CardContents>
           <Marker />
           <Title>{workoutCard.title}</Title>
-          <Explanation>
-            {workoutCard.desc}
-          </Explanation>
+          <Explanation>{workoutCard.desc}</Explanation>
         </CardContents>
         <CardFooter>
-          <CardExercise>{workoutCard.part.map(el => `${el}, `)}</CardExercise>
+          <CardExercise>{workoutCard.part.map((el) => `${el}, `)}</CardExercise>
         </CardFooter>
       </Card>
     </CardDiv>

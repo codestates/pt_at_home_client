@@ -74,7 +74,7 @@ const filterModels: IFilter[] = [
   },
 ];
 
-const HeaderBottom = ():JSX.Element => {
+const HeaderBottom = (): JSX.Element => {
   const dropdownRefs = [useRef(), useRef()];
   const [filterArr, setFilterArr] = useState<string[]>([]);
   const [dropdownModels, setDropdownModels] = useState(() => {
@@ -263,6 +263,5 @@ const Search = styled(BiSearch)`
 `;
 
 const Arrow = styled(BsFillCaretDownFill)``;
-
 
 export default HeaderBottom;

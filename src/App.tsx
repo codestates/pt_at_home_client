@@ -1,9 +1,11 @@
 import React from 'react';
-import { Route, Switch, withRouter, RouteComponentProps, } from 'react-router-dom'
 import {
-  MyRoutines,
-  Workout,
-} from './components/main';
+  Route,
+  Switch,
+  withRouter,
+  RouteComponentProps,
+} from 'react-router-dom';
+import { MyRoutines, Workout } from './components/main';
 import Root from './components/Root';
 import {
   DashboardContainer,
@@ -12,50 +14,63 @@ import {
   SignupContainer,
   HeaderContainer,
   SideBarContainer,
-  CreateRoutineContainer
-} from './containers'
+  CreateRoutineContainer,
+} from './containers';
 import styled from 'styled-components';
+
+enum TitleConstants {
+  Dashboard = 'Dashboard',
+  CreateRoutine = 'Create Routine',
+  UsersRoutine = 'Users Routine',
+  Workout = 'Workout',
+  Mypage = 'Mypage',
+}
 
 const App = ({
   match,
   history,
   location,
-}: RouteComponentProps):JSX.Element => {
-
-  const FeaturePage = ():JSX.Element => {
+}: RouteComponentProps): JSX.Element => {
+  const FeaturePage = (): JSX.Element => {
     return (
       <Wrap>
         <Side className="side-bar">
           <SideBarContainer />
         </Side>
-        <Main className="wrap">
+        <MainWrap className="wrap">
           <HeaderStyle className="header">
             <HeaderContainer />
           </HeaderStyle>
-          <div className="main">
+          <Main className="main">
             <Switch>
               <Route path={'/dashboard'} component={DashboardContainer} />
-              <Route path={'/createRoutine'} component={CreateRoutineContainer} />
+              <Route
+                path={'/createRoutine'}
+                component={CreateRoutineContainer}
+              />
               <Route path={'/usersroutine'} component={MyRoutines} />
               <Route path={'/workout'} component={Workout} />
               <Route path={'/mypage'} component={MyPageContainer} />
             </Switch>
-          </div>
-        </Main>
+          </Main>
+        </MainWrap>
       </Wrap>
     );
   };
 
   return (
     <>
-      {
-        location.pathname === '/' ? <Root /> : 
-        ( location.pathname === '/signup' ? <SignupContainer/> : 
-        ( location.pathname === '/login'? <LoginContainer/> : 
-        ( <FeaturePage /> )))
-        }
+      {location.pathname === '/' ? (
+        <Root />
+      ) : location.pathname === '/signup' ? (
+        <SignupContainer />
+      ) : location.pathname === '/login' ? (
+        <LoginContainer />
+      ) : (
+        <FeaturePage />
+      )}
     </>
-  )
+  );
 };
 
 const Wrap = styled.div`
@@ -80,11 +95,15 @@ const HeaderStyle = styled.div`
   background-color: #13141c;
   box-shadow: 0 1px 30px 0 rgba(2, 2, 3, 0.7);
   width: 100%;
+  z-index: 99;
+  position: sticky;
+  top: 0;
+`;
+const MainWrap = styled.div`
+  width: 100%;
 `;
 const Main = styled.div`
-  width: 100%;
+  height: calc(100% - 220px);
 `;
 
 export default withRouter(App);
-
-

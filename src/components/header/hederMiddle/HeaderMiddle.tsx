@@ -5,7 +5,7 @@ interface IHeader {
   title: string;
 }
 
-const HeaderMiddle = ({title}:IHeader):JSX.Element => {
+const HeaderMiddle = ({ title }: IHeader): JSX.Element => {
   return (
     <Wrap>
       <ItemsDiv>
