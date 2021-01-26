@@ -21,8 +21,8 @@ export interface Workout {
 }
 
 export interface ActionWorkoutList {
-    type:string;
-    payload:Array<Workout>;
+  type: string;
+  payload: Array<Workout>;
 }
 
 export interface WorkoutListResponse {
@@ -31,10 +31,12 @@ export interface WorkoutListResponse {
 }
 
 // Action Creator - workoutList
-export const actionSetWorkoutList = (payload:Array<Workout>):ActionWorkoutList => ({
-    type:SET_WORKOUT_LIST,
-    payload
-})
+export const actionSetWorkoutList = (
+  payload: Array<Workout>,
+): ActionWorkoutList => ({
+  type: SET_WORKOUT_LIST,
+  payload,
+});
 
 const initialState:Array<Workout> = [{
     id:1,
@@ -60,13 +62,16 @@ const initialState:Array<Workout> = [{
     tool:'none'
 }]
 
-const workoutList = (state=initialState, action:ActionWorkoutList):Array<Workout> => {
-    switch(action.type) {
-        case SET_WORKOUT_LIST:
-            return action.payload
-        default:
-            return state
-    }
-}
+const workoutList = (
+  state = initialState,
+  action: ActionWorkoutList,
+): Array<Workout> => {
+  switch (action.type) {
+    case SET_WORKOUT_LIST:
+      return action.payload;
+    default:
+      return state;
+  }
+};
 
 export default workoutList;

@@ -35,56 +35,56 @@ interface WorkoutOfRoutine {
 }
 
 interface Routine {
-    routineId:number;
-    title:string;
-    workout:Array<WorkoutOfRoutine>;
+  routineId: number;
+  title: string;
+  workout: Array<WorkoutOfRoutine>;
 }
 
 interface KeywordData {
-    keyword:string;
+  keyword: string;
 }
 
 interface FilterData {
-    category:string;
-    tool:Array<string>;
-    part:Array<string>;
+  category: string;
+  tool: Array<string>;
+  part: Array<string>;
 }
 
 interface SearchResponse {
-    data:Array<Workout>;
-    message:string;
+  data: Array<Workout>;
+  message: string;
 }
 
 interface FilterResponse {
-    data:Array<Workout>;
-    message:string;
+  data: Array<Workout>;
+  message: string;
 }
 
 interface RoutineResponse {
-    data:Array<Routine>;
-    message:string;
+  data: Array<Routine>;
+  message: string;
 }
 
 interface LogoutResponse {
-    message:string
+  message: string;
 }
 
 enum TitleConstants {
-    Dashboard = 'Dashboard',
-    CreateRoutine = 'Create Routine',
-    UsersRoutine = 'Users Routine',
-    Workout = 'Workout',
-    Mypage = 'Mypage',
-  }
+  Dashboard = 'Dashboard',
+  CreateRoutine = 'Create Routine',
+  UsersRoutine = 'Users Routine',
+  Workout = 'Workout',
+  Mypage = 'Mypage',
+}
 
 export interface HeaderProps {
-    isLogin:boolean;
-    userName:string;
-    searchHandler(keywordData:KeywordData):void;
-    clickRoutineHandler():void;
-    logoutHandler():void;
-    filterHandler(filterData:FilterData):void;
-    title:string;
+  isLogin: boolean;
+  userName: string;
+  searchHandler(keywordData: KeywordData): void;
+  clickRoutineHandler(): void;
+  logoutHandler(): void;
+  filterHandler(filterData: FilterData): void;
+  title: string;
 }
 
 const HeaderContainer = ():JSX.Element => {

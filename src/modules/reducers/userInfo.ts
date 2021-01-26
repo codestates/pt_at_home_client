@@ -26,8 +26,8 @@ export interface UserInfo {
 }
 
 export interface ActionUserInfo {
-    type: string;
-    payload:UserInfo
+  type: string;
+  payload: UserInfo;
 }
 
 export interface UserData {

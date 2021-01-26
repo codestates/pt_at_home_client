@@ -33,4 +33,3 @@ const MyPage = ({isLogin, userInfo, updateUserInfo, resignHandler}:MyPageProps):
 };
 
 export default MyPage;
-

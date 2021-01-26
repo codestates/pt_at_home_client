@@ -15,18 +15,17 @@ interface WorkoutOfRoutine {
 }
 
 interface Routine {
-  routineId:number;
-  title:string;
-  workout:Array<WorkoutOfRoutine>;
+  routineId: number;
+  title: string;
+  workout: Array<WorkoutOfRoutine>;
 }
 
 interface RoutineCardProps {
-  routineCard:Routine
+  routineCard: Routine;
 }
 
-const RoutineCard = ({routineCard}:RoutineCardProps):JSX.Element => {
+const RoutineCard = ({ routineCard }: RoutineCardProps): JSX.Element => {
   return (
-    
     <Card>
       <>
         <Title>아침운동</Title>
@@ -107,6 +106,5 @@ const Sub = styled.div`
   margin: 0 0 4px 0px;
   padding: 3px 0 4px;
 `;
-
 
 export default RoutineCard;

@@ -17,11 +17,10 @@ interface Workout {
 }
 
 interface WorkoutCardProps {
-  workoutCard:Workout
+  workoutCard: Workout;
 }
 
-
-const WorkoutCard = ({workoutCard}:WorkoutCardProps):JSX.Element => {
+const WorkoutCard = ({ workoutCard }: WorkoutCardProps): JSX.Element => {
   return (
     <CardDiv>
       <Card>
@@ -36,7 +35,7 @@ const WorkoutCard = ({workoutCard}:WorkoutCardProps):JSX.Element => {
           </Explanation>
         </CardContents>
         <CardFooter>
-          <CardExercise>{workoutCard.part.map(el => `${el}, `)}</CardExercise>
+          <CardExercise>{workoutCard.part.map((el) => `${el}, `)}</CardExercise>
         </CardFooter>
       </Card>
     </CardDiv>

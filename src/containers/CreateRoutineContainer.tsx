@@ -32,13 +32,9 @@ const CreateRoutineContainer = ():JSX.Element => {
     const myRoutines = useSelector((state:RootState) => state.myRoutines)
     const [addedWorkout, setAddedWorkout] = useState([])
 
-    const editMyRoutine = () => {
+  const editMyRoutine = () => {};
 
-    }
-
-    const saveMyRoutine = () => {
-
-    }
+  const saveMyRoutine = () => {};
 
     const setCurretRoutine = () => {
 

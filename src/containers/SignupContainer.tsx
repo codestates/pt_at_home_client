@@ -9,20 +9,19 @@ import axios from 'axios'
 axios.defaults.withCredentials = true
 
 interface SignupData {
-    userName:string;
-    email:string;
-    password:string;
+  userName: string;
+  email: string;
+  password: string;
 }
 
 interface SignupResponse {
-    data:UserInfo;
-    message:string
+  data: UserInfo;
+  message: string;
 }
 
 export interface SignupProps {
-    signupHandler(signupData:SignupData):void
+  signupHandler(signupData: SignupData): void;
 }
-
 
 const SignupContainer = ():JSX.Element => {
     const dispatch = useDispatch()

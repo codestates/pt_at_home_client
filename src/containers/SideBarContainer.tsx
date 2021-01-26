@@ -34,30 +34,30 @@ interface WorkoutOfRoutine {
 }
 
 interface Routine {
-    routineId:number;
-    title:string;
-    workout:Array<WorkoutOfRoutine>;
+  routineId: number;
+  title: string;
+  workout: Array<WorkoutOfRoutine>;
 }
 
 interface WorkoutListResponse {
-    data:Array<Workout>;
-    message:string;
+  data: Array<Workout>;
+  message: string;
 }
 
 interface MyRoutinesResponse {
-    data:Array<Routine>;
-    message:string;
+  data: Array<Routine>;
+  message: string;
 }
 
 interface MyWorkoutsResponse {
-    data:Array<Workout>;
-    message:string;
+  data: Array<Workout>;
+  message: string;
 }
 
 export interface SideBarProps {
-    getWorkoutList():void;
-    getMyRoutines():void;
-    getMyWorkouts():void;
+  getWorkoutList(): void;
+  getMyRoutines(): void;
+  getMyWorkouts(): void;
 }
 
 const SideBarContainer = ():JSX.Element => {
@@ -130,13 +130,13 @@ const SideBarContainer = ():JSX.Element => {
         }
     }
 
-    return (
-        <SideBar 
-            getWorkoutList={getWorkoutList}
-            getMyRoutines={getMyRoutines}
-            getMyWorkouts={getMyWorkouts}
-        />
-    );
+  return (
+    <SideBar
+      getWorkoutList={getWorkoutList}
+      getMyRoutines={getMyRoutines}
+      getMyWorkouts={getMyWorkouts}
+    />
+  );
 };
 
 export default SideBarContainer;

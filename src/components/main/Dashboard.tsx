@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import RoutineCard from '../component/RoutineCard';
 import WorkoutCard from '../component/WorkoutCard';
-import { DashboardProps } from '../../containers/DashboardContainer'
-
+import { DashboardProps } from '../../containers/DashboardContainer';
 const Dashboard = ({
   isLogin,
   workoutList,
@@ -20,23 +19,28 @@ const Dashboard = ({
   clickRoutineCard,
   offRoutineModal,
   saveOrRemoveWorkout,
-  saveOrRemoveRoutine
-}:DashboardProps):JSX.Element => {
-
+  saveOrRemoveRoutine,
+}: DashboardProps): JSX.Element => {
   return (
     <Warp>
       <BodyWrap>
         <CardWrap>
-            {isDashboardRoutine ? 
-            routineList.map(el => <Cardli key={el.routineId}><RoutineCard  routineCard={el}/></Cardli>):
-            workoutList.map(el => <Cardli key={el.id}><WorkoutCard  workoutCard={el}/></Cardli>)
-            }
+          {isDashboardRoutine
+            ? routineList.map((el) => (
+                <Cardli key={el.routineId}>
+                  <RoutineCard routineCard={el} />
+                </Cardli>
+              ))
+            : workoutList.map((el) => (
+                <Cardli key={el.id}>
+                  <WorkoutCard workoutCard={el} />
+                </Cardli>
+              ))}
         </CardWrap>
       </BodyWrap>
     </Warp>
   );
 };
-
 const Warp = styled.div`
   height: 100%;
   min-height:100vh;
@@ -59,5 +63,4 @@ const Cardli = styled.li`
   width: 270px;
   margin: 25px;
 `;
-
 export default Dashboard;

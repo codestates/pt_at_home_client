@@ -19,7 +19,6 @@ interface Workout {
   calrorie: number;
   tool: string;
 }
-
 interface WorkoutOfRoutine {
   id:number;
   title:string;
@@ -32,40 +31,36 @@ interface WorkoutOfRoutine {
   calrorie: number;
   tool: string;
 }
-
 interface Routine {
-  routineId:number;
-  title:string;
-  workout:Array<WorkoutOfRoutine>;
+  routineId: number;
+  title: string;
+  workout: Array<WorkoutOfRoutine>;
 }
-
 interface SaveOrRemoveWorkoutResponse {
-  data:Array<Workout>;
-  message:string;
+  data: Array<Workout>;
+  message: string;
 }
-
 interface SaveOrRemoveRoutineResponse {
-  data:Array<Routine>;
-  message:string;
+  data: Array<Routine>;
+  message: string;
 }
-
 export interface DashboardProps {
-  isLogin:boolean;
-  workoutList:Array<Workout>;
-  routineList:Array<Routine>;
-  myWorkouts:Array<Workout>;
-  myRoutines:Array<Routine>;
-  isDashboardRoutine:boolean;
-  workoutDetail:Workout | Object;
-  routineDetail:Routine | Object;
-  workoutModal:boolean;
-  routineModal:boolean;
-  clickWorkoutCard(id:number):void;
-  offWorkoutModal():void;
-  clickRoutineCard(id:number):void;
-  offRoutineModal():void;
-  saveOrRemoveWorkout(id:number):void;
-  saveOrRemoveRoutine(id:number):void;
+  isLogin: boolean;
+  workoutList: Array<Workout>;
+  routineList: Array<Routine>;
+  myWorkouts: Array<Workout>;
+  myRoutines: Array<Routine>;
+  isDashboardRoutine: boolean;
+  workoutDetail: Workout | Object;
+  routineDetail: Routine | Object;
+  workoutModal: boolean;
+  routineModal: boolean;
+  clickWorkoutCard(id: number): void;
+  offWorkoutModal(): void;
+  clickRoutineCard(id: number): void;
+  offRoutineModal(): void;
+  saveOrRemoveWorkout(id: number): void;
+  saveOrRemoveRoutine(id: number): void;
 }
 
 const DashboardContainer = ():JSX.Element => {
@@ -150,8 +145,7 @@ const DashboardContainer = ():JSX.Element => {
           })
       }
     }
-  }
-
+  };
   return (
     <Dashboard 
       isLogin={isLogin.isLogin}
@@ -170,8 +164,7 @@ const DashboardContainer = ():JSX.Element => {
       offRoutineModal={offRoutineModal}
       saveOrRemoveWorkout={saveOrRemoveWorkout}
       saveOrRemoveRoutine={saveOrRemoveRoutine}
-    />  
-  )
+    />
+  );
 };
-
 export default DashboardContainer;
