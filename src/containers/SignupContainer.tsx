@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
 import { actionSetUserInfo, actionLogin } from '../modules/actions'
+import { useHistory } from 'react-router-dom'
 import { URI } from '../index'
 import { UserInfo } from '../modules/reducers/userInfo'
 import Signup from '../components/Signup'
@@ -27,7 +27,6 @@ const SignupContainer = ():JSX.Element => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    // completed
     const signupHandler = (signupData:SignupData):void => {
         axios.post<SignupResponse>(`${URI}/users/signup`, signupData, {headers:{'Content-Type':'application/json'}})
             .then(res => {
@@ -35,7 +34,7 @@ const SignupContainer = ():JSX.Element => {
                 if (res.data.message === 'signup success') {
                     dispatch(actionLogin({isLogin:true, isExpired:false}))
                     dispatch(actionSetUserInfo(res.data.data))
-                    history.goBack()
+                    history.push('/dashboard')
                 }
             })
     }

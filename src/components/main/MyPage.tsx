@@ -16,13 +16,13 @@ const MyPage = ({isLogin, userInfo, updateUserInfo, resignHandler}:MyPageProps):
 
     return (
         <div>
-            { !isLogin ?
+            { isLogin ?
                 (<>
                     <div>{userInfo.id}</div>
-                    <input type="text" value={userName}  onChange={handleChange} />
-                    <input type="email" value={email} onChange={handleChange} />
-                    <input type="password" value={password} onChange={handleChange} />
-                    <input type="button" value="Leave Website" onClick={() => resignHandler(userInfo.userName)}/>
+                    <input type="text" value={userName} name='userName' onChange={handleChange} />
+                    <input type="email" value={email} name='email' onChange={handleChange} />
+                    <input type="password" placeholder='Password' name='password' onChange={handleChange} />
+                    <input type="button" value="Leave Website" onClick={() => resignHandler(userInfo.email)}/>
                     <input type="button" value="Update" onClick={() => updateUserInfo({userName, password})}/>
                 </>)
                 :

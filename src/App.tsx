@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Route,
   Switch,
   withRouter,
   RouteComponentProps,
 } from 'react-router-dom';
+import { useSelector } from 'react-redux'
+import { RootState } from './modules/reducers'
 import { MyRoutines } from './components/main';
 import Root from './components/Root';
 import {
@@ -32,6 +34,19 @@ const App = ({
   history,
   location,
 }: RouteComponentProps): JSX.Element => {
+  const isExpired = useSelector((state:RootState) => state.isLogin.isExpired)
+  const [prevPath, setPrevPath] = useState(location.pathname)
+
+  useEffect(() => {
+    if (isExpired) {
+      history.push('/login')
+    } 
+  },[isExpired])
+
+  useEffect(() => {
+    setPrevPath(location.pathname)
+  }, [prevPath])
+
   const FeaturePage = (): JSX.Element => {
     return (
       <Wrap>
@@ -51,7 +66,7 @@ const App = ({
               />
               <Route path={'/usersroutine'} component={MyRoutines} />
               <Route path={'/workout'} component={RunRoutineContainer} />
-              <Route path={'/mypage'} component={MyPageContainer} />
+              <Route path={'/mypage'} component={MyPageContainer}/>
             </Switch>
           </Main>
         </MainWrap>
@@ -66,7 +81,7 @@ const App = ({
       ) : location.pathname === '/signup' ? (
         <SignupContainer />
       ) : location.pathname === '/login' ? (
-        <LoginContainer />
+        <LoginContainer prevPath={prevPath}/>
       ) : (
         <FeaturePage />
       )}

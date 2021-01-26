@@ -1,9 +1,11 @@
-import React from 'react';
-import { useDispatch } from 'react-redux'
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import Login from '../components/Login'
 import { UserInfo } from '../modules/reducers/userInfo'
-import { actionSetUserInfo, actionLogin } from '../modules/actions'
+import { MyWorkoutsResponse, MyRoutinesResponse} from '../containers/SideBarContainer'
+import { RootState } from '../modules/reducers'
+import { actionSetUserInfo, actionLogin, actionSetMyWorkouts, actionSetMyRoutines } from '../modules/actions'
 import { URI } from '../index'
 import axios from 'axios'
 axios.defaults.withCredentials = true
@@ -18,14 +20,48 @@ interface SigninResponse {
   message: string;
 }
 
+interface LoginContProps {
+  prevPath:string
+}
+
 export interface LoginProps {
   loginHandler(loginData: LoginData): void;
 }
 
-const LoginContainer = ():JSX.Element => {
+const LoginContainer = ({prevPath}:LoginContProps):JSX.Element => {
     const dispatch = useDispatch()
     const history = useHistory()
+    const isLogin = useSelector((state:RootState) => state.isLogin)
+    const accessToken = useSelector((state:RootState) => state.userInfo.auth.token)
 
+    // completed
+    useEffect(() => {
+      if (isLogin.isLogin) {
+        axios.get<MyWorkoutsResponse>(`${URI}/myroutine/myworkout`, {
+          headers:{
+          'Content-Type':'application/json',
+          'Authorization':`Bearer ${accessToken}`
+      }})
+          .then(res => {
+              if (res.data.message === 'ok') {
+                  dispatch(actionSetMyWorkouts(res.data.data))
+              } 
+          })
+          axios.get<MyRoutinesResponse>(`${URI}/myroutine`, {
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization':`Bearer ${accessToken}`
+            }})
+            .then(res => {
+                if (res.data.message === 'ok') {
+                    dispatch(actionSetMyRoutines(res.data.data))
+                }
+            })
+          
+        
+      }
+    }, [isLogin.isLogin])
+    
     // completed
     const loginHandler = (loginData:LoginData):void => {
         axios.post<SigninResponse>(`${URI}/users/signin`, loginData, {headers:{'Content-Type':'application/json'}})

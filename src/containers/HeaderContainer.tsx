@@ -82,7 +82,7 @@ export interface HeaderProps {
   userName: string;
   searchHandler(keywordData: KeywordData): void;
   clickRoutineHandler(): void;
-  logoutHandler(): void;
+  logoutHandler():void;
   filterHandler(filterData: FilterData): void;
   title: string;
 }
@@ -113,6 +113,7 @@ const HeaderContainer = ():JSX.Element => {
 
     const title = titleGenerator()
 
+    //completed
     const searchHandler = async (keywordData:KeywordData) => {
         let { token, expDate } = auth
         let isTokenValid = await actionRenewToken(token, expDate, dispatch)
@@ -132,6 +133,7 @@ const HeaderContainer = ():JSX.Element => {
 
     }
 
+    // completed
     const filterHandler = async (filterData:FilterData) => {
         let { token, expDate } = auth
         let isTokenValid = await actionRenewToken(token, expDate, dispatch)
@@ -168,14 +170,22 @@ const HeaderContainer = ():JSX.Element => {
         }
     }
 
-    const logoutHandler = ():void => {
-        axios.get<LogoutResponse>(`${URI}/users/signout`, {headers:{'Content-Type':'application/json'}})
+    const logoutHandler = async () => {
+      let { token, expDate } = auth
+      let isTokenValid = await actionRenewToken(token, expDate, dispatch)
+      if (isTokenValid) {
+        axios.get<LogoutResponse>(`${URI}/users/signout`, {
+          headers:{
+            'Content-Type':'application/json',
+            'Authorization':`Bearer ${auth.token}`
+          }})
             .then(res => {
                 console.log('logout', res)
                 if (res.data.message === 'signout success') {
                     dispatch(actionLogout({isLogin:false}))
                 }
             })
+      }
     }
     
     return (

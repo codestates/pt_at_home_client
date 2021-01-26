@@ -101,7 +101,7 @@ export const actionUpdateUserInfo = (payload:UserData) => async (dispatch:Dispat
         token = getState().userInfo.auth.token
         axios.post<UpdateUserInfoResponse>(
             `${URI}/users/update`, 
-            {eamil:payload}, 
+            payload, 
             {headers:{
                 'Content-Type':'application/json',
                 'Authorization':`Bearer ${token}`
@@ -116,7 +116,9 @@ export const actionUpdateUserInfo = (payload:UserData) => async (dispatch:Dispat
 
 // completed
 export const actionRenewToken = (accessToken:string, expDate:string, dispatch:Dispatch) => {
-    if (true) {
+    let hasExpired = checkExpired(accessToken, expDate)
+
+    if (hasExpired) {
         return axios.get(`${URI}/users/token`, 
         {headers:{
             'Content-Type':'application/json',
@@ -132,9 +134,21 @@ export const actionRenewToken = (accessToken:string, expDate:string, dispatch:Di
                 return false
             }
         })
-    } else {
+    } 
+    else {
         return new Promise((resolve, reject) => resolve(true))
     }
+}
+
+// completed
+const checkExpired = (token:string, date:string):boolean => {
+    let now = new Date()
+    let issued = Date.parse(date)
+    let exp = new Date(issued)
+
+    if (now.getTime() - exp.getTime() > 500000) {
+        return true
+    } else return false
 }
 
 const initialState:UserInfo = {
