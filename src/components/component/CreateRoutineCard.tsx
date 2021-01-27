@@ -49,12 +49,6 @@ const DraggableWrap = styled.div`
   width: 280px;
   height: 130px;
 `;
-
-const CardDiv = styled.div`
-  color: currentColor;
-  text-decoration: none;
-  display: inline-table;
-`;
 const Card = styled.div`
   box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
   display: flex;

@@ -1,10 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import CreateRoutineCard from '../component/CreateRoutineCard'
-import RoutineBox from '../component/RoutineBox'
-import { WorkoutOfRoutine } from '../../modules/reducers/currentRoutine'
-import { Workout } from '../../modules/reducers/myWorkouts'
-import { CreateRoutineProps, ChoseWorkout } from '../../containers/CreateRoutineContainer'
+import CreateRoutineCard from '../component/CreateRoutineCard';
+import RoutineBox from '../component/RoutineBox';
+import { WorkoutOfRoutine } from '../../modules/reducers/currentRoutine';
+import { Workout } from '../../modules/reducers/myWorkouts';
+import {
+  CreateRoutineProps,
+  ChoseWorkout,
+} from '../../containers/CreateRoutineContainer';
 import {
   DragDropContext,
   Draggable,
@@ -14,23 +17,23 @@ import {
   ResponderProvided,
 } from 'react-beautiful-dnd';
 
-const initialChoseWorkout:ChoseWorkout = {
-    id:0,
-    title:'',
-    instruction:'',
-    image:['', ''],
-    part:['',''],
-    setCount:0,
-    count:0,
-    breakTime:0,
-    mySetCount:0,
-    myCount:0,
-    myBreakTime:0,
-    calrorie: 0,
-    tool: ''
-    }
+const initialChoseWorkout: ChoseWorkout = {
+  id: 0,
+  title: '',
+  instruction: '',
+  image: ['', ''],
+  part: ['', ''],
+  setCount: 0,
+  count: 0,
+  breakTime: 0,
+  mySetCount: 0,
+  myCount: 0,
+  myBreakTime: 0,
+  calrorie: 0,
+  tool: '',
+};
 
-const initialAddedWorkouts:ChoseWorkout[] = []
+const initialAddedWorkouts: ChoseWorkout[] = [];
 
 export interface ICard {
   id: string;
@@ -43,8 +46,7 @@ const reorder = (list: ICard[], startIndex: number, endIndex: number) => {
   return result;
 };
 
-
-const CreateRoutine = ({ myWorkouts }:CreateRoutineProps): JSX.Element => {
+const CreateRoutine = ({ myWorkouts }: CreateRoutineProps): JSX.Element => {
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const droppableRef = useRef<HTMLDivElement | null>(null);
   const [cards, setCards] = useState<ICard[]>([
@@ -156,7 +158,9 @@ const DropWrap = styled.div`
   position: relative;
   flex: 1;
 `;
-const DroppableDiv = styled.div``;
+const DroppableDiv = styled.div`
+  flex-wrap: wrap;
+`;
 const DropBox = styled.div`
   position: relative;
   flex: 1;
