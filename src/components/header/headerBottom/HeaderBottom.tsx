@@ -76,7 +76,7 @@ const filterModels: IFilter[] = [
 
 const HeaderBottom = (): JSX.Element => {
   const dropdownRefs = [useRef(), useRef()];
-  const [filterArr, setFilterArr] = useState<string[]>([]);
+  const [filterArr, setFilterArr] = useState<IFilterOption[]>([]);
   const [dropdownModels, setDropdownModels] = useState(() => {
     return filterModels.map((filter) => {
       filter.ref = dropdownRefs[filter.id];
@@ -95,17 +95,28 @@ const HeaderBottom = (): JSX.Element => {
     if (event.target === dropdownRefs[0].current) {
       return;
     }
+    if (event.target.classList.contains('custom-option-item')) {
+      return;
+    }
     allClose();
   });
   useOnClickDocument(dropdownRefs[1], (event) => {
     if (event.target === dropdownRefs[1].current) {
       return;
     }
+    if (event.target.classList.contains('custom-option-item')) {
+      return;
+    }
     allClose();
   });
-  const onChangeSelect = (id: number, value: string) => {
+  const onChangeSelect = (id: number, op: IFilterOption) => {
     toggleDropdwon(id);
-    setFilterArr((props) => [...props, value]);
+    // const filterRemove = filterArr.filter((item) => item.label === op.label);
+    // if (filterRemove.length === 0) setFilterArr([...filterArr, op]);
+    const hasLabel = filterArr.some((item) => item.label === op.label);
+    if (!hasLabel) {
+      setFilterArr([...filterArr, op]);
+    }
   };
   const toggleDropdwon = (id: number) => {
     setDropdownModels(
@@ -143,9 +154,11 @@ const HeaderBottom = (): JSX.Element => {
                       {model.options.map((op) => (
                         <CustomOptionItem
                           key={op.value}
+                          className={'custom-option-item'}
                           isdefault={!!op.isDefault}
-                          onClick={() => {
-                            onChangeSelect(model.id, op.value);
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onChangeSelect(model.id, op);
                           }}
                         >
                           {op.label}
@@ -158,16 +171,30 @@ const HeaderBottom = (): JSX.Element => {
               </div>
             );
           })}
+          <CustomSelect>STRETCHING</CustomSelect>
+          <CustomSelect>ROUTINE</CustomSelect>
         </FilterWrap>
         <SearchInputWrap>
           <SearchInput placeholder="검색어를 입력해주세요." />
           <Search />
         </SearchInputWrap>
       </Wrap>
-      <FilterCard>
-        등 운동
-        <BiX />
-      </FilterCard>
+      <TagWrap>
+        {filterArr &&
+          filterArr.map((op, index) => (
+            <FilterCard key={op.value}>
+              {op.label}
+              <BiX
+                onClick={() => {
+                  const removeFilter = filterArr.filter(
+                    (item) => item.label !== op.label,
+                  );
+                  setFilterArr(removeFilter);
+                }}
+              />
+            </FilterCard>
+          ))}
+      </TagWrap>
     </>
   );
 };
@@ -252,6 +279,7 @@ const FilterCard = styled.span`
   border-radius: 5px;
   display: flex;
   justify-content: space-between;
+  margin-right: 10px;
   padding: 3px;
 `;
 const Search = styled(BiSearch)`
@@ -261,7 +289,9 @@ const Search = styled(BiSearch)`
   font-size: 20px;
   color: #f0f0f0;
 `;
-
+const TagWrap = styled.div`
+  display: flex;
+`;
 const Arrow = styled(BsFillCaretDownFill)``;
 
 export default HeaderBottom;
