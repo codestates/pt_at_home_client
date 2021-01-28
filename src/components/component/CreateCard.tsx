@@ -2,6 +2,28 @@ import React from 'react';
 import styled from 'styled-components';
 import Img from '../../img/urbanbrush-20190214083430029790.png';
 
+const CreateCard = () => {
+  return (
+    <CardDiv>
+      <Card>
+        <CardImgWrap>
+          <CardImg src={Img} />
+        </CardImgWrap>
+        <CardContents>
+          <>
+            <Title>PLANK</Title>
+          </>
+          <ExplanationWrap>
+            <Explanation>60s</Explanation>
+            <Explanation>3set</Explanation>
+            <Explanation>코어, 복근</Explanation>
+          </ExplanationWrap>
+        </CardContents>
+      </Card>
+    </CardDiv>
+  );
+};
+
 const CardDiv = styled.div`
   color: currentColor;
   text-decoration: none;
@@ -46,26 +68,5 @@ const Explanation = styled.div`
   padding: 3px 3px 4px 10px;
   border-radius: 5px;
 `;
-const CreateCard = () => {
-  return (
-    <CardDiv>
-      <Card>
-        <CardImgWrap>
-          <CardImg src={Img} />
-        </CardImgWrap>
-        <CardContents>
-          <>
-            <Title>PLANK</Title>
-          </>
-          <ExplanationWrap>
-            <Explanation>60s</Explanation>
-            <Explanation>3set</Explanation>
-            <Explanation>코어, 복근</Explanation>
-          </ExplanationWrap>
-        </CardContents>
-      </Card>
-    </CardDiv>
-  );
-};
 
 export default CreateCard;

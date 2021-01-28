@@ -3,42 +3,12 @@ import Header from '../components/header/Header'
 import { useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../modules/reducers'
+import { Workout } from '../modules/reducers/workoutList'
+import { Routine } from '../modules/reducers/routineList'
 import { actionLogout, actionSetWorkoutList, actionSetRoutineList, actionToggleDashboardType, actionRenewToken } from '../modules/actions'
 import { URI } from '../index'
 import axios from 'axios'
 axios.defaults.withCredentials = true
-
-interface Workout {
-    id:number;
-    title:string;
-    instruction:string;
-    image:string[];
-    part:string[];
-    setCount:number;
-    count:number;
-    breakTime: number;
-    calrorie: number;
-    tool: string;
-}
-
-interface WorkoutOfRoutine {
-    id:number;
-    title:string;
-    instruction:string;
-    image:string[];
-    part:string[];
-    mySetCount:number;
-    myCount:number;
-    myBreakTime: number;
-    calrorie: number;
-    tool: string;
-}
-
-interface Routine {
-  routineId: number;
-  title: string;
-  workout: Array<WorkoutOfRoutine>;
-}
 
 interface KeywordData {
   keyword: string;
@@ -70,11 +40,11 @@ interface LogoutResponse {
 }
 
 enum TitleConstants {
-  Dashboard = 'Dashboard',
-  CreateRoutine = 'Create Routine',
-  UsersRoutine = 'Users Routine',
-  Workout = 'Workout',
-  Mypage = 'Mypage',
+  Dashboard = 'DASHBOARD',
+  CreateRoutine = 'CREATE ROUTINE',
+  UsersRoutine = 'MY ROUTINES',
+  Workout = 'RUN ROUTINES',
+  Mypage = 'MY PAGE',
 }
 
 export interface HeaderProps {

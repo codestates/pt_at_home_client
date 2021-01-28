@@ -2,24 +2,8 @@ import React, { useState } from 'react';
 import { CreateRoutine } from '../components/main'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../modules/reducers'
-import { Workout } from '../modules/reducers/myWorkouts'
+import { Workout } from '../modules/reducers/workoutList'
 import { actionSetCurrentRoutine, actionRenewToken } from '../modules/actions'
-
-export interface ChoseWorkout {
-    id:number;
-    title:string;
-    instruction:string;
-    image:string[];
-    part:string[];
-    setCount:number;
-    count:number;
-    breakTime:number;
-    mySetCount:number;
-    myCount:number;
-    myBreakTime:number;
-    calrorie:number;
-    tool: string;
-}
 
 export interface CreateRoutineProps {
     myWorkouts:Array<Workout>;

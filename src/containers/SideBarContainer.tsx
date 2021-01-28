@@ -2,42 +2,12 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../modules/reducers'
 import SideBar from '../components/sidebar/SideBar'
+import { Workout } from '../modules/reducers/workoutList'
+import { Routine } from '../modules/reducers/routineList'
 import { actionSetWorkoutList, actionSetMyWorkouts, actionSetMyRoutines, actionRenewToken } from '../modules/actions'
 import { URI } from '../index'
 import axios from 'axios'
 axios.defaults.withCredentials = true
-
-interface Workout {
-    id:number;
-    title:string;
-    instruction:string;
-    image:string[];
-    part:string[];
-    setCount:number;
-    count:number;
-    breakTime: number;
-    calrorie: number;
-    tool: string;
-}
-
-interface WorkoutOfRoutine {
-    id:number;
-    title:string;
-    instruction:string;
-    image:string[];
-    part:string[];
-    mySetCount:number;
-    myCount:number;
-    myBreakTime: number;
-    calrorie: number;
-    tool: string;
-}
-
-export interface Routine {
-  routineId: number;
-  title: string;
-  workout: Array<WorkoutOfRoutine>;
-}
 
 export interface WorkoutListResponse {
   data: Array<Workout>;

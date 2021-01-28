@@ -15,33 +15,33 @@ const Dashboard = ({
   workoutModal,
   routineModal,
   clickWorkoutCard,
-  offWorkoutModal,
   clickRoutineCard,
-  offRoutineModal,
   saveOrRemoveWorkout,
   saveOrRemoveRoutine,
 }: DashboardProps): JSX.Element => {
+
   return (
-    <Warp>
+    <Wrap>
       <BodyWrap>
         <CardWrap>
-          {isDashboardRoutine
+          {!isDashboardRoutine
             ? routineList.map((el) => (
                 <Cardli key={el.routineId}>
-                  <RoutineCard routineCard={el} />
+                  <RoutineCard routineCard={el} clickRoutineCard={clickRoutineCard} />
                 </Cardli>
               ))
             : workoutList.map((el) => (
                 <Cardli key={el.id}>
-                  <WorkoutCard workoutCard={el} />
+                  <WorkoutCard workoutCard={el} clickWorkoutCard={clickWorkoutCard}/>
                 </Cardli>
               ))}
         </CardWrap>
       </BodyWrap>
-    </Warp>
+    </Wrap>
   );
 };
-const Warp = styled.div`
+
+const Wrap = styled.div`
   height: 100%;
   min-height:100vh;
   background-color: #13141c;
@@ -60,7 +60,7 @@ const CardWrap = styled.ul`
   margin-bottom: 50px;
 `;
 const Cardli = styled.li`
-  width: 270px;
+  // width: 270px;
   margin: 25px;
 `;
 export default Dashboard;

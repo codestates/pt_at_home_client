@@ -1,54 +1,37 @@
 import React from 'react';
 import styled from 'styled-components';
-
-interface WorkoutOfRoutine {
-  id:number;
-  title:string;
-  instruction:string;
-  image:string[];
-  part:string[];
-  mySetCount:number;
-  myCount:number;
-  myBreakTime: number;
-  calrorie: number;
-  tool: string;
-}
-
-interface Routine {
-  routineId: number;
-  title: string;
-  workout: Array<WorkoutOfRoutine>;
-}
+import { Routine } from '../../modules/reducers/routineList'
 
 interface RoutineCardProps {
   routineCard: Routine;
+  clickRoutineCard(id:number):void;
 }
 
-const RoutineCard = ({ routineCard }: RoutineCardProps): JSX.Element => {
+const RoutineCard = ({ routineCard, clickRoutineCard}: RoutineCardProps): JSX.Element => {
+  const { routineId, title, workout } = routineCard
   return (
-    <Card>
-      <>
-        <Title>아침운동</Title>
-      </>
+    <Card onClick={() => clickRoutineCard(routineId)}>
+      <Title>{title.toUpperCase()}</Title>
       <Wrap>
         <ExplanationWrap>
-          <Explanation>PLANK</Explanation>
-          <Explanation>PLANK</Explanation>
-          <Explanation>PLANK</Explanation>
-          <Explanation>PLANK</Explanation>
+          {workout.map(el => <Explanation key={el.id}>{el.title.toUpperCase()}</Explanation>)}
         </ExplanationWrap>
         <SubWrap>
-          <Sub>5 min</Sub>
-          <Sub>1.000 kcal</Sub>
-          <Sub>기타등등...</Sub>
+          <Sub>{`${(workout.reduce((acc, cur) => acc+(cur.image.length === 1?0:cur.myCount), 0))/60} min`}</Sub>
+          <Sub>{`${numberWithCommas(workout.reduce((acc, cur) => acc + (cur.calrorie*(Math.round(cur.myCount/cur.count)*Math.round(cur.mySetCount/cur.setCount))), 0))} kcal`}</Sub>
         </SubWrap>
       </Wrap>
     </Card>
   );
 };
 
+function numberWithCommas(x:number):string {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const Card = styled.div`
   height: 200px;
+  width: 250px;
   margin: 5% auto;
   box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
   display: inline-block;
@@ -56,7 +39,6 @@ const Card = styled.div`
   background-color: #212330;
   border-radius: 4px;
   transition: 400ms ease;
-  position: relative;
   padding: 10px;
 `;
 const Title = styled.h1`
@@ -67,10 +49,11 @@ const Title = styled.h1`
 `;
 const Wrap = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 `;
 const ExplanationWrap = styled.div`
   height: 135px;
+  width:120px;
   display: flex;
   flex-direction: column;
   align-items: center;

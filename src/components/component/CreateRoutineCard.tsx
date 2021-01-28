@@ -2,11 +2,17 @@ import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import Img from '../../img/urbanbrush-20190214083430029790.png';
+import { WorkoutOfRoutine } from '../../modules/reducers/routineList' 
 
 interface ICreateCard {
   draggableId: string;
   index: number;
 }
+
+interface CreateRoutineCardProps {
+  test:string;
+}
+
 const CreateRoutineCard = ({
   draggableId,
   index,

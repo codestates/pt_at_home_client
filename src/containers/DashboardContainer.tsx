@@ -1,49 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom'
 import { Dashboard } from '../components/main';
+import { ModalWorkoutDetail, ModalRoutineDetail, ModalRequestLogin } from '../components/modal'
+import { Workout } from '../modules/reducers/workoutList'
+import { Routine } from '../modules/reducers/routineList'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../modules/reducers'
 import { URI } from '../index'
-import { actionSetMyWorkouts, actionSetMyRoutines, actionRenewToken } from '../modules/actions'
+import { actionSetMyWorkouts, actionSetMyRoutines, actionRenewToken, actionSetUserInfo , actionLogin } from '../modules/actions'
 import axios from 'axios'
 axios.defaults.withCredentials = true
 
-interface Workout {
-  id:number;
-  title:string;
-  instruction:string;
-  image:string[];
-  part:string[];
-  setCount:number;
-  count:number;
-  breakTime: number;
-  calrorie: number;
-  tool: string;
-}
-interface WorkoutOfRoutine {
-  id:number;
-  title:string;
-  instruction:string;
-  image:string[];
-  part:string[];
-  mySetCount:number;
-  myCount:number;
-  myBreakTime: number;
-  calrorie: number;
-  tool: string;
-}
-interface Routine {
-  routineId: number;
-  title: string;
-  workout: Array<WorkoutOfRoutine>;
-}
 interface SaveOrRemoveWorkoutResponse {
   data: Array<Workout>;
   message: string;
 }
+
 interface SaveOrRemoveRoutineResponse {
   data: Array<Routine>;
   message: string;
 }
+
 export interface DashboardProps {
   isLogin: boolean;
   workoutList: Array<Workout>;
@@ -56,21 +33,58 @@ export interface DashboardProps {
   workoutModal: boolean;
   routineModal: boolean;
   clickWorkoutCard(id: number): void;
-  offWorkoutModal(): void;
   clickRoutineCard(id: number): void;
-  offRoutineModal(): void;
   saveOrRemoveWorkout(id: number): void;
   saveOrRemoveRoutine(id: number): void;
+}
+
+export interface ModalRoutineProps {
+  routineDetail:Routine;
+  offRoutineModal(): void;
+  saveOrRemoveRoutine(id:number):void;
+}
+
+export interface ModalWorkoutProps {
+  workoutDetail:Workout;
+  offWorkoutModal():void;
+  saveOrRemoveWorkout(id:number):void;
 }
 
 const DashboardContainer = ():JSX.Element => {
   const dispatch = useDispatch()
   const auth = useSelector((state:RootState) => state.userInfo.auth)
   const {isLogin, workoutList, routineList, myWorkouts, myRoutines, isDashboardRoutine} = useSelector((state:RootState) => state)
-  const [workoutDetail, setWorkoutDetail] = useState({})
-  const [routineDetail, setRoutineDetail] = useState({})
+  const [workoutDetail, setWorkoutDetail] = useState(workoutList[0])
+  const [routineDetail, setRoutineDetail] = useState(routineList[0])
   const [workoutModal, setWorkoutModal] = useState(false)
   const [routineModal, setRoutineModal] = useState(false)
+  const [loginModal, setLoginModal] = useState(false)
+  const path = useLocation()
+
+  useEffect(() => {
+    const url = new URL(window.location.href)
+    const authorizationCode = url.searchParams.get('code')
+    if (authorizationCode) {
+      axios.get(`${URI}/users/kakao`, {headers:{
+        'Content-Type':'application/json',
+        'Authorization':`${authorizationCode}`
+      }})
+      .then(res => {
+        if (res.data.message === 'auth success') {
+          actionSetUserInfo(res.data.data)
+          actionLogin({isLogin:true, isExpired:false})
+        }
+      })
+    }
+
+    return () => {
+      setWorkoutModal(false)
+      setWorkoutModal(false)
+      setLoginModal(false)
+    }
+  }, [path])
+
+
   
 
   const clickWorkoutCard = (id:number):void => {
@@ -91,6 +105,10 @@ const DashboardContainer = ():JSX.Element => {
 
   const offRoutineModal = ():void => {
     setRoutineModal(false)
+  }
+
+  const offLoginModal = ():void => {
+    setLoginModal(false)
   }
 
   const saveOrRemoveWorkout = async (id:number) => {
@@ -125,46 +143,63 @@ const DashboardContainer = ():JSX.Element => {
   }
 
   const saveOrRemoveRoutine = async (id:number) =>  {
-    let { token, expDate } = auth
-    let isTokenValid = await actionRenewToken(token, expDate, dispatch)
-    if (isTokenValid) {
-      let savedRoutines = myRoutines.map(el => el.routineId)
-      if (savedRoutines.includes(id)) {
-        axios.post<SaveOrRemoveRoutineResponse>(`${URI}/myroutine/deleteroutine`,{workoutId:id}, {headers:{'Content-Type':'application/json'}})
-          .then(res => {
-            if (res.data.message === 'ok') {
-              actionSetMyRoutines(res.data.data)
-            }
-          })
-      } else {
-        axios.post<SaveOrRemoveRoutineResponse>(`${URI}/myroutine/createroutine`,{workoutId:id}, {headers:{'Content-Type':'application/json'}})
-          .then(res => {
-            if (res.data.message === 'ok') {
-              actionSetMyRoutines(res.data.data)
-            }
-          })
+    if (isLogin.isLogin) {
+      let { token, expDate } = auth
+      let isTokenValid = await actionRenewToken(token, expDate, dispatch)
+      if (isTokenValid) {
+        let savedRoutines = myRoutines.map(el => el.routineId)
+        if (savedRoutines.includes(id)) {
+          axios.post<SaveOrRemoveRoutineResponse>(`${URI}/myroutine/deleteroutine`,{routineId:id}, {
+            headers:{
+              'Content-Type':'application/json',
+              'Authorization':`Bearer ${auth.token}`
+            }})
+            .then(res => {
+              if (res.data.message === 'ok') {
+                actionSetMyRoutines(res.data.data)
+              }
+            })
+        } else {
+          axios.post<SaveOrRemoveRoutineResponse>(`${URI}/myroutine/createroutine`,{routineId:id}, {
+            headers:{
+              'Content-Type':'application/json',
+              'Authorization':`Bearer ${auth.token}`
+            }})
+            .then(res => {
+              if (res.data.message === 'ok') {
+                actionSetMyRoutines(res.data.data)
+              }
+            })
+        }
       }
+    } else {
+      setLoginModal(true)
     }
   };
+  
   return (
-    <Dashboard 
-      isLogin={isLogin.isLogin}
-      workoutList={workoutList}
-      routineList={routineList}
-      myWorkouts={myWorkouts}
-      myRoutines={myRoutines}
-      isDashboardRoutine={isDashboardRoutine}
-      workoutDetail={workoutDetail}
-      routineDetail={routineDetail}
-      workoutModal={workoutModal}
-      routineModal={routineModal}
-      clickWorkoutCard={clickWorkoutCard}
-      offWorkoutModal={offWorkoutModal}
-      clickRoutineCard={clickRoutineCard}
-      offRoutineModal={offRoutineModal}
-      saveOrRemoveWorkout={saveOrRemoveWorkout}
-      saveOrRemoveRoutine={saveOrRemoveRoutine}
-    />
+    <div>
+        {workoutModal?(<ModalWorkoutDetail workoutDetail={workoutDetail} offWorkoutModal={offWorkoutModal} saveOrRemoveWorkout={saveOrRemoveWorkout}/>):''}
+        {routineModal?(<ModalRoutineDetail routineDetail={routineDetail} offRoutineModal={offRoutineModal} saveOrRemoveRoutine={saveOrRemoveRoutine}/>):''}
+        {loginModal?(<ModalRequestLogin offLoginModal={offLoginModal}/>):''}
+      <Dashboard 
+        isLogin={isLogin.isLogin}
+        workoutList={workoutList}
+        routineList={routineList}
+        myWorkouts={myWorkouts}
+        myRoutines={myRoutines}
+        isDashboardRoutine={isDashboardRoutine}
+        workoutDetail={workoutDetail}
+        routineDetail={routineDetail}
+        workoutModal={workoutModal}
+        routineModal={routineModal}
+        clickWorkoutCard={clickWorkoutCard}
+        clickRoutineCard={clickRoutineCard}
+        saveOrRemoveWorkout={saveOrRemoveWorkout}
+        saveOrRemoveRoutine={saveOrRemoveRoutine}
+      />
+    </div>
+    
   );
 };
 export default DashboardContainer;

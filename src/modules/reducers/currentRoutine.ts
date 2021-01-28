@@ -1,18 +1,6 @@
+import { WorkoutOfRoutine } from './routineList'
 const SET_CURRENT_ROUTINE = 'SET_CURRENT_ROUTINE'
 const RESET_CURRENT_ROUTINE = 'RESET_CURRENT_ROUTINE'
-
-export interface WorkoutOfRoutine {
-    id:number;
-    title:string;
-    instruction:string;
-    image:string[];
-    part:string[];
-    mySetCount:number;
-    myCount:number;
-    myBreakTime: number;
-    calrorie: number;
-    tool: string;
-}
 
 export interface CurrentRoutine {
     routineId:number;
@@ -53,10 +41,14 @@ const initialState:CurrentRoutine = {
         instruction:'adfasdfadsfasdf',
         image:['one', 'two', 'three'],
         part:['core', 'heap'],
+        setCount:0,
+        count:0,
+        breakTime:0,
         mySetCount:3,
         myCount:3,
         myBreakTime: 8,
         calrorie: 1000,
+        category:'맨몸',
         tool: 'band'
     }, {
         id:1,
@@ -64,10 +56,14 @@ const initialState:CurrentRoutine = {
         instruction:'adfasdfadsfasdf',
         image:['three', 'four', 'five'],
         part:['core', 'heap'],
+        setCount:0,
+        count:0,
+        breakTime:0,
         mySetCount:3,
         myCount:10,
         myBreakTime: 8,
         calrorie: 1000,
+        category:'맨몸',
         tool: 'band'
     }, {
         id:2,
@@ -75,10 +71,14 @@ const initialState:CurrentRoutine = {
         instruction:'adfasdfadsfasdf',
         image:['6', '7', '8', '9'],
         part:['core', 'heap'],
+        setCount:0,
+        count:0,
+        breakTime:0,
         mySetCount:3,
         myCount:4,
         myBreakTime: 8,
         calrorie: 1000,
+        category:'맨몸',
         tool: 'band'
     }]
     
