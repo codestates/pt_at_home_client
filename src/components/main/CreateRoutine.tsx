@@ -2,9 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import CreateRoutineCard from '../component/CreateRoutineCard'
 import RoutineBox from '../component/RoutineBox'
-import { WorkoutOfRoutine } from '../../modules/reducers/currentRoutine'
-import { Workout } from '../../modules/reducers/myWorkouts'
-import { CreateRoutineProps, ChoseWorkout } from '../../containers/CreateRoutineContainer'
+import { WorkoutOfRoutine } from '../../modules/reducers/routineList'
+import { Workout } from '../../modules/reducers/workoutList'
+import { CreateRoutineProps } from '../../containers/CreateRoutineContainer'
 import {
   DragDropContext,
   Draggable,
@@ -14,7 +14,7 @@ import {
   ResponderProvided,
 } from 'react-beautiful-dnd';
 
-const initialChoseWorkout:ChoseWorkout = {
+const initialChoseWorkout:WorkoutOfRoutine = {
     id:0,
     title:'',
     instruction:'',
@@ -27,44 +27,31 @@ const initialChoseWorkout:ChoseWorkout = {
     myCount:0,
     myBreakTime:0,
     calrorie: 0,
+    category:'tool',
     tool: ''
     }
 
-const initialAddedWorkouts:ChoseWorkout[] = []
+const initialAddedWorkouts:WorkoutOfRoutine[] = []
 
 export interface ICard {
   id: string;
 }
+
 const reorder = (list: ICard[], startIndex: number, endIndex: number) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
-
   return result;
 };
 
 
 const CreateRoutine = ({ myWorkouts }:CreateRoutineProps): JSX.Element => {
+  const myWorkoutsIdList = myWorkouts.map(el => Object.assign({id:String(el.id)}))
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const droppableRef = useRef<HTMLDivElement | null>(null);
-  const [cards, setCards] = useState<ICard[]>([
-    {
-      id: '0',
-    },
-    {
-      id: '1',
-    },
-    {
-      id: '2',
-    },
-    {
-      id: '3',
-    },
-    {
-      id: '4',
-    },
-  ]);
+  const [cards, setCards] = useState<ICard[]>(myWorkoutsIdList);
   const [routineCards, setRoutineCards] = useState<ICard[]>([]);
+  
   const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
     console.log('result : ', result);
     console.log('provided : ', provided);
@@ -74,13 +61,13 @@ const CreateRoutine = ({ myWorkouts }:CreateRoutineProps): JSX.Element => {
     const sourceId = result.source.droppableId;
     const destinationId = result.destination.droppableId;
     if (sourceId === destinationId) {
-      const setter = sourceId === 'RoutineBox' ? setRoutineCards : setCards;
+      const setter = sourceId === 'RoutineBox' ? routineCards : cards;
       const _cards = reorder(
         sourceId === 'RoutineBox' ? routineCards : cards,
         result.source.index,
         result.destination.index,
       );
-      setter(_cards);
+      // setter(_cards);
     } else if (destinationId === 'RoutineBox') {
       const targetCard = cards.find((card) => {
         return result.draggableId === card.id;
@@ -103,6 +90,7 @@ const CreateRoutine = ({ myWorkouts }:CreateRoutineProps): JSX.Element => {
       }
     }
   };
+  
   useEffect(() => {
     if (wrapRef?.current?.parentElement) {
       wrapRef.current.parentElement.style.height = '100%';
@@ -111,6 +99,7 @@ const CreateRoutine = ({ myWorkouts }:CreateRoutineProps): JSX.Element => {
       droppableRef.current.style.height = '100%';
     }
   }, []);
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Wrap ref={wrapRef}>
@@ -163,3 +152,4 @@ const DropBox = styled.div`
   max-width: 600px;
 `;
 export default CreateRoutine;
+

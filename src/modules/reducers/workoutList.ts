@@ -1,7 +1,3 @@
-import { Dispatch } from 'redux'
-import { URI } from '../../index'
-import { actionRenewToken } from '../actions'
-import { RootState } from '../reducers'
 import axios from 'axios'
 axios.defaults.withCredentials = true;
 
@@ -17,7 +13,8 @@ export interface Workout {
     count:number;
     breakTime: number;
     calrorie: number;
-    tool: string;
+    category:string;
+    tool:string;
 }
 
 export interface ActionWorkoutList {
@@ -48,6 +45,7 @@ const initialState:Array<Workout> = [{
     count:60,
     breakTime:30,
     calrorie:1000,
+    category:'맨몸',
     tool:'none'
 },{
     id:2,
@@ -59,6 +57,7 @@ const initialState:Array<Workout> = [{
     count:60,
     breakTime:30,
     calrorie:1000,
+    category:'기구',
     tool:'none'
 }]
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SignupProps } from '../containers/SignupContainer';
 
-const Signup = ({ signupHandler }: SignupProps): JSX.Element => {
+const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLoginHandler }: SignupProps): JSX.Element => {
   const [email, setEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -51,8 +51,9 @@ const Signup = ({ signupHandler }: SignupProps): JSX.Element => {
           value="Signup"
         />
       </div>
-      <div>Github Login</div>
-      <div>Google Login</div>
+      <input type="button" value="KAKAO LOGIN" onClick={kakaoLoginHandler}/>
+      {/* <input type="button" value="GOOGLE LOGIN" onClick={kakaoLoginHandler}/> */}
+      <input type="button" value="GITHUB LOGIN" onClick={githubLoginHandler}/>
     </>
   );
 };

@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom';
 import { useSelector } from 'react-redux'
 import { RootState } from './modules/reducers'
-import { MyRoutines } from './components/main';
 import Root from './components/Root';
 import {
   DashboardContainer,
@@ -17,17 +16,10 @@ import {
   HeaderContainer,
   SideBarContainer,
   CreateRoutineContainer,
-  RunRoutineContainer
+  RunRoutineContainer,
+  MyRoutinesContainer,
 } from './containers'
 import styled from 'styled-components';
-
-enum TitleConstants {
-  Dashboard = 'Dashboard',
-  CreateRoutine = 'Create Routine',
-  UsersRoutine = 'Users Routine',
-  Workout = 'Workout',
-  Mypage = 'Mypage',
-}
 
 const App = ({
   match,
@@ -64,7 +56,7 @@ const App = ({
                 path={'/createRoutine'}
                 component={CreateRoutineContainer}
               />
-              <Route path={'/usersroutine'} component={MyRoutines} />
+              <Route path={'/usersroutine'} component={MyRoutinesContainer} />
               <Route path={'/workout'} component={RunRoutineContainer} />
               <Route path={'/mypage'} component={MyPageContainer}/>
             </Switch>

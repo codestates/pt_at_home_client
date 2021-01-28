@@ -1,17 +1,6 @@
-const SET_MY_WORKOUTS = 'SET_MY_WORKOUTS';
+import { Workout } from './workoutList'
 
-export interface Workout {
-    id:number;
-    title:string;
-    instruction:string;
-    image:string[];
-    part:string[];
-    setCount:number;
-    count:number;
-    breakTime: number;
-    calrorie: number;
-    tool: string;
-}
+const SET_MY_WORKOUTS = 'SET_MY_WORKOUTS';
 
 export interface ActionMyWorkouts {
   type: string;
@@ -26,7 +15,31 @@ export const actionSetMyWorkouts = (
   payload,
 });
 
-const initialState: Array<Workout> = [];
+const initialState: Array<Workout> = [{
+  id:1,
+  title:'plank',
+  instruction:'코어운동으로써 매트를 깔고 하는게 좋은 운동이다',
+  image:['https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80', 'https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80'],
+  part:['코어', '복부'],
+  setCount:3,
+  count:60,
+  breakTime:30,
+  calrorie:1000,
+  category:'맨몸',
+  tool:'none'
+},{
+  id:2,
+  title:'plank',
+  instruction:'코어운동으로써 매트를 깔고 하는게 좋은 운동이다',
+  image:['https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80', 'https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80'],
+  part:['코어', '복부'],
+  setCount:3,
+  count:60,
+  breakTime:30,
+  calrorie:1000,
+  category:'기구',
+  tool:'none'
+}];
 
 const myWorkouts = (
   state = initialState,

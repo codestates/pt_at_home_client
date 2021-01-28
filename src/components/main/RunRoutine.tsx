@@ -17,7 +17,7 @@ const RunRoutine = ({
     let [intervCounter, setIntervCounter] = useState(initialInterve)
     let [intervImg, setIntervImg] = useState(initialInterve)
     let [status, setStatus] = useState('ready')
-    let [imgIdx, setImgIdx] = useState(0)
+    let [imgIdx, setImgIdx] = useState(1)
     let [repeat, setRepeat] = useState('ready')
     let imgList = workout[routineOrder].image
     let currentWorkout = workout[routineOrder]
@@ -113,7 +113,7 @@ const RunRoutine = ({
 
     useEffect(() => {
         if (imgIdx === imgList.length) {
-            setImgIdx(0)
+            setImgIdx(1)
             setCounter(actionCounter)
             setRepeat('next')
             setIntervImg(clearInterval(intervImg))
@@ -173,7 +173,7 @@ const RunRoutine = ({
 };
 
 const WhiteText = styled.div`
-    color:white;
+    color:black;
 `
 
 export default RunRoutine;

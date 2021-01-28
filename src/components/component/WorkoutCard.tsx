@@ -1,28 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import { GoHeart } from 'react-icons/go';
+import { Workout } from '../../modules/reducers/workoutList'
 import Img from '../../img/urbanbrush-20190214083430029790.png';
-
-interface Workout {
-  id:number;
-  title:string;
-  instruction:string;
-  image:string[];
-  part:string[];
-  setCount:number;
-  count:number;
-  breakTime: number;
-  calrorie: number;
-  tool: string;
-}
 
 interface WorkoutCardProps {
   workoutCard: Workout;
+  clickWorkoutCard(id:number):void;
 }
 
-const WorkoutCard = ({ workoutCard }: WorkoutCardProps): JSX.Element => {
+const WorkoutCard = ({
+  workoutCard,
+  clickWorkoutCard
+}: WorkoutCardProps): JSX.Element => {
   return (
-    <CardDiv>
+    <CardDiv onClick={()=> clickWorkoutCard(workoutCard.id)}>
       <Card>
         <CardImgWrap>
           <CardImg src={workoutCard.image[0]} />
