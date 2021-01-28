@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
+
 import CreateRoutineCard from '../component/CreateRoutineCard'
 import RoutineBox from '../component/RoutineBox'
 import { WorkoutOfRoutine } from '../../modules/reducers/routineList'
@@ -43,7 +44,6 @@ const reorder = (list: ICard[], startIndex: number, endIndex: number) => {
   result.splice(endIndex, 0, removed);
   return result;
 };
-
 
 const CreateRoutine = ({ myWorkouts }:CreateRoutineProps): JSX.Element => {
   const myWorkoutsIdList = myWorkouts.map(el => Object.assign({id:String(el.id)}))
@@ -145,7 +145,9 @@ const DropWrap = styled.div`
   position: relative;
   flex: 1;
 `;
-const DroppableDiv = styled.div``;
+const DroppableDiv = styled.div`
+  flex-wrap: wrap;
+`;
 const DropBox = styled.div`
   position: relative;
   flex: 1;

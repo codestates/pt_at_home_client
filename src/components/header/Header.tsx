@@ -13,11 +13,12 @@ const Header = ({
   logoutHandler,
   title,
 }: HeaderProps): JSX.Element => {
+  const noBottom = title !== 'Dashboard' && title !== 'Create Routine';
   return (
     <HeaderWrap id="asd">
       <HeaderTop isLogin={isLogin} logoutHandler={logoutHandler} />
       <HeaderMiddle title={title} />
-      <HeaderBottom />
+      {!noBottom && <HeaderBottom />}
     </HeaderWrap>
   );
 };
