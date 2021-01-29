@@ -1,33 +1,34 @@
 import React from 'react';
 import styled from 'styled-components';
-import RoutineCard from '../component/RoutineCard'
-import { MyRoutinesProps } from '../../containers/MyRoutinesContainer'
+import RoutineCard from '../component/RoutineCard';
+import { MyRoutinesProps } from '../../containers/MyRoutinesContainer';
 
 const MyRoutines = ({
   myRoutines,
-  clickRoutineCard
-}:MyRoutinesProps): JSX.Element => {
+  clickRoutineCard,
+}: MyRoutinesProps): JSX.Element => {
   return (
     <Wrap>
       <BodyWrap>
         <CardWrap>
-          {myRoutines.length > 0?
-          (myRoutines.map((el) => (
-                    <Cardli key={el.routineId}>
-                      <RoutineCard routineCard={el} clickRoutineCard={clickRoutineCard}/>
-                    </Cardli>
-                  ))):''}
+          {myRoutines.length > 0
+            ? myRoutines.map((el) => (
+                <Cardli key={el.routineId}>
+                  <RoutineCard
+                    routineCard={el}
+                    clickRoutineCard={clickRoutineCard}
+                  />
+                </Cardli>
+              ))
+            : ''}
         </CardWrap>
       </BodyWrap>
     </Wrap>
   );
 };
 
-
 const Wrap = styled.div`
   height: 100%;
-  min-height:100vh;
-  background-color: #13141c;
 `;
 const BodyWrap = styled.div`
   display: flex;

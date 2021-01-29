@@ -184,7 +184,7 @@ const HeaderBottom = (): JSX.Element => {
           filterArr.map((op, index) => (
             <FilterCard key={op.value}>
               {op.label}
-              <BiX
+              <Close
                 onClick={() => {
                   const removeFilter = filterArr.filter(
                     (item) => item.label !== op.label,
@@ -194,6 +194,15 @@ const HeaderBottom = (): JSX.Element => {
               />
             </FilterCard>
           ))}
+        {filterArr.length !== 0 && (
+          <Clear
+            onClick={() => {
+              setFilterArr([]);
+            }}
+          >
+            Clear
+          </Clear>
+        )}
       </TagWrap>
     </>
   );
@@ -209,11 +218,15 @@ const FilterWrap = styled.div`
 `;
 
 const CustomSelect = styled.div`
-  background-color: #212330;
+  background-color: #f0f0f0;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border: none;
   outline: none;
   border-radius: 5px;
-  color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000000;
   padding: 5px;
   margin-right: 15px;
   cursor: pointer;
@@ -224,7 +237,7 @@ const CustomOptionItem = styled.div`
   display: ${(props: { isdefault: boolean }) =>
     props.isdefault ? 'none' : 'block'};
   &:hover {
-    background-color: #30323d;
+    background-color: #dadada;
     &:nth-child(2) {
       border-radius: 5px 5px 0 0;
     }
@@ -236,10 +249,11 @@ const CustomOptionItem = styled.div`
 
 const CustomOption = styled.div`
   position: absolute;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   left: 0;
   top: ${(props: { width: number; height: number }) => `${props.height}px`};
   width: ${(props: { width: number; height: number }) => `${props.width}px`};
-  background-color: #212330;
+  background-color: #f0f0f0;
   text-align: center;
   border-radius: 5px;
 `;
@@ -247,12 +261,13 @@ const CustomOption = styled.div`
 const SearchInputWrap = styled.div``;
 
 const SearchInput = styled.input`
-  background: #202230;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background: #f0f0f0;
   border: none;
   padding: 0 40px 0 15px;
   line-height: 30px;
   outline: none;
-  color: #f0f0f0;
+  color: #000000;
   border-radius: 5px;
   &:focus {
     &::-webkit-input-placeholder {
@@ -274,20 +289,43 @@ const SearchInput = styled.input`
 `;
 const FilterCard = styled.span`
   width: 90px;
-  background-color: #212330;
-  color: #f0f0f0;
+  background-color: #f0f0f0;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  color: #000000;
   border-radius: 5px;
   display: flex;
   justify-content: space-between;
   margin-right: 10px;
   padding: 3px;
 `;
+const Clear = styled.button`
+  width: 50px;
+  background-color: #f0f0f0;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  color: #000000;
+  border-radius: 5px;
+  display: flex;
+  border: none;
+  justify-content: center;
+  margin-left: 20px;
+  padding: 3px 15x;
+  outline: none;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    background-color: #bdbdbd;
+  }
+`;
 const Search = styled(BiSearch)`
   position: relative;
   top: 22%;
   right: 13%;
   font-size: 20px;
-  color: #f0f0f0;
+  color: #000000;
+  cursor: pointer;
+`;
+const Close = styled(BiX)`
+  cursor: pointer;
 `;
 const TagWrap = styled.div`
   display: flex;
