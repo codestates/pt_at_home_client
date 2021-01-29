@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-
 import CreateRoutineCard from '../component/CreateRoutineCard'
+// import _WorkoutCard from '../component/_WorkoutCard'
 import RoutineBox from '../component/RoutineBox'
 import { WorkoutOfRoutine } from '../../modules/reducers/routineList'
 import { Workout } from '../../modules/reducers/workoutList'
@@ -39,22 +39,33 @@ export interface ICard {
 }
 
 const reorder = (list: ICard[], startIndex: number, endIndex: number) => {
+  // console.log('reorder', list,startIndex, endIndex )
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
   return result;
 };
 
-const CreateRoutine = ({ myWorkouts }:CreateRoutineProps): JSX.Element => {
+const CreateRoutine = ({
+    myWorkouts,
+    clickCardBtnHandler,
+    saveMyRoutine,
+    setCurretRoutine,
+    dropCardIntoRoutineBox,
+    clickWorkoutCardHandler,
+    addedWorkout,
+    isLogin
+  }:CreateRoutineProps): JSX.Element => {
   const myWorkoutsIdList = myWorkouts.map(el => Object.assign({id:String(el.id)}))
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const droppableRef = useRef<HTMLDivElement | null>(null);
   const [cards, setCards] = useState<ICard[]>(myWorkoutsIdList);
   const [routineCards, setRoutineCards] = useState<ICard[]>([]);
+  const [area, setArea] = useState('')
   
   const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
-    console.log('result : ', result);
-    console.log('provided : ', provided);
+    // console.log('result : ', result);
+    // console.log('provided : ', provided);
     if (!result.destination) {
       return;
     }
@@ -67,7 +78,7 @@ const CreateRoutine = ({ myWorkouts }:CreateRoutineProps): JSX.Element => {
         result.source.index,
         result.destination.index,
       );
-      // setter(_cards);
+      sourceId === 'RoutineBox' ? setRoutineCards(_cards):setCards(_cards)
     } else if (destinationId === 'RoutineBox') {
       const targetCard = cards.find((card) => {
         return result.draggableId === card.id;
@@ -83,9 +94,7 @@ const CreateRoutine = ({ myWorkouts }:CreateRoutineProps): JSX.Element => {
         return result.draggableId === card.id;
       });
       if (targetCard) {
-        setRoutineCards((prev) =>
-          prev.filter((card) => card.id !== result.draggableId),
-        );
+        setRoutineCards((prev) => prev.filter((card) => card.id !== result.draggableId),);
         setCards((prev) => [...prev, targetCard]);
       }
     }
@@ -99,6 +108,7 @@ const CreateRoutine = ({ myWorkouts }:CreateRoutineProps): JSX.Element => {
       droppableRef.current.style.height = '100%';
     }
   }, []);
+
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -119,6 +129,10 @@ const CreateRoutine = ({ myWorkouts }:CreateRoutineProps): JSX.Element => {
                     key={card.id}
                     draggableId={card.id}
                     index={index}
+                    workout={myWorkouts.filter((el)=>el.id === Number(card.id))[0]}
+                    clickCardBtnHandler={clickCardBtnHandler}
+                    clickWorkoutCardHandler={clickWorkoutCardHandler}
+                    area={'cards'}
                   />
                 ))}
               </DroppableDiv>
@@ -126,7 +140,18 @@ const CreateRoutine = ({ myWorkouts }:CreateRoutineProps): JSX.Element => {
           </Droppable>
         </DropWrap>
         <DropBox>
-          <RoutineBox cards={routineCards} />
+          <RoutineBox 
+            isLogin={isLogin}
+            addedWorkout={addedWorkout}
+            cards={routineCards} 
+            myWorkouts={myWorkouts} 
+            clickCardBtnHandler={clickCardBtnHandler}
+            clickWorkoutCardHandler={clickWorkoutCardHandler} 
+            area={'RoutineBox'}
+            saveMyRoutine={saveMyRoutine}
+            setCurretRoutine={setCurretRoutine}
+            dropCardIntoRoutineBox={dropCardIntoRoutineBox}
+            />
         </DropBox>
       </Wrap>
     </DragDropContext>
@@ -138,20 +163,25 @@ const Wrap = styled.div`
   background-color: #13141c;
   display: flex;
   justify-content: space-between;
-  padding: 50px 100px 0 20px;
+  // padding: 50px 100px 0 20px;
+  padding:1.5% 1%;
 `;
+
 const DropWrap = styled.div`
   height: 100%;
-  position: relative;
-  flex: 1;
+  width:56%;
 `;
+
 const DroppableDiv = styled.div`
   flex-wrap: wrap;
 `;
+
 const DropBox = styled.div`
-  position: relative;
+  // position: relative;
   flex: 1;
-  max-width: 600px;
+  height:100%;
+  margin:0% 2%;
+  // max-width: 500px;
 `;
 export default CreateRoutine;
 

@@ -1,20 +1,21 @@
 import React from 'react';
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 
-interface ModalRequestLoginProps {
-    offLoginModal():void;
+interface ModalConfirm {
+    message:string;
+    buttonValue:string;
+    buttonHandler():void;
+    modalClose():void;
 }
 
-const ModalRequestLogin = ({offLoginModal}:ModalRequestLoginProps):JSX.Element => {
+const ModalConfirm = ({message, buttonValue, buttonHandler, modalClose}:ModalConfirm):JSX.Element => {
     return (
         <Frame>
             <Wrap>
-                <CloseBtn><input type="button" value="X" onClick={offLoginModal}/></CloseBtn>
-                <LoginMsg>Please Login first, if you want to save this routine!</LoginMsg>
+                <CloseBtn><input type="button" value="X" onClick={modalClose}/></CloseBtn>
+                <LoginMsg>{message}</LoginMsg>
                 <ControlBtn>
-                    <StyledLink to='/login'>LOG IN</StyledLink>
-                    <StyledLink to='/signup'>SIGN UP</StyledLink>
+                    <YesBtn type="button" value={buttonValue} onClick={buttonHandler}/>
                 </ControlBtn>
             </Wrap>
         </Frame>
@@ -30,9 +31,9 @@ const Frame = styled.div`
   border-radius: 4px;
   transition: 400ms ease;
   position: absolute;
-//   margin-left:30%;
+  margin-left:30%;
   margin-top:200px;
-  left:150px;
+  left:252px;
   padding: 5px;
   z-index:1;
 `;
@@ -65,7 +66,7 @@ const ControlBtn = styled.div`
     margin-bottom:10%;
 `
 
-const StyledLink = styled(Link)`
+const YesBtn = styled.input`
     border-radius:5px;
     text-decoration: none;
     color: #f0f0f0;
@@ -74,4 +75,4 @@ const StyledLink = styled(Link)`
 
 `;
 
-export default ModalRequestLogin;
+export default ModalConfirm;

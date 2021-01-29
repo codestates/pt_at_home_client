@@ -25,7 +25,7 @@ interface LoginContProps {
 }
 
 export interface LoginProps {
-  loginHandler(loginData: LoginData): void;
+  loginHandler(loginData: LoginData, type:string): void;
 }
 
 const LoginContainer = ({prevPath}:LoginContProps):JSX.Element => {
@@ -63,12 +63,12 @@ const LoginContainer = ({prevPath}:LoginContProps):JSX.Element => {
     }, [isLogin.isLogin])
     
     // completed
-    const loginHandler = (loginData:LoginData):void => {
+    const loginHandler = (loginData:LoginData, type:string):void => {
         axios.post<SigninResponse>(`${URI}/users/signin`, loginData, {headers:{'Content-Type':'application/json'}})
             .then(res => {
                 console.log('login', res)
                 if (res.data.message === 'signin success') {
-                    dispatch(actionLogin({isLogin:true, isExpired:false}))
+                    dispatch(actionLogin({isLogin:true, isExpired:false, type}))
                     dispatch(actionSetUserInfo(res.data.data))
                     history.goBack()
                 }

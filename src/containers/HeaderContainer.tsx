@@ -43,7 +43,7 @@ enum TitleConstants {
   Dashboard = 'DASHBOARD',
   CreateRoutine = 'CREATE ROUTINE',
   UsersRoutine = 'MY ROUTINES',
-  Workout = 'RUN ROUTINES',
+  RunRoutine = 'RUN ROUTINE',
   Mypage = 'MY PAGE',
 }
 
@@ -72,8 +72,8 @@ const HeaderContainer = ():JSX.Element => {
             return TitleConstants.CreateRoutine;
           case '/usersroutine':
             return TitleConstants.UsersRoutine;
-          case '/workout':
-            return TitleConstants.Workout;
+          case '/runroutine':
+            return TitleConstants.RunRoutine;
           case '/mypage':
             return TitleConstants.Mypage;
           default:
@@ -152,7 +152,7 @@ const HeaderContainer = ():JSX.Element => {
             .then(res => {
                 console.log('logout', res)
                 if (res.data.message === 'signout success') {
-                    dispatch(actionLogout({isLogin:false}))
+                    dispatch(actionLogout({isLogin:false, isExpired:false, type:'guest'}))
                 }
             })
       }

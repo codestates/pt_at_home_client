@@ -12,6 +12,9 @@ export interface Workout {
     setCount:number;
     count:number;
     breakTime: number;
+    mySetCount:number;
+    myCount:number;
+    myBreakTime:number;
     calrorie: number;
     category:string;
     tool:string;
@@ -44,6 +47,9 @@ const initialState:Array<Workout> = [{
     setCount:3,
     count:60,
     breakTime:30,
+    mySetCount:3,
+    myCount:60,
+    myBreakTime:3,
     calrorie:1000,
     category:'맨몸',
     tool:'none'
@@ -56,6 +62,9 @@ const initialState:Array<Workout> = [{
     setCount:3,
     count:60,
     breakTime:30,
+    mySetCount:3,
+    myCount:60,
+    myBreakTime:3,
     calrorie:1000,
     category:'기구',
     tool:'none'

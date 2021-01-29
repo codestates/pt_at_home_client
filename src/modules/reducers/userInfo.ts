@@ -85,7 +85,7 @@ export const actionResignUserInfo = (email:string) => async (dispatch:Dispatch, 
             }}
         ).then (res => {
             if (res.data.message === 'resign success') {
-                dispatch(actionLogout({isLogin:false}))
+                dispatch(actionLogout({isLogin:false, isExpired:false, type:'guest'}))
                 dispatch(actionResetUserInfo())
             }
         })
