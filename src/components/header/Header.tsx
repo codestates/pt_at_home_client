@@ -4,6 +4,7 @@ import HeaderBottom from './headerBottom/HeaderBottom';
 import HeaderTop from './headerTop/HeaderTop';
 import HeaderMiddle from './hederMiddle/HeaderMiddle';
 import { HeaderProps } from '../../containers/HeaderContainer';
+import SaveMeHomtLogo from '../../img/savemehomt_logo.png';
 
 const Header = ({
   isLogin,
@@ -13,22 +14,33 @@ const Header = ({
   logoutHandler,
   title,
 }: HeaderProps): JSX.Element => {
-  const noBottom = title !== 'Dashboard' && title !== 'Create Routine';
+  const noBottom = title !== 'DASHBOARD' && title !== 'CREATE ROUTINE';
   return (
-    <HeaderWrap id="asd">
-      <HeaderTop isLogin={isLogin} logoutHandler={logoutHandler} />
-      <HeaderMiddle title={title} />
-      {!noBottom && <HeaderBottom />}
-    </HeaderWrap>
+    <Wrap>
+      <Logo src={SaveMeHomtLogo} />
+      <HeaderWrap id="asd">
+        <HeaderTop isLogin={isLogin} logoutHandler={logoutHandler} />
+        <HeaderMiddle title={title} />
+        {!noBottom && <HeaderBottom />}
+      </HeaderWrap>
+    </Wrap>
   );
 };
+const Wrap = styled.div`
+  display: flex;
+  flex-direction: row;
+  border-bottom: solid 1px #ededed;
+`;
 
 const HeaderWrap = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #13141c;
-  box-shadow: 0 1px 30px 0 rgba(2, 2, 3, 0.7);
-  padding: 30px;
+  width: 100%;
+  padding: 15px 15px 15px 40px;
 `;
-
+const Logo = styled.img`
+  width: 230px;
+  border-right: solid 1px #ededed;
+  height: 195px;
+`;
 export default Header;

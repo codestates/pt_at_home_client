@@ -5,8 +5,8 @@ import {
   withRouter,
   RouteComponentProps,
 } from 'react-router-dom';
-import { useSelector } from 'react-redux'
-import { RootState } from './modules/reducers'
+import { useSelector } from 'react-redux';
+import { RootState } from './modules/reducers';
 import Root from './components/Root';
 import {
   DashboardContainer,
@@ -18,7 +18,8 @@ import {
   CreateRoutineContainer,
   RunRoutineContainer,
   MyRoutinesContainer,
-} from './containers'
+} from './containers';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import styled from 'styled-components';
 
 const App = ({
@@ -26,41 +27,53 @@ const App = ({
   history,
   location,
 }: RouteComponentProps): JSX.Element => {
-  const isExpired = useSelector((state:RootState) => state.isLogin.isExpired)
-  const [prevPath, setPrevPath] = useState(location.pathname)
+  const isExpired = useSelector((state: RootState) => state.isLogin.isExpired);
+  const [prevPath, setPrevPath] = useState(location.pathname);
+  const [isPlag, setIsPlag] = useState(true);
 
   useEffect(() => {
     if (isExpired) {
-      history.push('/login')
-    } 
-  },[isExpired])
+      history.push('/login');
+    }
+  }, [isExpired]);
 
   useEffect(() => {
-    setPrevPath(location.pathname)
-  }, [prevPath])
+    setPrevPath(location.pathname);
+  }, [prevPath]);
+
+  const Btn = () => {
+    isPlag === true ? setIsPlag(false) : setIsPlag(true);
+  };
 
   const FeaturePage = (): JSX.Element => {
     return (
       <Wrap>
-        <Side className="side-bar">
-          <SideBarContainer />
-        </Side>
         <MainWrap className="wrap">
           <HeaderStyle className="header">
             <HeaderContainer />
           </HeaderStyle>
-          <Main className="main">
-            <Switch>
-              <Route path={'/dashboard'} component={DashboardContainer} />
-              <Route
-                path={'/createRoutine'}
-                component={CreateRoutineContainer}
-              />
-              <Route path={'/usersroutine'} component={MyRoutinesContainer} />
-              <Route path={'/workout'} component={RunRoutineContainer} />
-              <Route path={'/mypage'} component={MyPageContainer}/>
-            </Switch>
-          </Main>
+          <Bottom>
+            <SideWrap>
+              <Side className="side-bar">
+                <SideBarContainer />
+                <TabBtn onClick={Btn}>
+                  {isPlag === true ? <TabRightIcon /> : <TabLeftIcon />}
+                </TabBtn>
+              </Side>
+            </SideWrap>
+            <Main className="main">
+              <Switch>
+                <Route path={'/dashboard'} component={DashboardContainer} />
+                <Route
+                  path={'/createRoutine'}
+                  component={CreateRoutineContainer}
+                />
+                <Route path={'/usersroutine'} component={MyRoutinesContainer} />
+                <Route path={'/workout'} component={RunRoutineContainer} />
+                <Route path={'/mypage'} component={MyPageContainer} />
+              </Switch>
+            </Main>
+          </Bottom>
         </MainWrap>
       </Wrap>
     );
@@ -73,7 +86,7 @@ const App = ({
       ) : location.pathname === '/signup' ? (
         <SignupContainer />
       ) : location.pathname === '/login' ? (
-        <LoginContainer prevPath={prevPath}/>
+        <LoginContainer prevPath={prevPath} />
       ) : (
         <FeaturePage />
       )}
@@ -84,34 +97,71 @@ const App = ({
 const Wrap = styled.div`
   display: flex;
   width: 100%;
+  height: 100%;
 `;
-const Side = styled.div`
-  position: sticky;
+const Bottom = styled.div`
+  display: flex;
+  height: 100%;
+`;
+const SideWrap = styled.div`
+  position: fixed;
   top: 0;
-  height: 100vh;
-  width: 300px;
-  background-color: #13141c;
+  height: 100%;
+  width: 230px;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100;
-  box-shadow: 0 1px 30px 0 rgba(2, 2, 3, 0.7);
+  background-color: #ffffff;
+  padding: 191px 0 0 0;
+  z-index: 1;
+`;
+const Side = styled.div`
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 230px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: solid 1px #ededed;
+`;
+const TabBtn = styled.div`
+  position: absolute;
+  right: -32px;
+  color: #7f97a7;
+  cursor: pointer;
+  width: 32px;
+  height: 132px;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIxMzEiIHZpZXdCb3g9IjAgMCAzMiAxMzEiPgogICAgPHBhdGggZmlsbD0iI0ZGRiIgZmlsbC1ydWxlPSJldmVub2RkIiBzdHJva2U9IiNFNEU0RTQiIGQ9Ik0yMy43NzUgMTYuMzQxTC0uNSAxLjA5NnYxMjguODA4bDI0LjI3NS0xNS4yNDVjNC44MDctMy4wMiA3LjcyNS04LjI5NyA3LjcyNS0xMy45NzNWMzAuMzE0YzAtNS42NzYtMi45MTgtMTAuOTU0LTcuNzI1LTEzLjk3M3oiLz4KPC9zdmc+Cg==);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 const HeaderStyle = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #13141c;
-  box-shadow: 0 1px 30px 0 rgba(2, 2, 3, 0.7);
   width: 100%;
   z-index: 99;
-  position: sticky;
+  position: fixed;
+  background-color: #ffffff;
   top: 0;
 `;
 const MainWrap = styled.div`
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 const Main = styled.div`
-  height: calc(100% - 220px);
+  flex: 1;
+  padding: 215px 0 0 255px;
 `;
-
+const TabRightIcon = styled(IoIosArrowForward)`
+  width: 14px;
+  height: 20px;
+`;
+const TabLeftIcon = styled(IoIosArrowBack)`
+  width: 14px;
+  height: 20px;
+`;
 export default withRouter(App);
