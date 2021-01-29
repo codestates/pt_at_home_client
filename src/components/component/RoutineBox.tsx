@@ -45,7 +45,7 @@ const CardWrap = styled.div`
   width: 310px;
   height: 600px;
   border-radius: 5px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   padding: 5px;
 `;

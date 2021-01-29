@@ -19,7 +19,7 @@ const HeaderTop = ({ isLogin, logoutHandler }: HeaderTopProps) => {
             <LoginBtn onClick={logoutHandler}>LOGOUT</LoginBtn>
           ) : (
             <LoginBtn>
-              <Link to={'/login'}>LOGIN</Link>
+              <LoginLink to={'/login'}>LOGIN</LoginLink>
             </LoginBtn>
           )}
         </RightItem>
@@ -33,12 +33,22 @@ const Wrap = styled.div`
 `;
 const LoginBtn = styled.button`
   opacity: 1;
-  color: #f0f0f0;
-  background: #202230;
+  color: #000000;
+  background: #f0f0f0;
   border: none;
   line-height: 35px;
-  padding: 0 20px;
   border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-sizing: border-box;
+  outline: none;
+  padding: 0;
+`;
+const LoginLink = styled(Link)`
+  color: #000000;
+  text-decoration: none;
+  width: 100%;
+  padding: 0 20px;
+  display: block;
 `;
 const ItemsDiv = styled.div`
   display: flex;
