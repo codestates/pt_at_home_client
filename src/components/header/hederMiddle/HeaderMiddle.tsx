@@ -38,7 +38,7 @@ const MainTitle = styled.span`
   line-height: 32px;
   font-weight: 700;
   font-size: 32px;
-  color: #f0f0f0;
+  color: #000000;
 `;
 
 export default HeaderMiddle;

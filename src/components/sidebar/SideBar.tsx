@@ -38,9 +38,10 @@ const Wrap = styled.div`
 `;
 
 const StyledLink = styled(Link)`
-  color: #f0f0f0;
+  color: #000000;
   text-decoration: none;
   font-size: 25px;
+  font-weight: 700;
   width: 100%;
   display: block;
   height: 50px;
@@ -50,7 +51,7 @@ const StyledLink = styled(Link)`
 
 const LinkWrap = styled.div`
   &:hover {
-    background-color: #30323d;
+    background-color: #f0f0f0;
   }
 `;
 

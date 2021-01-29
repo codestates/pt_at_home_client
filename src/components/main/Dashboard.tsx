@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import RoutineCard from '../component/RoutineCard';
 import WorkoutCard from '../component/WorkoutCard';
 import { DashboardProps } from '../../containers/DashboardContainer';
+
 const Dashboard = ({
   isLogin,
   workoutList,
@@ -19,20 +20,25 @@ const Dashboard = ({
   saveOrRemoveWorkout,
   saveOrRemoveRoutine,
 }: DashboardProps): JSX.Element => {
-
   return (
     <Wrap>
       <BodyWrap>
         <CardWrap>
-          {!isDashboardRoutine
+          {isDashboardRoutine
             ? routineList.map((el) => (
                 <Cardli key={el.routineId}>
-                  <RoutineCard routineCard={el} clickRoutineCard={clickRoutineCard} />
+                  <RoutineCard
+                    routineCard={el}
+                    clickRoutineCard={clickRoutineCard}
+                  />
                 </Cardli>
               ))
             : workoutList.map((el) => (
                 <Cardli key={el.id}>
-                  <WorkoutCard workoutCard={el} clickWorkoutCard={clickWorkoutCard}/>
+                  <WorkoutCard
+                    workoutCard={el}
+                    clickWorkoutCard={clickWorkoutCard}
+                  />
                 </Cardli>
               ))}
         </CardWrap>
@@ -41,11 +47,7 @@ const Dashboard = ({
   );
 };
 
-const Wrap = styled.div`
-  height: 100%;
-  min-height:100vh;
-  background-color: #13141c;
-`;
+const Wrap = styled.div``;
 const BodyWrap = styled.div`
   display: flex;
   justify-content: center;
