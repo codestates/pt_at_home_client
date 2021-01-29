@@ -57,7 +57,7 @@ const App = ({
                 component={CreateRoutineContainer}
               />
               <Route path={'/usersroutine'} component={MyRoutinesContainer} />
-              <Route path={'/workout'} component={RunRoutineContainer} />
+              <Route path={'/runroutine'} component={RunRoutineContainer} />
               <Route path={'/mypage'} component={MyPageContainer}/>
             </Switch>
           </Main>

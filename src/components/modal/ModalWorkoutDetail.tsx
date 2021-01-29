@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { Workout } from '../../modules/reducers/workoutList'
 import { ModalWorkoutProps } from '../../containers/DashboardContainer'
 
-
 const ModalWorkoutDetail = ({
     workoutDetail,
     offWorkoutModal,

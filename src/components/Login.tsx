@@ -17,7 +17,7 @@ const Login = ({loginHandler}:LoginProps):JSX.Element => {
             <div>
                 <input type="email" placeholder='Email' name='email' value={email} onChange={handleChange}/>
                 <input type="password" placeholder='password' name='password' value={password} onChange={handleChange}/>
-                <input type="button" value="Login" onClick={() => loginHandler({email, password})}/>
+                <input type="button" value="Login" onClick={() => loginHandler({email, password}, 'savemehomt')}/>
             </div>
             <Link to={'/signup'}>Sign Up</Link>
             <div>Github Login</div>

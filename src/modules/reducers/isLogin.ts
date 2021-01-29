@@ -1,5 +1,6 @@
 const LOGIN = 'LOGIN'
 const LOGOUT = 'LOGOUT'
+const SET_TYPE = 'SET_TYPE'
 export const TOKEN_EXPIRED = 'EXPIRED'
 
 export interface ActionIsLogin {
@@ -12,13 +13,24 @@ interface ActionIsExpired {
     payload:IsExpired
 }
 
-interface IsExpired {
-    isExpired:boolean
+interface ActionType {
+    type:string;
+    payload:SetType;
 }
+
+interface SetType {
+    type:string
+}
+
+interface IsExpired {
+    isExpired:boolean;
+}
+
 
 export interface IsLogin {
     isLogin:boolean;
     isExpired?:boolean;
+    type:string;
 }
 
 export const actionLogin = (payload:IsLogin):ActionIsLogin => ({
@@ -36,9 +48,15 @@ export const actionExpired = (payload:IsExpired):ActionIsExpired => ({
     payload
 })
 
+export const actionSetLoginType = (payload:SetType):ActionType => ({
+    type:SET_TYPE,
+    payload
+})
+
 const initialState:IsLogin = {
     isLogin:false,
-    isExpired:false
+    isExpired:false,
+    type:'guest'
 }
 
 const isLogin = (state=initialState, action:ActionIsLogin):IsLogin => {
@@ -49,6 +67,8 @@ const isLogin = (state=initialState, action:ActionIsLogin):IsLogin => {
             return Object.assign({}, state, action.payload)
         case TOKEN_EXPIRED:
             return Object.assign({}, state, action.payload)
+        case SET_TYPE:
+            return Object.assign({}, state, action.payload) 
         default:
             return state;
     }

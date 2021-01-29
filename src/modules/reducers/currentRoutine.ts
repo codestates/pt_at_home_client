@@ -3,8 +3,8 @@ const SET_CURRENT_ROUTINE = 'SET_CURRENT_ROUTINE'
 const RESET_CURRENT_ROUTINE = 'RESET_CURRENT_ROUTINE'
 
 export interface CurrentRoutine {
-    routineId:number;
-    title:string;
+    routineId?:number;
+    title?:string;
     workout:Array<WorkoutOfRoutine>;
 }
 

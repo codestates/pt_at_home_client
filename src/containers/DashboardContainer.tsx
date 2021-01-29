@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import { Dashboard } from '../components/main';
 import { ModalWorkoutDetail, ModalRoutineDetail, ModalRequestLogin } from '../components/modal'
 import { Workout } from '../modules/reducers/workoutList'
@@ -7,7 +7,13 @@ import { Routine } from '../modules/reducers/routineList'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../modules/reducers'
 import { URI } from '../index'
-import { actionSetMyWorkouts, actionSetMyRoutines, actionRenewToken, actionSetUserInfo , actionLogin } from '../modules/actions'
+import { 
+  actionSetMyWorkouts,
+  actionSetMyRoutines,
+  actionRenewToken,
+  actionSetUserInfo,
+  actionLogin,
+  actionSetLoginType } from '../modules/actions'
 import axios from 'axios'
 axios.defaults.withCredentials = true
 
@@ -60,29 +66,43 @@ const DashboardContainer = ():JSX.Element => {
   const [routineModal, setRoutineModal] = useState(false)
   const [loginModal, setLoginModal] = useState(false)
   const path = useLocation()
+  const history = useHistory()
 
   useEffect(() => {
-    const url = new URL(window.location.href)
-    const authorizationCode = url.searchParams.get('code')
-    if (authorizationCode) {
-      axios.get(`${URI}/users/kakao`, {headers:{
-        'Content-Type':'application/json',
-        'Authorization':`${authorizationCode}`
-      }})
-      .then(res => {
-        if (res.data.message === 'auth success') {
-          actionSetUserInfo(res.data.data)
-          actionLogin({isLogin:true, isExpired:false})
-        }
-      })
-    }
-
     return () => {
       setWorkoutModal(false)
       setWorkoutModal(false)
       setLoginModal(false)
     }
   }, [path])
+
+
+  // 실제 test 필요
+  // 깃헙 = 20
+  // 구글 = 73
+  // 카카오 = 86
+  useEffect(() => {
+    const url = new URL(window.location.href)
+    const authorizationCode = url.searchParams.get('code')
+    if (authorizationCode) {
+      console.log(authorizationCode, authorizationCode.length)
+      let source:string=''
+      if (authorizationCode.length === 20) source = 'github'
+      else if (authorizationCode.length === 73) source = 'google'
+      else if (authorizationCode.length === 86) source = 'kakao'
+      axios.post(`${URI}/users/${source}`, {authCode:authorizationCode},{headers:{'Content-Type':'application/json'}})
+      .then(res => {
+        if (res.data.message === 'auth success') {
+          actionSetUserInfo(res.data.data)
+          actionLogin({isLogin:true, isExpired:false, type:source})
+        } else {
+          console.log('guest')
+          history.push('/signup')
+          actionSetLoginType({type:'guest'})
+        }
+      })
+    }
+  }, [isLogin.type])
 
 
   

@@ -17,7 +17,7 @@ const SideBar = ({
         <StyledLink to="/createroutine">Create Routine</StyledLink>
       </LinkWrap>
       <LinkWrap>
-        <StyledLink to="/workout">Run Routine</StyledLink>
+        <StyledLink to="/runroutine">Run Routine</StyledLink>
       </LinkWrap>
       <LinkWrap onClick={getMyRoutines}>
         <StyledLink to="/usersroutine">My Routines</StyledLink>
