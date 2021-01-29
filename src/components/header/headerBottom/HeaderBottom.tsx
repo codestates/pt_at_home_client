@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { BiX, BiSearch } from 'react-icons/bi';
 import { useOnClickDocument } from '../../../hooks/useOnClickDocument';
 import { BsFillCaretDownFill } from 'react-icons/bs';
+import { HeaderBottomProps } from '../Header' 
 
 interface IFilterOption {
   label: string;
@@ -74,7 +75,11 @@ const filterModels: IFilter[] = [
   },
 ];
 
-const HeaderBottom = (): JSX.Element => {
+const HeaderBottom = ({
+  searchHandler,
+  clickRoutineHandler,
+  filterHandler
+}:HeaderBottomProps): JSX.Element => {
   const dropdownRefs = [useRef(), useRef()];
   const [filterArr, setFilterArr] = useState<IFilterOption[]>([]);
   const [dropdownModels, setDropdownModels] = useState(() => {
@@ -83,6 +88,9 @@ const HeaderBottom = (): JSX.Element => {
       return filter;
     });
   });
+
+  console.log(filterArr)
+
   const allClose = () => {
     setDropdownModels(
       dropdownModels.map((model) => {
@@ -91,6 +99,7 @@ const HeaderBottom = (): JSX.Element => {
       }),
     );
   };
+
   useOnClickDocument(dropdownRefs[0], (event) => {
     if (event.target === dropdownRefs[0].current) {
       return;
@@ -100,6 +109,7 @@ const HeaderBottom = (): JSX.Element => {
     }
     allClose();
   });
+
   useOnClickDocument(dropdownRefs[1], (event) => {
     if (event.target === dropdownRefs[1].current) {
       return;
@@ -109,6 +119,7 @@ const HeaderBottom = (): JSX.Element => {
     }
     allClose();
   });
+
   const onChangeSelect = (id: number, op: IFilterOption) => {
     toggleDropdwon(id);
     // const filterRemove = filterArr.filter((item) => item.label === op.label);
@@ -118,6 +129,7 @@ const HeaderBottom = (): JSX.Element => {
       setFilterArr([...filterArr, op]);
     }
   };
+
   const toggleDropdwon = (id: number) => {
     setDropdownModels(
       dropdownModels.map((model) => {
