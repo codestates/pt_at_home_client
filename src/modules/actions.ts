@@ -1,4 +1,4 @@
-import { actionLogin, actionLogout, actionExpired } from './reducers/isLogin'
+import { actionLogin, actionLogout, actionExpired, actionSetLoginType } from './reducers/isLogin'
 import { actionSetUserInfo, actionUpdateUserInfo, actionRenewToken, actionResignUserInfo } from './reducers/userInfo'
 import { actionSetWorkoutList } from './reducers/workoutList'
 import { actionSetMyWorkouts } from './reducers/myWorkouts'
@@ -11,6 +11,7 @@ export {
     actionLogin,
     actionLogout,
     actionExpired,
+    actionSetLoginType,
     actionSetUserInfo,
     actionUpdateUserInfo,
     actionRenewToken,

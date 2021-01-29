@@ -1,7 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
-import { Workout } from '../../modules/reducers/workoutList';
-import { ModalWorkoutProps } from '../../containers/DashboardContainer';
+import styled from 'styled-components'
+import { Workout } from '../../modules/reducers/workoutList'
+import { ModalWorkoutProps } from '../../containers/DashboardContainer'
+
 
 const ModalWorkoutDetail = ({
   workoutDetail,
