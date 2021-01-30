@@ -17,7 +17,7 @@ const WorkoutCard = ({
     <CardDiv onClick={() => clickWorkoutCard(workoutCard.id)}>
       <Card>
         <CardImgWrap>
-          <CardImg src={workoutCard.image[0]} />
+          <CardImg src={workoutCard.image[1]} />
         </CardImgWrap>
         <CardContents>
           <Marker />

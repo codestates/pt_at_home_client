@@ -32,7 +32,7 @@ const CreateRoutineCard = ({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <Card onClick={() => clickWorkoutCardHandler(area, workout)}>
+          <Card onClick={() => clickWorkoutCardHandler(area,workout)}>
             <CardImgWrap>
               <CardImg src={image[0]} />
             </CardImgWrap>

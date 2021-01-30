@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { CurrentRoutineProps } from '../../containers/RunRoutineContainer';
+import RoutineCardOrder from '../component/RoutineCardOrder'
 import styled from 'styled-components';
+import { Card, CardContents } from '../component/_WorkoutCard_2'
 import CreateRoutineCard from '../component/CreateRoutineCard';
 
 type SetInterval = ReturnType<typeof setInterval>;
@@ -20,6 +22,8 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
   let totalCount = workout[routineOrder].myCount;
   let breakCount = workout[routineOrder].myBreakTime;
   let num = useMemo(() => routineOrder + 1, [routineOrder]);
+  const slideRef = useRef<HTMLDivElement>(null)
+  let breakTimeImage = 'https://ptathomebucket.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%B2%E1%84%89%E1%85%B5%E1%86%A8.jpeg'
 
   useEffect(() => {
     if (
@@ -85,7 +89,7 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
   useEffect(() => {
     if (repeat === 'repeat') {
       console.log('repeat');
-      setIntervImg(setInterval(() => setImgIdx(imgIdx++), 1500));
+      setIntervImg(setInterval(() => setImgIdx(imgIdx++), 300));
     }
     if (repeat === 'next') {
       if (counter === totalCount) {
@@ -118,8 +122,12 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
     }
   }, [imgIdx]);
 
+  useEffect(() => {
+    
+  }, [routineOrder])
+
   const runWorkout = () => {
-    if (currentWorkout.myCount < 5) {
+    if (currentWorkout.image.length > 2) {
       setRepeat('repeat');
     } else {
       setCounter(counter++);
@@ -154,30 +162,35 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
 
   return (
     <Wrap>
-      <CardWrap>title</CardWrap>
       <RunWrap>
         {/* <div>{currentWorkout.id}</div> */}
-        <Box>
-          <ImgStyle>Image : {currentImg}</ImgStyle>
+          <ImgBox>
+            <ImgStyle src={status === 'break'?breakTimeImage:currentImg} />
+          </ImgBox>
           <CountAndBtn>
-            <CountWrap>{`${counter}/${
-              status === 'break' || status === 'pauseBreak'
-                ? breakCount
-                : totalCount
-            }`}</CountWrap>
+            <ControlTop>
+              <Title>{status === 'break'?'Break Time':currentWorkout.title.toUpperCase()}</Title>
+              <CountWrap>{`${counter}/${
+                status === 'break' || status === 'pauseBreak'
+                  ? breakCount
+                  : totalCount
+              }`}</CountWrap>
+            </ControlTop>
             <ButtonWrap>
-              <Row1>
-                <Btn type="button" value="START" onClick={startHandler} />
-                <Btn type="button" value="PAUSE" onClick={pauseHandler} />
-              </Row1>
-              <Row2>
-                <Btn type="button" value="RESUME" onClick={resumeHandler} />
-                <Btn type="button" value="RESET" />
-              </Row2>
+              {/* <Row1> */}
+                {status === 'ready' || status === 'finish'?<Btn type="button" value="START" onClick={startHandler} />:''}
+                {status === 'start' || status === 'resume' || status === 'break'?<Btn type="button" value="PAUSE" onClick={pauseHandler} />:''}
+              {/* </Row1> */}
+              {/* <Row2> */}
+                {status === 'pause'?<Btn type="button" value="RESET" />:''}
+                {status === 'pause'?<Btn type="button" value="RESUME" onClick={resumeHandler} />:''}
+              {/* </Row2> */}
             </ButtonWrap>
           </CountAndBtn>
-        </Box>
       </RunWrap>
+      <CardWrap className='TEST' ref={slideRef}>
+        <RoutineCardOrder routineCards={currentRoutine.workout} routineOrder={routineOrder}/>
+      </CardWrap>
     </Wrap>
   );
 };
@@ -185,45 +198,77 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
 const Wrap = styled.div`
   display: flex;
   height: 100%;
-  text-align: center;
-  padding: 50px 140px 50px 50px;
-`;
-const Box = styled.div`
-  padding: 20px;
-`;
-const CardWrap = styled.div`
-  flex: 1;
+  justify-content:space-between;
+  padding-top:1%;
+  
 `;
 
 const RunWrap = styled.div`
-  flex: 1;
+  // flex: 1;
+  display:flex;
+  justify-content:space-between;
+  height:85%;
+  margin-left:2%;
   background-color: #f0f0f0;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 5px;
   padding: 10px;
-  margin-left: 164px;
 `;
-const ImgStyle = styled.div`
+const ImgBox = styled.div`
+  display:flex;
+  justify-content:center;
+  align-items:center;
   border-radius: 5px;
-  background-color: #000;
-  height: 420px;
-`;
-const CountAndBtn = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 0 50px;
+  background-color:white;
+  padding:15px;
+  width:725px;
+`
+const ImgStyle = styled.img`
+  border-radius: 5px;
+  width:100%;
 `;
 
+const CountAndBtn = styled.div`
+  display: flex;
+  width:275px;
+  flex-flow:column nowrap;
+  justify-content: space-between;
+  align-items:center;
+  padding:10px 30px;;
+`;
+
+const ControlTop = styled.div`
+  display:flex;
+  flex-flow:column nowrap;
+  height:42%;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:5%;
+
+`
+const Title = styled.div`
+  font-weight:bold;
+  font-size:2.5rem;
+  
+`
+
 const CountWrap = styled.div`
-  margin-top: 25px;
-  padding: 30px;
-  font-size: 50px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:170px;
+  height:170px;
+  font-size: 4rem;
   border-radius: 50%;
   background-color: #f7d89f;
 `;
+
 const ButtonWrap = styled.div`
-  margin-top: 25px;
+  margin-bottom: 7%;
+  display:flex;
+  flex-flow:column nowrap;
 `;
+
 const Row1 = styled.div``;
 const Row2 = styled.div``;
 const Btn = styled.input`
@@ -235,6 +280,101 @@ const Btn = styled.input`
   outline: none;
   border: none;
   cursor: pointer;
+  font-size:1.2rem;
 `;
 
+const CardWrap = styled.div`
+  display:flex;
+  flex-flow:column nowrap;
+  align-items:center;
+  margin-right:8%;
+  overflow:hidden;
+  padding:45px 10px 10px 10px;
+  height:85%;
+  width:400px;
+  border-radius:8px;
+  ${Card}:nth-child(1) {
+    filter:blur(1px);
+    transition: 400ms ease;
+  }
+  ${Card}:nth-child(2) {
+    z-index:1;
+    transform:scale(1.2);
+    box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
+    background-color:#212330;
+    transition: 400ms ease;
+  }
+  ${Card}:nth-child(3) {
+    filter:blur(1px);
+    transition: 400ms ease;
+  }
+`;
+
+
+
+
 export default RunRoutine;
+
+
+// const Wrap = styled.div`
+//   display: flex;
+//   height: 100%;
+//   text-align: center;
+//   padding: 30px 100px 50px 100px;
+//   justify-content:space-between;
+// `;
+// const Box = styled.div`
+//   // padding: 10px;
+// `;
+
+// const RunWrap = styled.div`
+//   // flex: 1;
+//   display:flex;
+//   flex-flow:column nowrap
+//   width:50%;
+//   background-color: #f0f0f0;
+//   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+//   border-radius: 5px;
+//   padding: 10px;
+//   // margin-left: 164px;
+// `;
+// const ImgStyle = styled.img`
+//   border-radius: 5px;
+//   // height: 420px;
+//   width:90%;
+// `;
+// const CountAndBtn = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   width:90%;
+//   padding: 0 50px;
+// `;
+
+// const CountWrap = styled.div`
+//   margin-top: 25px;
+//   padding: 30px;
+//   font-size: 50px;
+//   border-radius: 50%;
+//   background-color: #f7d89f;
+// `;
+
+// const ButtonWrap = styled.div`
+//   margin-top: 25px;
+// `;
+
+// const Row1 = styled.div``;
+// const Row2 = styled.div``;
+// const Btn = styled.input`
+//   padding: 15px 5px;
+//   margin: 5px;
+//   width: 150px;
+//   background-color: #f7d89f;
+//   border-radius: 5px;
+//   outline: none;
+//   border: none;
+//   cursor: pointer;
+// `;
+
+// const CardWrap = styled.div`
+//   // flex: 1;
+// `;

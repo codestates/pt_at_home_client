@@ -5,16 +5,23 @@ import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../modules/reducers'
 import { Workout } from '../modules/reducers/workoutList'
 import { Routine } from '../modules/reducers/routineList'
-import { actionLogout, actionSetWorkoutList, actionSetRoutineList, actionToggleDashboardType, actionRenewToken } from '../modules/actions'
+import {
+  actionLogout,
+  actionSetWorkoutList,
+  actionSetRoutineList,
+  actionToggleDashboardType,
+  actionRenewToken,
+  actionExpired
+} from '../modules/actions'
 import { URI } from '../index'
 import axios from 'axios'
 axios.defaults.withCredentials = true
 
-interface KeywordData {
+export interface KeywordData {
   keyword: string;
 }
 
-interface FilterData {
+export interface FilterData {
   category: string;
   tool: Array<string>;
   part: Array<string>;
@@ -88,17 +95,19 @@ const HeaderContainer = ():JSX.Element => {
         let { token, expDate } = auth
         let isTokenValid = await actionRenewToken(token, expDate, dispatch)
         if (isTokenValid) {
-            axios.post<SearchResponse>(`${URI}/main/search`, keywordData, {
-                headers:{
-                    'Content-Type':'application/json',
-                    'Authorization':`Bearer ${auth.token}`
-                }})
-                .then(res => {
-                    if (res.data.message === 'ok') {
-                        dispatch(actionSetWorkoutList(res.data.data))
-                        if (isDashboardRoutine) dispatch(actionToggleDashboardType(false))
-                    }
-                })
+          axios.post<SearchResponse>(`${URI}/main/search`, keywordData, {
+              headers:{
+                  'Content-Type':'application/json',
+                  'Authorization':`Bearer ${auth.token}`
+              }})
+              .then(res => {
+                  if (res.data.message === 'ok') {
+                      dispatch(actionSetWorkoutList(res.data.data))
+                      if (isDashboardRoutine) dispatch(actionToggleDashboardType(false))
+                  }
+              })
+        } else {
+          dispatch(actionExpired({isExpired:true}))
         }
 
     }
@@ -108,17 +117,19 @@ const HeaderContainer = ():JSX.Element => {
         let { token, expDate } = auth
         let isTokenValid = await actionRenewToken(token, expDate, dispatch)
         if (isTokenValid) {
-            axios.post<FilterResponse>(`${URI}/main/filter`, filterData, {
-                headers:{
-                    'Content-Type':'application/json',
-                    'Authorization':`Bearer ${auth.token}`
-                }})
-                .then(res => {
-                    if (res.data.message === 'ok') {
-                        actionSetWorkoutList(res.data.data)
-                        if (isDashboardRoutine) dispatch(actionToggleDashboardType(false))
-                    }
-                })
+          axios.post<FilterResponse>(`${URI}/main/filter`, filterData, {
+              headers:{
+                  'Content-Type':'application/json',
+                  'Authorization':`Bearer ${auth.token}`
+              }})
+              .then(res => {
+                  if (res.data.message === 'ok') {
+                      actionSetWorkoutList(res.data.data)
+                      if (isDashboardRoutine) dispatch(actionToggleDashboardType(false))
+                  }
+              })
+        } else {
+          dispatch(actionExpired({isExpired:true}))
         }
     }
 
@@ -126,17 +137,19 @@ const HeaderContainer = ():JSX.Element => {
         let { token, expDate } = auth
         let isTokenValid = await actionRenewToken(token, expDate, dispatch)
         if (isTokenValid) {
-            axios.get<RoutineResponse>(`${URI}/main/routine`, {
-                headers:{
-                    'Content-Type':'application/json',
-                    'Authorization':`Bearer ${auth.token}`
-                }})
-                .then(res => {
-                    if (res.data.message === 'ok') {
-                        dispatch(actionSetRoutineList(res.data.data))
-                        dispatch(actionToggleDashboardType(true))
-                    }
-                })
+          axios.get<RoutineResponse>(`${URI}/main/routine`, {
+              headers:{
+                  'Content-Type':'application/json',
+                  'Authorization':`Bearer ${auth.token}`
+              }})
+              .then(res => {
+                  if (res.data.message === 'ok') {
+                      dispatch(actionSetRoutineList(res.data.data))
+                      dispatch(actionToggleDashboardType(true))
+                  }
+              })
+        } else {
+          dispatch(actionExpired({isExpired:true}))
         }
     }
 
@@ -155,6 +168,8 @@ const HeaderContainer = ():JSX.Element => {
                     dispatch(actionLogout({isLogin:false, isExpired:false, type:'guest'}))
                 }
             })
+      } else {
+        dispatch(actionExpired({isExpired:true}))
       }
     }
     

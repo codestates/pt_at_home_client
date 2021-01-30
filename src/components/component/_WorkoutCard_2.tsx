@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { MyWorkoutCardProps } from '../modal/ModalRoutineDetail'
 
-const _WorkoutCard = ({myWorkoutCard}:MyWorkoutCardProps) => {
+const _WorkoutCard_2 = ({myWorkoutCard}:MyWorkoutCardProps) => {
   const {title, mySetCount, myCount, tool, part, category, image} = myWorkoutCard
     return (
       // <Wrap>
@@ -26,31 +26,31 @@ const _WorkoutCard = ({myWorkoutCard}:MyWorkoutCardProps) => {
       );
     };
 
-const Card = styled.div`
-  width:225px;
-  height:110px;
+export const Card = styled.div`
+  width:300px;
+  height:180px;
+  display: flex;
   align-items:center;
   box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
-  display: flex;
-  background-color: #212330;
+  background-color: white;
   border-radius: 10px;
-  margin-top:7px;
+  margin-bottom:40px;
   transition: 400ms ease;
 `
 
 const CardImgWrap = styled.div``;
 
 const CardImg = styled.img`
-  width: 100px;
-  height:100px;
+  width: 150px;
+  height:130px;
   border-radius: 15px;
   padding:10%;
 `;
 
-const CardContents = styled.div`
+export const CardContents = styled.div`
   padding: 0 10px 0 0;
-  width:120px;
-  height
+  width:80%;
+  height:80%;
 `;
 
 const Title = styled.h1`
@@ -68,13 +68,13 @@ const ExplanationWrap = styled.div`
 `;
 
 const Explanation = styled.div`
-  font-size: 14px;
+  font-size: 1rem;
   color: #f0f0f0;
   background-color: #30323d;
   margin: 0 0 4px 0px;
-  width: 80%;
-  padding: 3px 0 4px 0;
+  width: 100%;
+  padding: 3px 0 4px 4px;;
   border-radius: 5px;
 `;
 
-export default _WorkoutCard;
+export default _WorkoutCard_2;
