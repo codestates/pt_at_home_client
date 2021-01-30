@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import HeaderBottom from './headerBottom/HeaderBottom';
 import HeaderTop from './headerTop/HeaderTop';
 import HeaderMiddle from './hederMiddle/HeaderMiddle';
-import { HeaderProps, KeywordData, FilterData } from '../../containers/HeaderContainer';
+import {
+  HeaderProps,
+  KeywordData,
+  FilterData,
+} from '../../containers/HeaderContainer';
 import SaveMeHomtLogo from '../../img/savemehomt_logo_500.png';
-
 
 export interface HeaderBottomProps {
   searchHandler(keywordData: KeywordData): void;
@@ -29,7 +31,6 @@ const Header = ({
       <HeaderWrap id="asd">
         <HeaderTop isLogin={isLogin} logoutHandler={logoutHandler} />
         <HeaderMiddle title={title} />
-        {!noBottom && <HeaderBottom searchHandler={searchHandler} clickRoutineHandler={clickRoutineHandler} filterHandler={filterHandler}/>}
       </HeaderWrap>
     </Wrap>
   );
@@ -47,8 +48,8 @@ const HeaderWrap = styled.div`
   padding: 15px 15px 15px 40px;
 `;
 const Logo = styled.img`
-  width: 195px;
-  height: 195px;
+  width: 125px;
+  height: 125px;
   margin: 0 35px;
 `;
 export default Header;
