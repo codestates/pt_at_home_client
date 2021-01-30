@@ -4,7 +4,8 @@ import HeaderBottom from './headerBottom/HeaderBottom';
 import HeaderTop from './headerTop/HeaderTop';
 import HeaderMiddle from './hederMiddle/HeaderMiddle';
 import { HeaderProps, KeywordData, FilterData } from '../../containers/HeaderContainer';
-import SaveMeHomtLogo from '../../img/savemehomt_logo.png';
+import SaveMeHomtLogo from '../../img/savemehomt_logo_500.png';
+
 
 export interface HeaderBottomProps {
   searchHandler(keywordData: KeywordData): void;
@@ -46,8 +47,8 @@ const HeaderWrap = styled.div`
   padding: 15px 15px 15px 40px;
 `;
 const Logo = styled.img`
-  width: 230px;
-  border-right: solid 1px #ededed;
+  width: 195px;
   height: 195px;
+  margin: 0 35px;
 `;
 export default Header;

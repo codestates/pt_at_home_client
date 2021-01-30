@@ -1,8 +1,7 @@
 import React from 'react';
-import styled from 'styled-components'
-import { Workout } from '../../modules/reducers/workoutList'
-import { ModalWorkoutProps } from '../../containers/DashboardContainer'
-
+import styled from 'styled-components';
+import { Workout } from '../../modules/reducers/workoutList';
+import { ModalWorkoutProps } from '../../containers/DashboardContainer';
 
 const ModalWorkoutDetail = ({
   workoutDetail,
@@ -22,42 +21,56 @@ const ModalWorkoutDetail = ({
     part,
   } = workoutDetail;
   return (
-    <Frame>
-      <ModalTop>
-        <input type="button" value="X" onClick={offWorkoutModal} />
-      </ModalTop>
-      <Title>{title.toUpperCase()}</Title>
-      <Wrap>
-        <ImgFrame src={image[0]} />
-        <Description>
-          <Summary>
-            <Explanation>{category}</Explanation>
-            <Explanation>{`${setCount} Sets`}</Explanation>
-            <Explanation>
-              {image.length === 1 ? `${count} sec` : `${count} 회`}
-            </Explanation>
-            <Explanation>{`Break Time: ${breakTime}`}</Explanation>
-            <Explanation>
-              {part.map((el, idx) => {
-                if (idx === part.length - 1) return el;
-                else return el + ', ';
-              })}
-            </Explanation>
-            <Explanation>{`Required Tool: ${tool}`}</Explanation>
-            <Instruction>{instruction}</Instruction>
-          </Summary>
-          <ControlBtn>
-            <SaveBtn
-              type="button"
-              value="SAVE IT!"
-              onClick={() => saveOrRemoveWorkout(id)}
-            />
-          </ControlBtn>
-        </Description>
-      </Wrap>
-    </Frame>
+    <>
+      <Layer onClick={offWorkoutModal} />
+      <Frame>
+        <ModalTop>
+          <input type="button" value="X" onClick={offWorkoutModal} />
+        </ModalTop>
+        <Title>{title.toUpperCase()}</Title>
+        <Wrap>
+          <ImgFrame src={image[0]} />
+          <Description>
+            <Summary>
+              <Explanation>{category}</Explanation>
+              <Explanation>{`${setCount} Sets`}</Explanation>
+              <Explanation>
+                {image.length === 1 ? `${count} sec` : `${count} 회`}
+              </Explanation>
+              <Explanation>{`Break Time: ${breakTime}`}</Explanation>
+              <Explanation>
+                {part.map((el, idx) => {
+                  if (idx === part.length - 1) return el;
+                  else return el + ', ';
+                })}
+              </Explanation>
+              <Explanation>{`Required Tool: ${tool}`}</Explanation>
+              <Instruction>{instruction}</Instruction>
+            </Summary>
+            <ControlBtn>
+              <SaveBtn
+                type="button"
+                value="SAVE IT!"
+                onClick={() => saveOrRemoveWorkout(id)}
+              />
+            </ControlBtn>
+          </Description>
+        </Wrap>
+      </Frame>
+    </>
   );
 };
+
+const Layer = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  opacity: 0;
+`;
 
 const Frame = styled.div`
   height: 500px;

@@ -29,7 +29,7 @@ const App = ({
 }: RouteComponentProps): JSX.Element => {
   const isExpired = useSelector((state: RootState) => state.isLogin.isExpired);
   const [prevPath, setPrevPath] = useState(location.pathname);
-  const [isPlag, setIsPlag] = useState(true);
+  const [open, setOpen] = useState<boolean>(true);
 
   useEffect(() => {
     if (isExpired) {
@@ -42,7 +42,7 @@ const App = ({
   }, [prevPath]);
 
   const Btn = () => {
-    isPlag === true ? setIsPlag(false) : setIsPlag(true);
+    open === true ? setOpen(false) : setOpen(true);
   };
 
   const FeaturePage = (): JSX.Element => {
@@ -57,7 +57,7 @@ const App = ({
               <Side className="side-bar">
                 <SideBarContainer />
                 <TabBtn onClick={Btn}>
-                  {isPlag === true ? <TabRightIcon /> : <TabLeftIcon />}
+                  {open === true ? <TabRightIcon /> : <TabLeftIcon />}
                 </TabBtn>
               </Side>
             </SideWrap>
