@@ -103,7 +103,20 @@ const Bottom = styled.div`
   display: flex;
   height: 100%;
 `;
+const TabBtn = styled.div`
+  position: absolute;
+  right: -32px;
+  color: #7f97a7;
+  cursor: pointer;
+  width: 32px;
+  height: 132px;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIxMzEiIHZpZXdCb3g9IjAgMCAzMiAxMzEiPgogICAgPHBhdGggZmlsbD0iI0ZGRiIgZmlsbC1ydWxlPSJldmVub2RkIiBzdHJva2U9IiNFNEU0RTQiIGQ9Ik0yMy43NzUgMTYuMzQxTC0uNSAxLjA5NnYxMjguODA4bDI0LjI3NS0xNS4yNDVjNC44MDctMy4wMiA3LjcyNS04LjI5NyA3LjcyNS0xMy45NzNWMzAuMzE0YzAtNS42NzYtMi45MTgtMTAuOTU0LTcuNzI1LTEzLjk3M3oiLz4KPC9zdmc+Cg==);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 const SideWrap = styled.div`
+  background-color: #ffffff;
   position: fixed;
   top: 0;
   height: 100%;
@@ -111,7 +124,20 @@ const SideWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 191px 0 0 0;
+  z-index: 1;
+`
+
+styled.div`
   background-color: #ffffff;
+  // background-color: #ffffff;
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 230px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 191px 0 0 0;
   z-index: 1;
 `;
@@ -125,18 +151,7 @@ const Side = styled.div`
   align-items: center;
   border-right: solid 1px #ededed;
 `;
-const TabBtn = styled.div`
-  position: absolute;
-  right: -32px;
-  color: #7f97a7;
-  cursor: pointer;
-  width: 32px;
-  height: 132px;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIxMzEiIHZpZXdCb3g9IjAgMCAzMiAxMzEiPgogICAgPHBhdGggZmlsbD0iI0ZGRiIgZmlsbC1ydWxlPSJldmVub2RkIiBzdHJva2U9IiNFNEU0RTQiIGQ9Ik0yMy43NzUgMTYuMzQxTC0uNSAxLjA5NnYxMjguODA4bDI0LjI3NS0xNS4yNDVjNC44MDctMy4wMiA3LjcyNS04LjI5NyA3LjcyNS0xMy45NzNWMzAuMzE0YzAtNS42NzYtMi45MTgtMTAuOTU0LTcuNzI1LTEzLjk3M3oiLz4KPC9zdmc+Cg==);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+
 const HeaderStyle = styled.div`
   display: flex;
   flex-direction: column;

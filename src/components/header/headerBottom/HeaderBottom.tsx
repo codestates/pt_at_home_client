@@ -82,14 +82,15 @@ const HeaderBottom = ({
 }:HeaderBottomProps): JSX.Element => {
   const dropdownRefs = [useRef(), useRef()];
   const [filterArr, setFilterArr] = useState<IFilterOption[]>([]);
+  // const [partArr,]
+  // const [toolArr]
+  // const [categoryArr]
   const [dropdownModels, setDropdownModels] = useState(() => {
     return filterModels.map((filter) => {
       filter.ref = dropdownRefs[filter.id];
       return filter;
     });
   });
-
-  console.log(filterArr)
 
   const allClose = () => {
     setDropdownModels(
@@ -121,6 +122,7 @@ const HeaderBottom = ({
   });
 
   const onChangeSelect = (id: number, op: IFilterOption) => {
+    console.log(id, op)
     toggleDropdwon(id);
     // const filterRemove = filterArr.filter((item) => item.label === op.label);
     // if (filterRemove.length === 0) setFilterArr([...filterArr, op]);
