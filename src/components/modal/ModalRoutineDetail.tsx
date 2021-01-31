@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { WorkoutOfRoutine } from '../../modules/reducers/routineList';
 import { ModalRoutineProps } from '../../containers/DashboardContainer';
 import _WorkoutCard from '../component/_WorkoutCard';
+import { BiX } from 'react-icons/bi';
 
 export interface MyWorkoutCardProps {
   myWorkoutCard: WorkoutOfRoutine;
@@ -24,9 +25,11 @@ const ModalRoutineDetail = ({
       <Layer onClick={offRoutineModal} />
       <Frame>
         <ModalTop>
-          <CloseBtn>
-            <input type="button" value="X" onClick={offRoutineModal} />
-          </CloseBtn>
+          <CloseBtnWrap>
+            <CloseBtn onClick={offRoutineModal}>
+              <Close />
+            </CloseBtn>
+          </CloseBtnWrap>
         </ModalTop>
         <Title>{routineDetail.title}</Title>
         <Main>
@@ -75,33 +78,34 @@ const ModalRoutineDetail = ({
 const Layer = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #ffffff;
+  background-color: #000000;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 100;
-  opacity: 0;
+  opacity: 0.6;
 `;
 
 const Frame = styled.div`
   height: 600px;
   width: 500px;
   box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
-  display: inline-block;
-  background-color: white;
-  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  background-color: #e0e5ec;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
   transition: 400ms ease;
-  position: absolute;
-  margin-left: 30%;
-  margin-right: 30%;
-  margin-top: 50px;
-  left: 200px;
-  right: 100px;
+  position: fixed;
+  left: 40%;
+  top: 23%;
   padding: 5px;
-  z-index: 100;
+  z-index: 1000;
 `;
 
 const Title = styled.div`
+  font-weight: 700;
+  color: #30475e;
   height: 50px;
   text-align: center;
   padding-top: 3%;
@@ -112,27 +116,54 @@ const ModalTop = styled.div`
   justify-content: flex-end;
 `;
 
-const CloseBtn = styled.div`
+const CloseBtnWrap = styled.div`
   padding-top: 2%;
   padding-right: 2%;
 `;
-
+const CloseBtn = styled.button`
+  outline: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 10% 0;
+  height: 35px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  background-color: #d9e8fd;
+  color: #30475e;
+  box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+  }
+  &:active {
+    box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #e0e5ec;
+  }
+`;
+const Close = styled(BiX)`
+  font-size: 30px;
+  color: #304752;
+`;
 const Main = styled.div`
   display: flex;
   justify-content: space-evenly;
-  fles-flow: row nowrap;
   align-items: stretch;
   height: 78%;
 `;
 
 const CardList = styled.div`
-  border: 1px solid red;
+  background-color: #d9e8fd;
+  box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
   width: 260px;
   margin: 2%;
   display: flex;
   flex-direction: column;
+  border-radius: 5px;
+  overflow-y: auto;
+  overflow-x: hidden;
   align-items: center;
   overflow-y: scroll;
+
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -140,7 +171,7 @@ const CardList = styled.div`
     background: none;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: #abbcfb;
     border-radius: 6px;
   }
 `;
@@ -149,7 +180,6 @@ const Description = styled.div`
   display: flex;
   justify-content: space-between;
   flex-flow: column nowrap;
-  border: 1px solid blue;
   width: 200px;
   padding: 5px;
   margin: 2%;
@@ -162,14 +192,34 @@ const ControlBtn = styled.div`
   justify-content: center;
   margin-bottom: 15px;
 `;
-const SaveBtn = styled.input``;
+const SaveBtn = styled.input`
+  outline: none;
+  padding: 5px 15px 5px 15px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 10% 0;
+  height: 35px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  background-color: #d9e8fd;
+  color: #30475e;
+  box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+  }
+  &:active {
+    box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #e0e5ec;
+  }
+`;
 
 const Explanation = styled.div`
   font-size: 1.3rem;
-  color: #f0f0f0;
-  background-color: #30323d;
-  margin: 0px 5px 4px 0px;
-  padding: 10px 20px 10px;
+  color: #555555;
+  background-color: #f6f5f5;
+  margin: 0px 5px 20px 0px;
+  padding: 5px 15px 5px;
   border-radius: 5px;
 `;
 

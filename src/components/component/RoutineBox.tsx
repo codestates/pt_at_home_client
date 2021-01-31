@@ -18,7 +18,7 @@ interface IRoutineBox {
   saveMyRoutine(title: string): void;
   setCurretRoutine(): string;
   dropCardIntoRoutineBox(cards: ICard[]): void;
-  allClear():void;
+  allClear(): void;
 }
 
 const RoutineBox = ({
@@ -32,12 +32,12 @@ const RoutineBox = ({
   saveMyRoutine,
   setCurretRoutine,
   dropCardIntoRoutineBox,
-  allClear
+  allClear,
 }: IRoutineBox): JSX.Element => {
   const path = useLocation();
   const [modalLoginRequest, setModalLoginRequest] = useState(false);
   const [modalRoutineTitle, setModalRoutineTitle] = useState(false);
-  const [alertMsg, setAlertMsg] = useState('')
+  const [alertMsg, setAlertMsg] = useState('');
 
   useEffect(() => {
     return () => {
@@ -47,11 +47,9 @@ const RoutineBox = ({
   }, [path]);
 
   useEffect(() => {
-    setAlertMsg('')
+    setAlertMsg('');
     dropCardIntoRoutineBox(cards);
   }, [cards]);
-
-
 
   const numberWithCommas = (x: number): string => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -59,7 +57,7 @@ const RoutineBox = ({
 
   const clickSaveRoutine = (): void => {
     if (isLogin) {
-      if (cards.length === 0) setAlertMsg('운동을 먼저 추가해주세요')
+      if (cards.length === 0) setAlertMsg('운동을 먼저 추가해주세요');
       else setModalRoutineTitle(true);
     } else {
       setModalLoginRequest(true);
@@ -99,7 +97,17 @@ const RoutineBox = ({
           <>
             <div {...provided.droppableProps} ref={provided.innerRef}>
               <CardWrap>
-              {cards.length === 0?'':<ClearBtnWrap><ClearBtn type="button" value="Clear All" onClick={allClear}/></ClearBtnWrap>}
+                {cards.length === 0 ? (
+                  ''
+                ) : (
+                  <ClearBtnWrap>
+                    <ClearBtn
+                      type="button"
+                      value="Clear All"
+                      onClick={allClear}
+                    />
+                  </ClearBtnWrap>
+                )}
                 {cards &&
                   cards.map((card, index) => (
                     <CreateRoutineCard
@@ -170,16 +178,17 @@ const RoutineBox = ({
 const Wrap = styled.div`
   display: flex;
   padding: 20px 0 20px 20px;
-  background-color: #f4f9ff;
+  background-color: #e0e5ec;
   box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
   justify-content: space-between;
   border-radius: 5px;
   position: fixed;
-  height:620px;
+  height: 620px;
 `;
 
 const CardWrap = styled.div`
-  background-color: #fff29b;
+  background-color: #d9e8fd;
+  box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
   width: 320px;
   height: 100%;
   border-radius: 5px;
@@ -193,23 +202,23 @@ const CardWrap = styled.div`
     background: none;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: #979797;
+    background-color: #abbcfb;
     border-radius: 6px;
   }
 `;
 
 const ClearBtnWrap = styled.div`
-  display:flex;
-  justify-content:flex-end;
-  margin:1%;
-`
+  display: flex;
+  justify-content: flex-end;
+  margin: 1%;
+`;
 
 const ClearBtn = styled.input`
-  border:2px solid grey;
-  padding:1% 2%;
-  border-radius:5px;
-  background-color:#fff29b;
-`
+  border: 2px solid grey;
+  padding: 1% 2%;
+  border-radius: 5px;
+  background-color: #fff29b;
+`;
 
 const ContentWrap = styled.div`
   width: 300px;
@@ -221,9 +230,10 @@ const ContentWrap = styled.div`
 `;
 
 const SummaryHead = styled.div`
-  color: #000000;
+  color: #30475e;
   text-align: center;
   font-size: 2.5rem;
+  font-weight: 700;
 `;
 
 const Summary = styled.div`
@@ -231,17 +241,20 @@ const Summary = styled.div`
   flex-flow: column nowrap;
   height: 300px;
   justify-content: space-around;
-  margin-bottom:35%;
+  margin-bottom: 35%;
 `;
 const EachSummary = styled.div`
-  color: #000000;
+  color: #555555;
+  font-weight: 700;
   display: flex;
   justify-content: space-between;
   padding: 2% 1%;
-  border-bottom: 2px solid #ffe227;
+  border-bottom: 1px solid #00587a;
 `;
 const Tag = styled.div`
   font-size: 1.2rem;
+  font-weight: 700;
+  color: #555555;
   margin-left: 1%;
 `;
 const Content = styled.div`
@@ -254,26 +267,51 @@ const ControlBtn = styled.div`
 `;
 
 const SaveBtn = styled.input`
-  font-size: 1.2rem;
+  outline: none;
+  font-size: 1.5rem;
+  font-weight: 700;
   margin: 10% 0;
   height: 35px;
-  border-radius: 8px;
-  background-color: Transparent;
-  border: 2px solid #ffe227;
-  color: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  background-color: #d9e8fd;
+  color: #30475e;
+  box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+  }
+  &:active {
+    box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #e0e5ec;
+  }
 `;
 const RunBtn = styled.input`
+  outline: none;
   font-size: 1.5rem;
+  font-weight: 700;
   margin: 5% 0;
   padding: 5% 3%;
   height: 50px;
-  background-color: #ffe227;
-  border-radius: 8px;
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  background-color: #d9e8fd;
+  color: #30475e;
+  box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+  }
+  &:active {
+    box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #e0e5ec;
+  }
 `;
 
 const AlertMsg = styled.div`
-  text-align:center;
-  color:red;
-`
+  text-align: center;
+  color: red;
+`;
 
 export default RoutineBox;
