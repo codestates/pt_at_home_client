@@ -100,12 +100,12 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
   let actionCounter = useMemo(() => counter + 1, [counter]);
   useEffect(() => {
     if (repeat === 'repeat') {
-      console.log('repeat');
+      // console.log('repeat');
       setIntervImg(setInterval(() => setImgIdx(imgIdx++), intervalTime));
     }
     if (repeat === 'next') {
       if (counter === totalCount) {
-        console.log('next', counter);
+        // console.log('next', counter);
         // setCounter(0)
         setTimeout(() => setRepeat('stop'), 1500);
       } else {
@@ -114,7 +114,7 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
       }
     }
     if (repeat === 'stop') {
-      console.log('stop');
+      // console.log('stop');
       setCounter(0);
       setRepeat('ready');
       if (num < workout.length) {

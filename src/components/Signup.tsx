@@ -60,9 +60,9 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
             </SignUpMainConteiner>
         </SignUpInputSection>
       </SignUpMainContainer>
-      <input type="SignUpbutton" value="KAKAO LOGIN" onClick={kakaoLoginHandler}/>
+      {/* <input type="SignUpbutton" value="KAKAO LOGIN" onClick={kakaoLoginHandler}/>
       <input type="button" value="GOOGLE LOGIN" onClick={googleLoginHandler}/>
-      <input type="button" value="GITHUB LOGIN" onClick={githubLoginHandler}/>
+      <input type="button" value="GITHUB LOGIN" onClick={githubLoginHandler}/> */}
     </>
   );
 };

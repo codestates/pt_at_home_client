@@ -8,7 +8,12 @@ import google from '../img/google.png'
 import github from '../img/github.png'
 
 
-const Login = ({loginHandler}:LoginProps):JSX.Element => {
+const Login = ({
+    loginHandler,
+    kakaoLoginHandler,
+    googleLoginHandler,
+    githubLoginHandler
+}:LoginProps):JSX.Element => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -33,8 +38,9 @@ const Login = ({loginHandler}:LoginProps):JSX.Element => {
                     <LoginButton type="button" value="Login" onClick={() => loginHandler({email, password}, 'savemehomt')}/>
                     <LineBox></LineBox>
                     <LoginSocial>
-                        <LoginGithub></LoginGithub>
-                        <LoginGoogle></LoginGoogle>
+                        <LoginGithub onClick={githubLoginHandler}></LoginGithub>
+                        <LoginGoogle onClick={googleLoginHandler}></LoginGoogle>
+                        <input type="SignUpbutton" value="KAKAO LOGIN" onClick={kakaoLoginHandler}/>
                     </LoginSocial>
                     <SignUpContainer>
                         <SignUpText>Not a member ?</SignUpText>
