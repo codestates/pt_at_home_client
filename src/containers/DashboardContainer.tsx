@@ -6,6 +6,7 @@ import { Workout } from '../modules/reducers/workoutList'
 import { Routine } from '../modules/reducers/routineList'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../modules/reducers'
+import { MyWorkoutsResponse, MyRoutinesResponse} from '../containers/SideBarContainer'
 import { URI } from '../index'
 import { 
   actionSetMyWorkouts,
@@ -13,7 +14,8 @@ import {
   actionRenewToken,
   actionSetUserInfo,
   actionLogin,
-  actionSetLoginType } from '../modules/actions'
+  actionSetLoginType,
+  actionSetWorkoutList } from '../modules/actions'
 import axios from 'axios'
 axios.defaults.withCredentials = true
 
@@ -24,6 +26,11 @@ interface SaveOrRemoveWorkoutResponse {
 
 interface SaveOrRemoveRoutineResponse {
   data: Array<Routine>;
+  message: string;
+}
+
+interface WorkoutListResponse {
+  data: Array<Workout>;
   message: string;
 }
 
@@ -52,8 +59,10 @@ export interface ModalRoutineProps {
 
 export interface ModalWorkoutProps {
   workoutDetail:Workout;
+  myWorkouts:Array<Workout>;
   offWorkoutModal():void;
   saveOrRemoveWorkout(id:number):void;
+
 }
 
 const DashboardContainer = ():JSX.Element => {
@@ -102,9 +111,50 @@ const DashboardContainer = ():JSX.Element => {
         }
       })
     }
-  }, [isLogin.type])
+    if (isLogin.isLogin) {
+      axios.get<MyWorkoutsResponse>(`${URI}/myroutine/myworkout`, {
+        headers:{
+        'Content-Type':'application/json',
+        'Authorization':`Bearer ${auth.token}`
+      }})
+        .then(res => {
+            if (res.data.message === 'ok') {
+                dispatch(actionSetMyWorkouts(res.data.data))
+            } 
+        })
+      axios.get<MyRoutinesResponse>(`${URI}/myroutine`, {
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization':`Bearer ${auth.token}`
+        }})
+        .then(res => {
+            if (res.data.message === 'ok') {
+                dispatch(actionSetMyRoutines(res.data.data))
+            }
+        })
+    }
+  }, [isLogin])
 
+  useEffect(() => {
+    getWorkoutList()
+  }, [isLogin.isLogin])
 
+  const getWorkoutList = async () => {
+    let { token, expDate } = auth
+    let isTokenValid = await actionRenewToken(token, expDate, dispatch)
+    if (isTokenValid) {
+        axios.get<WorkoutListResponse>(`${URI}/main`, {
+            headers:{
+            'Content-Type':'application/json',
+            'Authorization':`Bearer ${auth.token}`
+        }})
+            .then(res => {
+                if (res.data.message === 'ok') {
+                    dispatch(actionSetWorkoutList(res.data.data))
+                } 
+            })
+    }  
+}
   
 
   const clickWorkoutCard = (id:number):void => {
@@ -160,6 +210,7 @@ const DashboardContainer = ():JSX.Element => {
           })
       }
     }
+    setWorkoutModal(false)
   }
 
   const saveOrRemoveRoutine = async (id:number) =>  {
@@ -199,9 +250,9 @@ const DashboardContainer = ():JSX.Element => {
   
   return (
     <div>
-        {workoutModal?(<ModalWorkoutDetail workoutDetail={workoutDetail} offWorkoutModal={offWorkoutModal} saveOrRemoveWorkout={saveOrRemoveWorkout}/>):''}
-        {routineModal?(<ModalRoutineDetail routineDetail={routineDetail} offRoutineModal={offRoutineModal} saveOrRemoveRoutine={saveOrRemoveRoutine}/>):''}
-        {loginModal?(<ModalRequestLogin offLoginModal={offLoginModal}/>):''}
+      {workoutModal?(<ModalWorkoutDetail myWorkouts={myWorkouts} workoutDetail={workoutDetail} offWorkoutModal={offWorkoutModal} saveOrRemoveWorkout={saveOrRemoveWorkout}/>):''}
+      {routineModal?(<ModalRoutineDetail routineDetail={routineDetail} offRoutineModal={offRoutineModal} saveOrRemoveRoutine={saveOrRemoveRoutine}/>):''}
+      {loginModal?(<ModalRequestLogin offLoginModal={offLoginModal}/>):''}
       <Dashboard 
         isLogin={isLogin.isLogin}
         workoutList={workoutList}

@@ -26,7 +26,7 @@ export interface CreateRoutineProps {
   myWorkouts: Array<Workout>;
   clickCardBtnHandler(area: string, workout: Workout): void;
   saveMyRoutine(title: string): void;
-  setCurretRoutine(addedWorkouts: ICard[]): void;
+  setCurretRoutine(): string;
   dropCardIntoRoutineBox(cards: ICard[]): void;
   clickWorkoutCardHandler(area: string, workout: Workout): void;
   isLogin: boolean;
@@ -87,6 +87,7 @@ const CreateRoutineContainer = (): JSX.Element => {
     } else {
       dispatch(actionExpired({ isExpired: true }));
     }
+    setModalWorkoutDetail(false)
   };
 
   const editMyWorkout = ({
@@ -145,9 +146,14 @@ const CreateRoutineContainer = (): JSX.Element => {
     }
   };
 
-  const setCurretRoutine = (): void => {
-    dispatch(actionSetCurrentRoutine({ workout: addedWorkout }));
-    history.push('/runroutine');
+  const setCurretRoutine = (): string => {
+    if (addedWorkout.length === 0) {
+      return '운동을 먼저 추가해주세요'
+    } else {
+      dispatch(actionSetCurrentRoutine({ workout: addedWorkout }));
+      history.push('/runroutine');
+      return ''
+    } 
   };
 
   const offModalConfirm = () => {
@@ -207,6 +213,7 @@ const CreateRoutineContainer = (): JSX.Element => {
       )}
       {modalWorkoutDetail ? (
         <ModalWorkoutDetail
+          myWorkouts={myWorkouts}
           workoutDetail={myWorkouts.filter((el) => el.id === selectedId)[0]}
           offWorkoutModal={offWorkoutModal}
           saveOrRemoveWorkout={removeWorkout}

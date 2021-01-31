@@ -18,6 +18,7 @@ import {
   CreateRoutineContainer,
   RunRoutineContainer,
   MyRoutinesContainer,
+  ControlBarContainer
 } from './containers';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import styled from 'styled-components';
@@ -66,16 +67,15 @@ const App = ({
             </CSSTransition>
             <CSSTransition in={open} timeout={0} classNames={'main'}>
               <Main className="main" isShowSidebar={open}>
+              {location.pathname === '/dashboard' || location.pathname === '/createroutine'?
+                <ControlBarContainer />: ''}
                 <Switch>
                   <Route path={'/dashboard'} component={DashboardContainer} />
                   <Route
                     path={'/createRoutine'}
                     component={CreateRoutineContainer}
                   />
-                  <Route
-                    path={'/usersroutine'}
-                    component={MyRoutinesContainer}
-                  />
+                  <Route path={'/usersroutine'} component={MyRoutinesContainer} />
                   <Route path={'/runroutine'} component={RunRoutineContainer} />
                   <Route path={'/mypage'} component={MyPageContainer} />
                 </Switch>

@@ -35,33 +35,31 @@ const LoginContainer = ({prevPath}:LoginContProps):JSX.Element => {
     const isLogin = useSelector((state:RootState) => state.isLogin)
     const accessToken = useSelector((state:RootState) => state.userInfo.auth.token)
 
-    // completed
-    useEffect(() => {
-      if (isLogin.isLogin) {
-        axios.get<MyWorkoutsResponse>(`${URI}/myroutine/myworkout`, {
-          headers:{
-          'Content-Type':'application/json',
-          'Authorization':`Bearer ${accessToken}`
-      }})
-          .then(res => {
-              if (res.data.message === 'ok') {
-                  dispatch(actionSetMyWorkouts(res.data.data))
-              } 
-          })
-          axios.get<MyRoutinesResponse>(`${URI}/myroutine`, {
-            headers:{
-                'Content-Type':'application/json',
-                'Authorization':`Bearer ${accessToken}`
-            }})
-            .then(res => {
-                if (res.data.message === 'ok') {
-                    dispatch(actionSetMyRoutines(res.data.data))
-                }
-            })
-          
-        
-      }
-    }, [isLogin.isLogin])
+    // completed - dashboard 가 잘 동작하면 지워도 되는 코드임
+    // useEffect(() => {
+    //   if (isLogin.isLogin) {
+    //     axios.get<MyWorkoutsResponse>(`${URI}/myroutine/myworkout`, {
+    //       headers:{
+    //       'Content-Type':'application/json',
+    //       'Authorization':`Bearer ${accessToken}`
+    //   }})
+    //       .then(res => {
+    //           if (res.data.message === 'ok') {
+    //               dispatch(actionSetMyWorkouts(res.data.data))
+    //           } 
+    //       })
+    //       axios.get<MyRoutinesResponse>(`${URI}/myroutine`, {
+    //         headers:{
+    //             'Content-Type':'application/json',
+    //             'Authorization':`Bearer ${accessToken}`
+    //         }})
+    //         .then(res => {
+    //             if (res.data.message === 'ok') {
+    //                 dispatch(actionSetMyRoutines(res.data.data))
+    //             }
+    //         })
+    //   }
+    // }, [isLogin.isLogin])
     
     // completed
     const loginHandler = (loginData:LoginData, type:string):void => {
@@ -71,7 +69,7 @@ const LoginContainer = ({prevPath}:LoginContProps):JSX.Element => {
                 if (res.data.message === 'signin success') {
                     dispatch(actionLogin({isLogin:true, isExpired:false, type}))
                     dispatch(actionSetUserInfo(res.data.data))
-                    history.goBack()
+                    history.push('/')
                 }
             })
     }

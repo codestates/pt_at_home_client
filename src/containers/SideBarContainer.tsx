@@ -35,7 +35,7 @@ const SideBarContainer = ():JSX.Element => {
     const userInfo = useSelector((state:RootState) => state.userInfo)
     const auth = userInfo.auth
 
-    // completed
+    // completed - dashboard가 잘 작동하면 지워도 되는 코드
     const getWorkoutList = async () => {
         let { token, expDate } = auth
         let isTokenValid = await actionRenewToken(token, expDate, dispatch)
@@ -91,7 +91,7 @@ const SideBarContainer = ():JSX.Element => {
 
   return (
     <SideBar
-      getWorkoutList={getWorkoutList}
+      getWorkoutList={getWorkoutList} // dashboard 가 잘 작동하면 지워도 되는 props 
       getMyRoutines={getMyRoutines}
       getMyWorkouts={getMyWorkouts}
     />

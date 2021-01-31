@@ -1,9 +1,11 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import styled from 'styled-components'
 import { MyWorkoutCardProps } from '../modal/ModalRoutineDetail'
 
 const _WorkoutCard_2 = ({myWorkoutCard}:MyWorkoutCardProps) => {
   const {title, mySetCount, myCount, tool, part, category, image} = myWorkoutCard
+
+
     return (
       // <Wrap>
         <Card>
@@ -26,16 +28,16 @@ const _WorkoutCard_2 = ({myWorkoutCard}:MyWorkoutCardProps) => {
       );
     };
 
-export const Card = styled.div`
-  width:300px;
-  height:180px;
+const Card = styled.div`
+  width:100%;
+  height:100%;
   display: flex;
   align-items:center;
   box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
-  background-color: white;
+  // background-color: none;
   border-radius: 10px;
-  margin-bottom:40px;
-  transition: 400ms ease;
+  // margin-bottom:70px;
+  // transition: 400ms ease;
 `
 
 const CardImgWrap = styled.div``;
@@ -47,7 +49,7 @@ const CardImg = styled.img`
   padding:10%;
 `;
 
-export const CardContents = styled.div`
+const CardContents = styled.div`
   padding: 0 10px 0 0;
   width:80%;
   height:80%;

@@ -113,6 +113,11 @@ const CreateRoutine = ({
     }
   }, []);
 
+  const allClear = ():void => {
+    setRoutineCards([])
+    setCards(myWorkoutsIdList)
+  }
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Wrap ref={wrapRef}>
@@ -156,6 +161,7 @@ const CreateRoutine = ({
             saveMyRoutine={saveMyRoutine}
             setCurretRoutine={setCurretRoutine}
             dropCardIntoRoutineBox={dropCardIntoRoutineBox}
+            allClear={allClear}
           />
         </DropBox>
       </Wrap>
@@ -168,7 +174,7 @@ const Wrap = styled.div`
   display: flex;
   justify-content: space-between;
   // padding: 50px 100px 0 20px;
-  padding: 1.5% 1%;
+  padding: 0.5% 1%;
 `;
 
 const DropWrap = styled.div`

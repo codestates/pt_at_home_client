@@ -2,29 +2,36 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { CurrentRoutineProps } from '../../containers/RunRoutineContainer';
 import RoutineCardOrder from '../component/RoutineCardOrder'
 import styled from 'styled-components';
-import { Card, CardContents } from '../component/_WorkoutCard_2'
-import CreateRoutineCard from '../component/CreateRoutineCard';
+import ReactAudioPlayer from 'react-audio-player';
+const bgm1 = 'https://ptathomebucket.s3.ap-northeast-2.amazonaws.com/bgm2.mp3'
+const bgm2 = 'https://ptathomebucket.s3.ap-northeast-2.amazonaws.com/bgm1.wav'
+const countedSound = 'https://ptathomebucket.s3.ap-northeast-2.amazonaws.com/counted.mp3'
+const breakTimeImage = 'https://ptathomebucket.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%B2%E1%84%89%E1%85%B5%E1%86%A8.jpeg'
+
+
 
 type SetInterval = ReturnType<typeof setInterval>;
 
 const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
   const initialInterve: SetInterval | any = undefined;
-  let { routineId, title, workout } = currentRoutine;
+  const { routineId, title, workout } = currentRoutine;
   let [counter, setCounter] = useState(0);
   let [routineOrder, setRoutineOrder] = useState(0);
-  let [intervCounter, setIntervCounter] = useState(initialInterve);
-  let [intervImg, setIntervImg] = useState(initialInterve);
-  let [status, setStatus] = useState('ready');
+  const [intervCounter, setIntervCounter] = useState(initialInterve);
+  const [intervImg, setIntervImg] = useState(initialInterve);
+  const [status, setStatus] = useState('ready');
   let [imgIdx, setImgIdx] = useState(1);
-  let [repeat, setRepeat] = useState('ready');
+  const [repeat, setRepeat] = useState('ready');
+  const [audioPlay, setAudioPlay] = useState(false)
+  const [bgm, setBgm] = useState(bgm1)
   let imgList = workout[routineOrder].image;
   let currentWorkout = workout[routineOrder];
   let totalCount = workout[routineOrder].myCount;
   let breakCount = workout[routineOrder].myBreakTime;
+  const intervalTime = 1400 / (workout[routineOrder].image.length - 1)
   let num = useMemo(() => routineOrder + 1, [routineOrder]);
-  const slideRef = useRef<HTMLDivElement>(null)
-  let breakTimeImage = 'https://ptathomebucket.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%B2%E1%84%89%E1%85%B5%E1%86%A8.jpeg'
-
+  
+  
   useEffect(() => {
     if (
       counter === totalCount + 1 &&
@@ -73,6 +80,12 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
     }
   }, [status]);
 
+  useEffect(() => {
+    if (status !== 'pause' && status !== 'pauseBreak' && status !== 'finish' && status !== 'ready') {
+      setAudioPlay(true)
+    }
+  }, [status, audioPlay])
+
   // start 를 누르면 status 를 start로 바꾼다
   // staus 가 start 면 runworkout을 실행한다
   // runworkout 이 실행 될 때 조건에 의해서 count 방식이 결정된다
@@ -83,13 +96,12 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
   // routineOrder 가 증가하면 현재 운동이 재설정 된다.
   // breakTime이 다 돌면 다시 runworkout 이 실행된다.
 
-  let currentImg = imgIdx === imgList.length ? imgList[0] : imgList[imgIdx];
+  let currentImg = imgIdx === imgList.length ? imgList[1] : imgList[imgIdx];
   let actionCounter = useMemo(() => counter + 1, [counter]);
-
   useEffect(() => {
     if (repeat === 'repeat') {
       console.log('repeat');
-      setIntervImg(setInterval(() => setImgIdx(imgIdx++), 300));
+      setIntervImg(setInterval(() => setImgIdx(imgIdx++), intervalTime));
     }
     if (repeat === 'next') {
       if (counter === totalCount) {
@@ -121,10 +133,6 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
       setIntervImg(clearInterval(intervImg));
     }
   }, [imgIdx]);
-
-  useEffect(() => {
-    
-  }, [routineOrder])
 
   const runWorkout = () => {
     if (currentWorkout.image.length > 2) {
@@ -160,16 +168,24 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
     }
   };
 
+  const resetHandler = () => {
+    setImgIdx(1)
+    setRoutineOrder(0)
+    setStatus('ready')
+    setRepeat('ready')
+  }
+
   return (
     <Wrap>
-      <RunWrap>
+      <div>
+          <RunWrap>
         {/* <div>{currentWorkout.id}</div> */}
           <ImgBox>
             <ImgStyle src={status === 'break'?breakTimeImage:currentImg} />
           </ImgBox>
           <CountAndBtn>
             <ControlTop>
-              <Title>{status === 'break'?'Break Time':currentWorkout.title.toUpperCase()}</Title>
+              <Title>{status === 'break'?'BREAK TIME':(status === 'finish'?'FINISHED':currentWorkout.title.toUpperCase())}</Title>
               <CountWrap>{`${counter}/${
                 status === 'break' || status === 'pauseBreak'
                   ? breakCount
@@ -178,23 +194,29 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
             </ControlTop>
             <ButtonWrap>
               {/* <Row1> */}
-                {status === 'ready' || status === 'finish'?<Btn type="button" value="START" onClick={startHandler} />:''}
+                {status === 'ready'?<Btn type="button" value="START" onClick={startHandler} />:''}
                 {status === 'start' || status === 'resume' || status === 'break'?<Btn type="button" value="PAUSE" onClick={pauseHandler} />:''}
               {/* </Row1> */}
               {/* <Row2> */}
-                {status === 'pause'?<Btn type="button" value="RESET" />:''}
-                {status === 'pause'?<Btn type="button" value="RESUME" onClick={resumeHandler} />:''}
+                {status === 'pause' || status==='finish' || status==='pauseBreak' ?<Btn type="button" value="RESET" onClick={resetHandler}/>:''}
+                {status === 'pause' || status === 'pauseBreak'?<Btn type="button" value="RESUME" onClick={resumeHandler} />:''}
               {/* </Row2> */}
             </ButtonWrap>
+              
           </CountAndBtn>
       </RunWrap>
-      <CardWrap className='TEST' ref={slideRef}>
+      <RoutineAudio>
+          <ReactAudioPlayer src={bgm2} autoPlay={audioPlay}  controls volume={0.3}/>
+      </RoutineAudio>
+      </div>
+      
+      <CardWrap > 
         <RoutineCardOrder routineCards={currentRoutine.workout} routineOrder={routineOrder}/>
       </CardWrap>
     </Wrap>
   );
 };
-
+// order={routineOrder}
 const Wrap = styled.div`
   display: flex;
   height: 100%;
@@ -248,7 +270,7 @@ const ControlTop = styled.div`
 `
 const Title = styled.div`
   font-weight:bold;
-  font-size:2.5rem;
+  font-size:2.3rem;
   
 `
 
@@ -264,6 +286,7 @@ const CountWrap = styled.div`
 `;
 
 const ButtonWrap = styled.div`
+  margin-top:50%;
   margin-bottom: 7%;
   display:flex;
   flex-flow:column nowrap;
@@ -283,37 +306,65 @@ const Btn = styled.input`
   font-size:1.2rem;
 `;
 
+const RoutineAudio = styled.div`
+  margin-top:2%;
+  margin-left:2%;
+`
+
 const CardWrap = styled.div`
   display:flex;
   flex-flow:column nowrap;
   align-items:center;
   margin-right:8%;
   overflow:hidden;
-  padding:45px 10px 10px 10px;
+  padding:10px 10px 10px 10px;
   height:85%;
   width:400px;
   border-radius:8px;
-  ${Card}:nth-child(1) {
-    filter:blur(1px);
-    transition: 400ms ease;
-  }
-  ${Card}:nth-child(2) {
-    z-index:1;
-    transform:scale(1.2);
-    box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
-    background-color:#212330;
-    transition: 400ms ease;
-  }
-  ${Card}:nth-child(3) {
-    filter:blur(1px);
-    transition: 400ms ease;
-  }
 `;
 
-
+// ${(props:{order:number})=> 
+//   `${CardBox}:nth-child(${props.order}) {
+//     transform: translateY(-${props.order*100}%)
+//     box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
+//     transition: 400ms ease;
+//     ${CardBox}:nth-child(${props.order+1}) {
+//       z-index:1;
+//       transform:scale(1.5) translateY(-${props.order*100}%)
+//       box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
+//       transition: 400ms ease;
+//       ${CardBox}:nth-child(${props.order+2}) {
+//         transform:translateY(-${props.order*100}%)
+//         box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
+//         transition: 400ms ease;
+//   }`};
 
 
 export default RunRoutine;
+
+
+// ${(props:{order:number})=> `${CardBox}:nth-child(${props.order+1}) {
+//   z-index:1;
+//   transform:scale(1.5)
+//   box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
+//   transition: 400ms ease;
+// }`};
+
+// ${CardBox}:nth-child(1) {
+//   filter:blur(1px);
+//   transition: 400ms ease;
+// }
+// ${CardBox}:nth-child(2) {
+//   z-index:1;
+//   transform:scale(1.2);
+//   box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
+//   transition: 400ms ease;
+// }
+// ${CardBox}:nth-child(3) {
+//   filter:blur(1px);
+//   transition: 400ms ease;
+// }
+
 
 
 // const Wrap = styled.div`
@@ -378,3 +429,5 @@ export default RunRoutine;
 // const CardWrap = styled.div`
 //   // flex: 1;
 // `;
+
+
