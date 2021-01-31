@@ -21,6 +21,7 @@ import {
 } from './containers';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import styled from 'styled-components';
+import { CSSTransition } from 'react-transition-group';
 
 const App = ({
   match,
@@ -29,7 +30,6 @@ const App = ({
 }: RouteComponentProps): JSX.Element => {
   const isExpired = useSelector((state: RootState) => state.isLogin.isExpired);
   const [prevPath, setPrevPath] = useState(location.pathname);
-  const [open, setOpen] = useState<boolean>(true);
 
   useEffect(() => {
     if (isExpired) {
@@ -41,11 +41,12 @@ const App = ({
     setPrevPath(location.pathname);
   }, [prevPath]);
 
-  const Btn = () => {
-    open === true ? setOpen(false) : setOpen(true);
-  };
-
   const FeaturePage = (): JSX.Element => {
+    const [open, setOpen] = useState<boolean>(true);
+
+    const toggleBtn = () => {
+      setOpen(!open);
+    };
     return (
       <Wrap>
         <MainWrap className="wrap">
@@ -53,26 +54,33 @@ const App = ({
             <HeaderContainer />
           </HeaderStyle>
           <Bottom>
-            <SideWrap>
-              <Side className="side-bar">
-                <SideBarContainer />
-                <TabBtn onClick={Btn}>
-                  {open === true ? <TabRightIcon /> : <TabLeftIcon />}
-                </TabBtn>
-              </Side>
-            </SideWrap>
-            <Main className="main">
-              <Switch>
-                <Route path={'/dashboard'} component={DashboardContainer} />
-                <Route
-                  path={'/createRoutine'}
-                  component={CreateRoutineContainer}
-                />
-                <Route path={'/usersroutine'} component={MyRoutinesContainer} />
-                <Route path={'/runroutine'} component={RunRoutineContainer} />
-                <Route path={'/mypage'} component={MyPageContainer} />
-              </Switch>
-            </Main>
+            <CSSTransition in={open} timeout={0} classNames={'sidebar'}>
+              <SideWrap className="sidebar">
+                <Side className="side-bar">
+                  <SideBarContainer />
+                  <TabBtn onClick={toggleBtn}>
+                    {open ? <TabLeftIcon /> : <TabRightIcon />}
+                  </TabBtn>
+                </Side>
+              </SideWrap>
+            </CSSTransition>
+            <CSSTransition in={open} timeout={0} classNames={'main'}>
+              <Main className="main" isShowSidebar={open}>
+                <Switch>
+                  <Route path={'/dashboard'} component={DashboardContainer} />
+                  <Route
+                    path={'/createRoutine'}
+                    component={CreateRoutineContainer}
+                  />
+                  <Route
+                    path={'/usersroutine'}
+                    component={MyRoutinesContainer}
+                  />
+                  <Route path={'/runroutine'} component={RunRoutineContainer} />
+                  <Route path={'/mypage'} component={MyPageContainer} />
+                </Switch>
+              </Main>
+            </CSSTransition>
           </Bottom>
         </MainWrap>
       </Wrap>
@@ -116,40 +124,39 @@ const TabBtn = styled.div`
   align-items: center;
 `;
 const SideWrap = styled.div`
-  background-color: #ffffff;
-  position: fixed;
-  top: 0;
-  height: 100%;
-  width: 230px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 191px 0 0 0;
-  z-index: 1;
-`
-
-styled.div`
-  background-color: #ffffff;
-  // background-color: #ffffff;
-  position: fixed;
-  top: 0;
-  height: 100%;
-  width: 230px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 191px 0 0 0;
-  z-index: 1;
-`;
-const Side = styled.div`
-  position: fixed;
-  top: 0;
-  height: 100%;
-  width: 230px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   border-right: solid 1px #ededed;
+  background-color: #ffffff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 230px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  &.sidebar-enter {
+    transform: translateX(-230px);
+  }
+  &.sidebar-enter-done {
+    transform: translateX(0);
+  }
+  &.sidebar-exit {
+    transform: translateX(0);
+  }
+  &.sidebar-exit-done {
+    transform: translateX(-230px);
+  }
+  transition: transform 300ms;
+`;
+
+const Side = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  padding: 200px 0 0 0;
 `;
 
 const HeaderStyle = styled.div`
@@ -169,7 +176,21 @@ const MainWrap = styled.div`
 `;
 const Main = styled.div`
   flex: 1;
-  padding: 215px 0 0 255px;
+  padding: ${(props: { isShowSidebar: boolean }) =>
+    props.isShowSidebar ? '125px 0 0 255px' : '125px 0 0 25px'};
+  &.main-enter {
+    padding: '125px 0 0 25px';
+  }
+  &.main-enter-done {
+    transform: '125px 0 0 255px';
+  }
+  &.main-exit {
+    transform: '125px 0 0 255px';
+  }
+  &.main-exit-done {
+    transform: '125px 0 0 25px';
+  }
+  transition: padding 300ms;
 `;
 const TabRightIcon = styled(IoIosArrowForward)`
   width: 14px;

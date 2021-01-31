@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import HeaderBottom from './headerBottom/HeaderBottom';
-import HeaderTop from './headerTop/HeaderTop';
 import HeaderMiddle from './hederMiddle/HeaderMiddle';
-import { HeaderProps, KeywordData, FilterData } from '../../containers/HeaderContainer';
+import {
+  HeaderProps,
+  KeywordData,
+  FilterData,
+} from '../../containers/HeaderContainer';
 import SaveMeHomtLogo from '../../img/savemehomt_logo_500.png';
-
 
 export interface HeaderBottomProps {
   searchHandler(keywordData: KeywordData): void;
@@ -22,14 +23,15 @@ const Header = ({
   logoutHandler,
   title,
 }: HeaderProps): JSX.Element => {
-  const noBottom = title !== 'DASHBOARD' && title !== 'CREATE ROUTINE';
   return (
     <Wrap>
       <Logo src={SaveMeHomtLogo} />
       <HeaderWrap id="asd">
-        <HeaderTop isLogin={isLogin} logoutHandler={logoutHandler} />
-        <HeaderMiddle title={title} />
-        {!noBottom && <HeaderBottom searchHandler={searchHandler} clickRoutineHandler={clickRoutineHandler} filterHandler={filterHandler}/>}
+        <HeaderMiddle
+          title={title}
+          isLogin={isLogin}
+          logoutHandler={logoutHandler}
+        />
       </HeaderWrap>
     </Wrap>
   );
@@ -42,13 +44,14 @@ const Wrap = styled.div`
 
 const HeaderWrap = styled.div`
   display: flex;
+  justify-content: center;
   flex-direction: column;
   width: 100%;
-  padding: 15px 15px 15px 40px;
+  padding: 40px 15px 15px 40px;
 `;
 const Logo = styled.img`
-  width: 195px;
-  height: 195px;
+  width: 125px;
+  height: 125px;
   margin: 0 35px;
 `;
 export default Header;
