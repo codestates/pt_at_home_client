@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import HeaderTop from './headerTop/HeaderTop';
 import HeaderMiddle from './hederMiddle/HeaderMiddle';
 import { HeaderProps } from '../../containers/HeaderContainer';
-import SaveMeHomtLogo from '../../img/savemehomt_logo_500.png';
+import SaveMeHomtLogo from '../../img/Logo.png';
 
 const Header = ({
   isLogin,

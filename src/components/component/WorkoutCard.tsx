@@ -79,6 +79,7 @@ const Explanation = styled.p`
   font-size: 14px;
   color: #000000;
   margin: 0 0 10px 0px;
+  line-height: 18px;
 `;
 const Marker = styled(GoHeart)`
   font-size: 30px;

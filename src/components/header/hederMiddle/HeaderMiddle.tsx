@@ -57,21 +57,21 @@ const LoginBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: none;
   border-radius: 20px;
-  background-color: #ffffff;
-  box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
+  background-color: #fbd46d;
+  box-shadow: -5px -5px 20px #f7b506, 5px 5px 20px #f7b506;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   &:hover {
-    box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+    box-shadow: -2px -2px 5px #fbd46d, 2px 2px 5px #f7b506;
   }
   &:active {
-    box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #ffffff;
+    box-shadow: inset 1px 1px 2px #f7b506, inset -1px -1px 2px #fbd46d;
   }
 `;
 const LoginLink = styled(Link)`
-  color: #000000;
+  color: #3220eb;
   text-decoration: none;
   width: 100%;
   padding: 0 20px;
