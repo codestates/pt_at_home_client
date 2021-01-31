@@ -1,14 +1,11 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react';
+import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import Login from '../components/Login'
 import { UserInfo } from '../modules/reducers/userInfo'
-import { MyWorkoutsResponse, MyRoutinesResponse} from '../containers/SideBarContainer'
-import { RootState } from '../modules/reducers'
-import { actionSetUserInfo, actionLogin, actionSetMyWorkouts, actionSetMyRoutines } from '../modules/actions'
+import { actionSetUserInfo, actionLogin } from '../modules/actions'
 import { URI } from '../index'
 import axios from 'axios'
-import styled from 'styled-components';
 axios.defaults.withCredentials = true
 
 interface LoginData {
@@ -21,9 +18,7 @@ interface SigninResponse {
   message: string;
 }
 
-interface LoginContProps {
-  prevPath:string
-}
+
 
 export interface LoginProps {
   loginHandler(loginData: LoginData, type:string): void;
@@ -32,13 +27,11 @@ export interface LoginProps {
   githubLoginHandler():void;
 }
 
-const LoginContainer = ({prevPath}:LoginContProps):JSX.Element => {
+const LoginContainer = ():JSX.Element => {
     const dispatch = useDispatch()
     const history = useHistory()
-    const isLogin = useSelector((state:RootState) => state.isLogin)
-    const accessToken = useSelector((state:RootState) => state.userInfo.auth.token)
-    // const redirectURI = 'http://localhost:3000'
-    const redirectURI = 'https://savemehomt.com'
+    const redirectURI = 'http://localhost:3000'
+    // const redirectURI = 'https://savemehomt.com'
     const KAKAO_CLIENT_ID = 'd50abf58bec9012f2e4c9691ebbfbc6e'
     const KAKAO_AUTH_URL =`https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_CLIENT_ID}&redirect_uri=${redirectURI}/dashboard`
     const GOOGLE_CLIENT_ID = '627663661717-8gh0906boel3ojvbsv45l0om88p3injo.apps.googleusercontent.com'
@@ -74,10 +67,9 @@ const LoginContainer = ({prevPath}:LoginContProps):JSX.Element => {
     // }, [isLogin.isLogin])
     
     // completed
-    const loginHandler = (loginData:LoginData, type:string):void => {
-        axios.post<SigninResponse>(`${URI}/users/signin`, loginData, {headers:{'Content-Type':'application/json'}})
+    const loginHandler = (loginData:LoginData, type:string) => {
+        return axios.post<SigninResponse>(`${URI}/users/signin`, loginData, {headers:{'Content-Type':'application/json'}})
             .then(res => {
-                console.log('login', res)
                 if (res.data.message === 'signin success') {
                     dispatch(actionLogin({isLogin:true, isExpired:false, type}))
                     dispatch(actionSetUserInfo(res.data.data))

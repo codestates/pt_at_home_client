@@ -7,6 +7,7 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPW, setConfirmPW] = useState('');
+  const [alertMsg, setAlertMsg] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (e.target.name === 'email') setEmail(e.target.value);
@@ -14,6 +15,20 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
     else if (e.target.name === 'password') setPassword(e.target.value);
     else if (e.target.name === 'confirmPW') setConfirmPW(e.target.value);
   };
+
+  const clickSignupHandler = () => {
+    if (!email || !password || !userName || !confirmPW) {
+      setAlertMsg("모든 항목은 필수입니다.")
+    } else if (password !== confirmPW) {
+      setAlertMsg("비밀번호가 맞지않습니다.")
+    } else if (!/^[0-9a-zA-Z]([-_\]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(email)) {
+      setAlertMsg("이메일 형식이 아닙니다.")
+    } else if (!/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&+=]).*$/.test(password)) {
+      setAlertMsg("대문자, 소문자, 특수문자, 숫자형식이 하나이상 들어가야 합니다. 비밀번호가 8 - 15 여야 합니다.")
+    } else {
+      signupHandler({ email, userName, password })  
+    }
+}
 
   return (
     <>
@@ -54,7 +69,7 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
                     />
                     <SignUpButton
                       type="button"
-                      onClick={() => signupHandler({ email, userName, password })}
+                      onClick={clickSignupHandler}
                       value="Signup"
                     />
             </SignUpMainConteiner>

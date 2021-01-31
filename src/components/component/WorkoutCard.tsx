@@ -2,18 +2,21 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { GoHeart } from 'react-icons/go';
 import { Workout } from '../../modules/reducers/workoutList';
-import Img from '../../img/urbanbrush-20190214083430029790.png';
 
 interface WorkoutCardProps {
   workoutCard: Workout;
   clickWorkoutCard(id: number): void;
+  saveOrRemoveWorkout(id:number):void;
+  myWorkouts: Array<Workout>;
 }
 
 const WorkoutCard = ({
   workoutCard,
+  myWorkouts,
   clickWorkoutCard,
+  saveOrRemoveWorkout
 }: WorkoutCardProps): JSX.Element => {
-  const [color, setColor] = useState<boolean>(false);
+  const [color, setColor] = useState<boolean>(myWorkouts.filter(el => el.id === workoutCard.id)[0]?true:false);
   const ChangeColor = () => {
     setColor(!color);
   };
@@ -28,11 +31,12 @@ const WorkoutCard = ({
             onClick={(e) => {
               e.stopPropagation();
               ChangeColor();
+              saveOrRemoveWorkout(workoutCard.id)
             }}
             changeColor={color}
           />
           <Title>{workoutCard.title}</Title>
-          <Part>{workoutCard.part.map((el) => `${el}, `)}</Part>
+          <Part>{workoutCard.parts.map((el) => `${el}, `)}</Part>
           <Explanation>{workoutCard.instruction}</Explanation>
         </CardContents>
       </Card>

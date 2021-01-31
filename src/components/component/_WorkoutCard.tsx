@@ -1,44 +1,31 @@
-import React from 'react';
-import styled from 'styled-components';
-import { MyWorkoutCardProps } from '../modal/ModalRoutineDetail';
+import React from 'react'
+import styled from 'styled-components'
+import { MyWorkoutCardProps } from '../modal/ModalRoutineDetail'
+const breakTimeImage = 'https://ptathomebucket.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%B2%E1%84%89%E1%85%B5%E1%86%A8.jpeg'
 
-const _WorkoutCard = ({ myWorkoutCard }: MyWorkoutCardProps) => {
-  const {
-    title,
-    mySetCount,
-    myCount,
-    tool,
-    part,
-    category,
-    image,
-  } = myWorkoutCard;
-  return (
-    // <Wrap>
-    <Card>
-      <CardImgWrap>
-        <CardImg src={image[1]} />
-      </CardImgWrap>
-      <CardContents>
-        <Title>{title.toUpperCase()}</Title>
-        <ExplanationWrap>
-          <Explanation>
-            {myWorkoutCard.image.length === 1
-              ? `${myCount} sec`
-              : `${myCount} 회`}
-          </Explanation>
-          <Explanation>{`${mySetCount} Sets`}</Explanation>
-          <Explanation>
-            {part.map((el, idx) => {
-              if (idx === part.length - 1) return el;
-              else return el + ', ';
-            })}
-          </Explanation>
-        </ExplanationWrap>
-      </CardContents>
-    </Card>
-    // </Wrap>
-  );
-};
+const _WorkoutCard = ({myWorkoutCard}:MyWorkoutCardProps) => {
+  const {title, mySetCount, myCount, tool, parts, category, image} = myWorkoutCard
+    return (
+      <>
+        <Card>
+          <CardImgWrap>
+            <CardImg src={image?image[1]:breakTimeImage}/>
+          </CardImgWrap>
+          <CardContents>
+            <Title>{title?.toUpperCase()}</Title>
+            <ExplanationWrap>
+              <Explanation>{myWorkoutCard.image?.length === 1?`${myCount} sec`:`${myCount} 회`}</Explanation>
+              <Explanation>{`${mySetCount} Sets`}</Explanation>
+              <Explanation>{parts?.map((el, idx) => {
+                if (idx === parts?.length-1) return el
+                else return el+', '
+              })}</Explanation>
+            </ExplanationWrap>
+          </CardContents>
+        </Card>
+      </>
+      );
+    };
 
 const Card = styled.div`
   width: 225px;

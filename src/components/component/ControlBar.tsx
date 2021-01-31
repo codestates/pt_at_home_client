@@ -150,11 +150,11 @@ const ControlBar = ({
     });
   });
 
-  useEffect(() => {
-    if (filterArr.length !== 0) {
-      filterHandler({ category, tool, part });
-    }
-  }, [filterArr]);
+  useEffect(() => {  
+        console.log('dfasdfasdfasdfadfs', category, tool, part)
+        // filterHandler({category, tool, part})
+  }, [filterArr])
+
 
   const allClose = () => {
     setDropdownModels(
@@ -201,7 +201,6 @@ const ControlBar = ({
     toggleDropdwon(id);
 
     const hasLabel = filterArr.some((item) => item.label === op.label);
-    const hasNone = filterArr.some((item) => item.label === '맨손');
     if (!hasLabel) {
       if (op.label === '기구') {
         let temp = filterArr.filter((item) => item.category !== 'tool');

@@ -11,33 +11,21 @@ const RoutineCard = ({
   routineCard,
   clickRoutineCard,
 }: RoutineCardProps): JSX.Element => {
-  const { routineId, title, workout } = routineCard;
+  const routineId = routineCard?.routineId
+  const title = routineCard?.title
+  const workout = routineCard?.workout
   return (
     <Card onClick={() => clickRoutineCard(routineId)}>
       <Title>{title.toUpperCase()}</Title>
       <Wrap>
         <ExplanationWrap>
           {workout.map((el) => (
-            <Explanation key={el.id}>{el.title.toUpperCase()}</Explanation>
+            <Explanation key={el.id}>{el.title?.toUpperCase()}</Explanation>
           ))}
         </ExplanationWrap>
         <SubWrap>
-          <Sub>{`${
-            workout.reduce(
-              (acc, cur) => acc + (cur.image.length === 1 ? 0 : cur.myCount),
-              0,
-            ) / 60
-          } min`}</Sub>
-          <Sub>{`${numberWithCommas(
-            workout.reduce(
-              (acc, cur) =>
-                acc +
-                cur.calrorie *
-                  (Math.round(cur.myCount / cur.count) *
-                    Math.round(cur.mySetCount / cur.setCount)),
-              0,
-            ),
-          )} kcal`}</Sub>
+          <Sub>{`${workout.reduce((acc, cur) => acc + (cur.image?.length < 3 ? cur.myCount : 0),0) / 60} min`}</Sub>
+          <Sub>{`${numberWithCommas(workout.reduce((acc, cur) => acc + cur.calrorie * (Math.round(cur.myCount / cur.myCount) * Math.round(cur.mySetCount / cur.mySetCount)),0),)} kcal`}</Sub>
         </SubWrap>
       </Wrap>
     </Card>

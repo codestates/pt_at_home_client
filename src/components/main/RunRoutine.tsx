@@ -24,11 +24,11 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
   const [repeat, setRepeat] = useState('ready');
   const [audioPlay, setAudioPlay] = useState(false)
   const [bgm, setBgm] = useState(bgm1)
-  let imgList = workout[routineOrder].image;
+  let imgList = workout[routineOrder]?.image;
   let currentWorkout = workout[routineOrder];
-  let totalCount = workout[routineOrder].myCount;
-  let breakCount = workout[routineOrder].myBreakTime;
-  const intervalTime = 1400 / (workout[routineOrder].image.length - 1)
+  let totalCount = workout[routineOrder]?.myCount;
+  let breakCount = workout[routineOrder]?.myBreakTime;
+  const intervalTime = 1400 / (workout[routineOrder]?.image.length - 1)
   let num = useMemo(() => routineOrder + 1, [routineOrder]);
   
   
@@ -96,7 +96,7 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
   // routineOrder 가 증가하면 현재 운동이 재설정 된다.
   // breakTime이 다 돌면 다시 runworkout 이 실행된다.
 
-  let currentImg = imgIdx === imgList.length ? imgList[1] : imgList[imgIdx];
+  let currentImg = imgList?(imgIdx === imgList?.length ? imgList[1] : imgList[imgIdx]):'';
   let actionCounter = useMemo(() => counter + 1, [counter]);
   useEffect(() => {
     if (repeat === 'repeat') {
@@ -126,7 +126,7 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
   }, [repeat]);
 
   useEffect(() => {
-    if (imgIdx === imgList.length) {
+    if (imgIdx === imgList?.length) {
       setImgIdx(1);
       setCounter(actionCounter);
       setRepeat('next');
@@ -185,7 +185,7 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
           </ImgBox>
           <CountAndBtn>
             <ControlTop>
-              <Title>{status === 'break'?'BREAK TIME':(status === 'finish'?'FINISHED':currentWorkout.title.toUpperCase())}</Title>
+              <Title>{status === 'break'?'BREAK TIME':(status === 'finish'?'FINISHED':currentWorkout?.title.toUpperCase())}</Title>
               <CountWrap>{`${counter}/${
                 status === 'break' || status === 'pauseBreak'
                   ? breakCount
@@ -321,6 +321,7 @@ const CardWrap = styled.div`
   height:85%;
   width:400px;
   border-radius:8px;
+  padding-top:220px;
 `;
 
 // ${(props:{order:number})=> 
