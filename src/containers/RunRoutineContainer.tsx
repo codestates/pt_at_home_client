@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { RunRoutine } from '../components/main';
 import { RootState } from '../modules/reducers';
@@ -19,7 +19,9 @@ const RunRoutineContainer = (): JSX.Element => {
 
   return (
     <Wrap>
-      <RunRoutine currentRoutine={currentRoutine} />
+      {currentRoutine.workout.length > 0? <RunRoutine currentRoutine={currentRoutine} />:
+      <NoneRoutine>Create Routine Page 에서 먼저 Routine 을 생성하여주세요</NoneRoutine>}
+      
     </Wrap>
   );
 };
@@ -27,6 +29,14 @@ const RunRoutineContainer = (): JSX.Element => {
 const Wrap = styled.div`
   height: 100%;
 `;
+
+const NoneRoutine = styled.div`
+  margin-top:60px;
+  margin-left:50px;
+  font-size:2rem;
+  font-weight:bold;
+  color:#555555;
+`
 
 
 export default RunRoutineContainer;

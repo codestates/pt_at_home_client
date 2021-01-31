@@ -38,6 +38,8 @@ const Dashboard = ({
                   <WorkoutCard
                     workoutCard={el}
                     clickWorkoutCard={clickWorkoutCard}
+                    saveOrRemoveWorkout={saveOrRemoveWorkout}
+                    myWorkouts={myWorkouts}
                   />
                 </Cardli>
               ))}

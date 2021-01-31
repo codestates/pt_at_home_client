@@ -44,7 +44,7 @@ const MyRoutinesContainer = () => {
             axios.post<RemoveRoutineResponse>(`${URI}/myroutine/deleteroutine`,{routineId:id}, {headers:{'Content-Type':'application/json'}})
             .then(res => {
                 if (res.data.message === 'ok') {
-                actionSetMyRoutines(res.data.data)
+                  dispatch(actionSetMyRoutines(res.data.data))
                 }
             })
           } 
