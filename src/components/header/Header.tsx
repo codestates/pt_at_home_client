@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import HeaderTop from './headerTop/HeaderTop';
 import HeaderMiddle from './hederMiddle/HeaderMiddle';
 import {
   HeaderProps,
@@ -24,13 +23,15 @@ const Header = ({
   logoutHandler,
   title,
 }: HeaderProps): JSX.Element => {
-  const noBottom = title !== 'DASHBOARD' && title !== 'CREATE ROUTINE';
   return (
     <Wrap>
       <Logo src={SaveMeHomtLogo} />
       <HeaderWrap id="asd">
-        <HeaderTop isLogin={isLogin} logoutHandler={logoutHandler} />
-        <HeaderMiddle title={title} />
+        <HeaderMiddle
+          title={title}
+          isLogin={isLogin}
+          logoutHandler={logoutHandler}
+        />
       </HeaderWrap>
     </Wrap>
   );
@@ -43,9 +44,10 @@ const Wrap = styled.div`
 
 const HeaderWrap = styled.div`
   display: flex;
+  justify-content: center;
   flex-direction: column;
   width: 100%;
-  padding: 15px 15px 15px 40px;
+  padding: 40px 15px 15px 40px;
 `;
 const Logo = styled.img`
   width: 125px;
