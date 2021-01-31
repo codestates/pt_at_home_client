@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ModalWorkoutProps } from '../../containers/DashboardContainer';
+import { BiX } from 'react-icons/bi';
 
 const ModalWorkoutDetail = ({
   myWorkouts,
@@ -25,7 +26,9 @@ const ModalWorkoutDetail = ({
       <Layer onClick={offWorkoutModal} />
       <Frame>
         <ModalTop>
-          <input type="button" value="X" onClick={offWorkoutModal} />
+          <CloseBtn onClick={offWorkoutModal}>
+            <Close />
+          </CloseBtn>
         </ModalTop>
         <Title>{title.toUpperCase()}</Title>
         <Wrap>
@@ -64,26 +67,28 @@ const ModalWorkoutDetail = ({
 const Layer = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #ffffff;
+  background-color: #000000;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 100;
-  opacity: 0;
+  opacity: 0.3;
 `;
 
 const Frame = styled.div`
   height: 500px;
   width: 800px;
-  box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
-  background-color: white;
-  border-radius: 4px;
+  background-color: #212121;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6),
+    -9px -9px 16px rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
   transition: 400ms ease;
   position: absolute;
-  left: 25%;
-  top: 25%;
+  left: 30%;
+  top: 23%;
   padding: 5px;
   z-index: 1000;
 `;
@@ -93,12 +98,39 @@ const ModalTop = styled.div`
   justify-content: flex-end;
   padding: 5px 5px 0 0;
 `;
-
+const CloseBtn = styled.button`
+  outline: none;
+  font-size: 1.5rem;
+  width: 40px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  background-color: #ffffff;
+  box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+  }
+  &:active {
+    box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #ffffff;
+  }
+`;
+const Close = styled(BiX)`
+  font-size: 30px;
+  color: #ae1100;
+`;
 const Title = styled.div`
-  width: 200px;
-  text-align: center;
+  width: 93%;
+  color: #ffffff;
+  text-align: left;
   font-size: 2.5rem;
-  margin-top: 1%;
+  margin: 0 0 5px 20px;
+  padding-bottom: 15px;
+  border-bottom: solid 2px #32e0c4;
 `;
 
 const Wrap = styled.div`
@@ -108,13 +140,18 @@ const Wrap = styled.div`
   height: 80%;
 `;
 
-const ImgFrame = styled.img`
+const ImgFrameWrap = styled.div`
   width: 450px;
-  padding: 5px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  // background-color:#EDE7D9;
-  box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
+  height: 340px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6),
+    -9px -9px 16px rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+`;
+
+const ImgFrame = styled.img`
+  width: 100%;
+  border-radius: 20px;
 `;
 
 const Description = styled.div`
@@ -134,26 +171,38 @@ const ControlBtn = styled.div`
   margin-bottom: 3px;
 `;
 const SaveBtn = styled.input`
+  outline: none;
   font-size: 1.5rem;
   width: 200px;
   height: 50px;
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  background-color: #ffffff;
+  box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+  }
+  &:active {
+    box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #ffffff;
+  }
 `;
 
 const Explanation = styled.div`
   font-size: 1rem;
-  color: #f0f0f0;
-  background-color: #30323d;
+  color: #ffffff;
   margin: 7px 5px 5px 5px;
   padding: 6px 10px 6px;
-  border-radius: 5px;
+  border-bottom: 2px solid #f4be70;
 `;
 
 const Instruction = styled.div`
   font-size: 1rem;
-  color: #f0f0f0;
-  background-color: #30323d;
+  color: #ffffff;
   margin: 7px 5px 5px 5px;
   padding: 10px 10px 10px;
-  border-radius: 5px;
+  border-radius: 20px;
 `;
 export default ModalWorkoutDetail;

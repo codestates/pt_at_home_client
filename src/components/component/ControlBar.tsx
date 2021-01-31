@@ -324,13 +324,16 @@ const ControlBar = ({
 };
 
 const ControlBarWrap = styled.div`
+    margin-top:1.5%;
+    padding-left:2%;
+    padding-right:4%;
     display:flex;
     flex-flow:column nowrap;
 `
 
 const Wrap = styled.div`
   display: flex;
-  width:95%;
+  
   margin-bottom: 15px;
 `;
 const FilterWrap = styled.div`
