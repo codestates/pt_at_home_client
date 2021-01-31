@@ -1,13 +1,16 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom'
 import styled from 'styled-components';
 import { BiX, BiSearch } from 'react-icons/bi';
-import { useOnClickDocument } from '../../../hooks/useOnClickDocument';
+import { useOnClickDocument } from '../../hooks/useOnClickDocument';
 import { BsFillCaretDownFill } from 'react-icons/bs';
-import { HeaderBottomProps } from '../Header' 
+import { ControlBarProps } from '../../containers/ControlBarContainer'
+
 
 interface IFilterOption {
   label: string;
   value: string;
+  category:string;
   isDefault?: boolean;
 }
 
@@ -24,7 +27,7 @@ const filterModels: IFilter[] = [
   {
     id: 0,
     name: 'excercises',
-    label: 'EXCERCISES',
+    label: 'MUSCLE',
     ref: null,
     isShow: false,
     options: [
@@ -32,29 +35,59 @@ const filterModels: IFilter[] = [
         label: 'EXCERCISES',
         value: 'excercises',
         isDefault: true,
+        category:'part'
       },
       {
         label: '등',
         value: 'back',
+        category:'part'
       },
       {
         label: '허리',
         value: 'waist',
+        category:'part'
       },
       {
         label: '복부',
         value: 'stomach',
+        category:'part'
       },
       {
         label: '하체',
         value: 'lower body',
+        category:'part'
+      },
+      {
+        label: '가슴',
+        value: 'chest',
+        category:'part'
+      },
+      {
+        label: '엉덩이',
+        value: 'hip',
+        category:'part'
+      },
+      {
+        label: '코어',
+        value: 'core',
+        category:'part'
+      },
+      {
+        label: '허벅지',
+        value: 'thigh',
+        category:'part'
+      },
+      {
+        label: '어깨',
+        value: 'shoulder',
+        category:'part'
       },
     ],
   },
   {
     id: 1,
     name: 'equipment',
-    label: 'EQUIPMENT',
+    label: 'TOOL',
     ref: null,
     isShow: false,
     options: [
@@ -62,35 +95,67 @@ const filterModels: IFilter[] = [
         label: 'EQUIPMENT',
         value: 'equipment',
         isDefault: true,
+        category:'tool'
+      },
+      {
+        label: '맨손',
+        value: 'none',
+        category:'tool'
+      },
+      {
+        label: '기구',
+        value: 'tools',
+        category:'tool'
       },
       {
         label: '아령',
         value: 'dumbbell',
+        category:'tool'
       },
       {
         label: '밴드',
         value: 'band',
+        category:'tool'
+      },
+      {
+        label: '박스',
+        value: 'box',
+        category:'tool'
+      },
+      {
+        label: '볼',
+        value: 'ball',
+        category:'tool'
       },
     ],
   },
 ];
 
-const HeaderBottom = ({
+const ControlBar = ({
   searchHandler,
   clickRoutineHandler,
   filterHandler
-}:HeaderBottomProps): JSX.Element => {
+}:ControlBarProps): JSX.Element => {
+  const path = useLocation().pathname
   const dropdownRefs = [useRef(), useRef()];
   const [filterArr, setFilterArr] = useState<IFilterOption[]>([]);
-  // const [partArr,]
-  // const [toolArr]
-  // const [categoryArr]
+  const [toggleDropDown, setToggleDropDown] = useState(false)
+  const [category, setCategory] = useState('')
+  const [tool, setTool] = useState<string[]>([])
+  const [part, setPart] = useState<string[]>([])
+  const [searchKeyword, setSearchKeyword] = useState('')
   const [dropdownModels, setDropdownModels] = useState(() => {
     return filterModels.map((filter) => {
       filter.ref = dropdownRefs[filter.id];
       return filter;
     });
   });
+
+  useEffect(() => {
+      if (filterArr.length !== 0) {
+        filterHandler({category, tool, part})
+      }
+  }, [filterArr])
 
   const allClose = () => {
     setDropdownModels(
@@ -100,6 +165,15 @@ const HeaderBottom = ({
       }),
     );
   };
+
+  const changeSearchHandler = (e:React.ChangeEvent<HTMLInputElement>):void => {
+    setSearchKeyword(e.target.value)
+  }
+
+  const clickSearchHandler = ():void => {
+    searchHandler({keyword:searchKeyword})
+    setSearchKeyword('')
+  }
 
   useOnClickDocument(dropdownRefs[0], (event) => {
     if (event.target === dropdownRefs[0].current) {
@@ -124,29 +198,53 @@ const HeaderBottom = ({
   const onChangeSelect = (id: number, op: IFilterOption) => {
     console.log(id, op)
     toggleDropdwon(id);
-    // const filterRemove = filterArr.filter((item) => item.label === op.label);
-    // if (filterRemove.length === 0) setFilterArr([...filterArr, op]);
+
     const hasLabel = filterArr.some((item) => item.label === op.label);
+    const hasNone = filterArr.some(item => item.label === '맨손')
     if (!hasLabel) {
-      setFilterArr([...filterArr, op]);
+        if (op.label === '기구') {
+            let temp = filterArr.filter(item => item.category !== 'tool')
+            setFilterArr([...temp, op])
+            setCategory('기구')
+        }
+        else if (op.label === '맨손') {
+            let temp = filterArr.filter(item => item.category !== 'tool')
+            setFilterArr([...temp, op])
+            setCategory('맨손')
+        } else if (op.label !== '기구' && op.category === 'tool') {
+            let temp = filterArr.filter(item => item.label !== '맨손' && item.label !== '기구' )
+            setFilterArr([...temp, op])
+            setTool([...tool, op.label])
+        } else if (op.category === 'part') {
+            setPart([...part, op.label])
+            setFilterArr([...filterArr, op])
+        }
+        else setFilterArr([...filterArr, op])
     }
+    // const filterRemove = filterArr.filter((item) => item.label === op.label);
+    // if (filterRemove.length === 0) setFilterArr([...filterArr, op]);   
   };
 
   const toggleDropdwon = (id: number) => {
-    setDropdownModels(
-      dropdownModels.map((model) => {
-        if (model.isShow && model.id === id) {
-          model.isShow = false;
-        } else {
-          model.isShow = model.id === id;
-        }
-        return model;
-      }),
-    );
+    setToggleDropDown(!toggleDropDown)
+    if (toggleDropDown) {
+        setDropdownModels(
+          dropdownModels.map((model) => {
+            if (model.isShow && model.id === id) {
+              model.isShow = false;
+            } else {
+              model.isShow = model.id === id;
+            }
+            return model;
+          }),
+        );
+    } else {
+        allClose()
+    }
   };
 
   return (
-    <>
+    <ControlBarWrap>
       <Wrap>
         <FilterWrap>
           {dropdownModels.map((model) => {
@@ -185,13 +283,13 @@ const HeaderBottom = ({
               </div>
             );
           })}
-          <CustomSelect>STRETCHING</CustomSelect>
-          <CustomSelect>ROUTINE</CustomSelect>
+          <CustomSelect onClick={() => filterHandler({category:'스트레칭', part:[], tool:[]})}>STRETCHING</CustomSelect>
+          {path === '/createroutine'?'':<CustomSelect onClick={clickRoutineHandler}>ROUTINE</CustomSelect>}
         </FilterWrap>
-        <SearchInputWrap>
-          <SearchInput placeholder="검색어를 입력해주세요." />
-          <Search />
-        </SearchInputWrap>
+        {path === '/createroutine'?'':<SearchInputWrap>
+          <SearchInput placeholder="검색어를 입력해주세요." value={searchKeyword} onChange={changeSearchHandler}/>
+          <Search onClick={clickSearchHandler}/>
+        </SearchInputWrap>}
       </Wrap>
       <TagWrap>
         {filterArr &&
@@ -212,18 +310,27 @@ const HeaderBottom = ({
           <Clear
             onClick={() => {
               setFilterArr([]);
+              setTool([])
+              setPart([])
+              setCategory('')
             }}
           >
             Clear
           </Clear>
         )}
       </TagWrap>
-    </>
+    </ControlBarWrap>
   );
 };
 
+const ControlBarWrap = styled.div`
+    display:flex;
+    flex-flow:column nowrap;
+`
+
 const Wrap = styled.div`
   display: flex;
+  width:95%;
   margin-bottom: 15px;
 `;
 const FilterWrap = styled.div`
@@ -238,11 +345,12 @@ const CustomSelect = styled.div`
   outline: none;
   border-radius: 5px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   color: #000000;
-  padding: 5px;
-  margin-right: 15px;
+  padding: 8px 10px;
+  margin-right: 50px;
+  width: 170px;
   cursor: pointer;
   position: relative;
 `;
@@ -272,13 +380,15 @@ const CustomOption = styled.div`
   border-radius: 5px;
 `;
 
-const SearchInputWrap = styled.div``;
+const SearchInputWrap = styled.div`
+`;
 
 const SearchInput = styled.input`
+  width:300px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   background: #f0f0f0;
   border: none;
-  padding: 0 40px 0 15px;
+  padding: 1px 40px 1px 15px;
   line-height: 30px;
   outline: none;
   color: #000000;
@@ -346,4 +456,4 @@ const TagWrap = styled.div`
 `;
 const Arrow = styled(BsFillCaretDownFill)``;
 
-export default HeaderBottom;
+export default ControlBar;

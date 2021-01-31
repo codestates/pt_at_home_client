@@ -1,35 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
-import HeaderBottom from './headerBottom/HeaderBottom';
 import HeaderTop from './headerTop/HeaderTop';
 import HeaderMiddle from './hederMiddle/HeaderMiddle';
-import { HeaderProps, KeywordData, FilterData } from '../../containers/HeaderContainer';
+import { HeaderProps } from '../../containers/HeaderContainer';
 import SaveMeHomtLogo from '../../img/savemehomt_logo_500.png';
-
-
-export interface HeaderBottomProps {
-  searchHandler(keywordData: KeywordData): void;
-  clickRoutineHandler(): void;
-  filterHandler(filterData: FilterData): void;
-}
 
 const Header = ({
   isLogin,
   userName,
-  searchHandler,
-  clickRoutineHandler,
-  filterHandler,
   logoutHandler,
   title,
 }: HeaderProps): JSX.Element => {
-  const noBottom = title !== 'DASHBOARD' && title !== 'CREATE ROUTINE';
   return (
     <Wrap>
       <Logo src={SaveMeHomtLogo} />
       <HeaderWrap id="asd">
         <HeaderTop isLogin={isLogin} logoutHandler={logoutHandler} />
         <HeaderMiddle title={title} />
-        {!noBottom && <HeaderBottom searchHandler={searchHandler} clickRoutineHandler={clickRoutineHandler} filterHandler={filterHandler}/>}
       </HeaderWrap>
     </Wrap>
   );

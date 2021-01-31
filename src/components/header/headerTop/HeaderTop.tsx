@@ -15,7 +15,7 @@ const HeaderTop = ({ isLogin, logoutHandler }: HeaderTopProps) => {
       </ItemsDiv>
       <ItemsDiv>
         <RightItem>
-          {isLogin ? (
+          {!isLogin ? (
             <LoginBtn onClick={logoutHandler}>LOGOUT</LoginBtn>
           ) : (
             <LoginBtn>

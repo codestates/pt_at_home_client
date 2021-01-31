@@ -10,7 +10,7 @@ const SideBar = ({
 }: SideBarProps): JSX.Element => {
   return (
     <Wrap>
-      <LinkWrap onClick={getWorkoutList}>
+      <LinkWrap>
         <StyledLink to="/dashboard">Dashboard</StyledLink>
       </LinkWrap>
       <LinkWrap onClick={getMyWorkouts}>

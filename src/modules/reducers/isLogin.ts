@@ -53,6 +53,8 @@ export const actionSetLoginType = (payload:SetType):ActionType => ({
     payload
 })
 
+
+
 const initialState:IsLogin = {
     isLogin:false,
     isExpired:false,

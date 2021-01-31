@@ -16,8 +16,9 @@ interface IRoutineBox {
   clickCardBtnHandler(area: string, workout: Workout): void;
   clickWorkoutCardHandler(area: string, workout: Workout): void;
   saveMyRoutine(title: string): void;
-  setCurretRoutine(addedWorkouts: ICard[]): void;
+  setCurretRoutine(): string;
   dropCardIntoRoutineBox(cards: ICard[]): void;
+  allClear():void;
 }
 
 const RoutineBox = ({
@@ -31,10 +32,12 @@ const RoutineBox = ({
   saveMyRoutine,
   setCurretRoutine,
   dropCardIntoRoutineBox,
+  allClear
 }: IRoutineBox): JSX.Element => {
   const path = useLocation();
   const [modalLoginRequest, setModalLoginRequest] = useState(false);
   const [modalRoutineTitle, setModalRoutineTitle] = useState(false);
+  const [alertMsg, setAlertMsg] = useState('')
 
   useEffect(() => {
     return () => {
@@ -44,8 +47,11 @@ const RoutineBox = ({
   }, [path]);
 
   useEffect(() => {
+    setAlertMsg('')
     dropCardIntoRoutineBox(cards);
   }, [cards]);
+
+
 
   const numberWithCommas = (x: number): string => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -53,7 +59,8 @@ const RoutineBox = ({
 
   const clickSaveRoutine = (): void => {
     if (isLogin) {
-      setModalRoutineTitle(true);
+      if (cards.length === 0) setAlertMsg('운동을 먼저 추가해주세요')
+      else setModalRoutineTitle(true);
     } else {
       setModalLoginRequest(true);
     }
@@ -89,24 +96,27 @@ const RoutineBox = ({
       )}
       <Droppable droppableId="RoutineBox" type="Task">
         {(provided) => (
-          <div {...provided.droppableProps} ref={provided.innerRef}>
-            <CardWrap>
-              {cards &&
-                cards.map((card, index) => (
-                  <CreateRoutineCard
-                    key={card.id}
-                    draggableId={card.id}
-                    index={index}
-                    workout={
-                      myWorkouts.filter((el) => el.id === Number(card.id))[0]
-                    }
-                    area={area}
-                    clickCardBtnHandler={clickCardBtnHandler}
-                    clickWorkoutCardHandler={clickWorkoutCardHandler}
-                  />
-                ))}
-            </CardWrap>
-          </div>
+          <>
+            <div {...provided.droppableProps} ref={provided.innerRef}>
+              <CardWrap>
+              {cards.length === 0?'':<ClearBtnWrap><ClearBtn type="button" value="Clear All" onClick={allClear}/></ClearBtnWrap>}
+                {cards &&
+                  cards.map((card, index) => (
+                    <CreateRoutineCard
+                      key={card.id}
+                      draggableId={card.id}
+                      index={index}
+                      workout={
+                        myWorkouts.filter((el) => el.id === Number(card.id))[0]
+                      }
+                      area={area}
+                      clickCardBtnHandler={clickCardBtnHandler}
+                      clickWorkoutCardHandler={clickWorkoutCardHandler}
+                    />
+                  ))}
+              </CardWrap>
+            </div>
+          </>
         )}
       </Droppable>
       <ContentWrap>
@@ -148,9 +158,10 @@ const RoutineBox = ({
           <RunBtn
             type="button"
             value="Run Routine"
-            onClick={() => setCurretRoutine(cards)}
+            onClick={() => setAlertMsg(setCurretRoutine())}
           />
         </ControlBtn>
+        <AlertMsg>{alertMsg}</AlertMsg>
       </ContentWrap>
     </Wrap>
   );
@@ -164,12 +175,13 @@ const Wrap = styled.div`
   justify-content: space-between;
   border-radius: 5px;
   position: fixed;
+  height:620px;
 `;
 
 const CardWrap = styled.div`
   background-color: #fff29b;
   width: 320px;
-  height: 635px;
+  height: 100%;
   border-radius: 5px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -186,11 +198,24 @@ const CardWrap = styled.div`
   }
 `;
 
+const ClearBtnWrap = styled.div`
+  display:flex;
+  justify-content:flex-end;
+  margin:1%;
+`
+
+const ClearBtn = styled.input`
+  border:2px solid grey;
+  padding:1% 2%;
+  border-radius:5px;
+  background-color:#fff29b;
+`
+
 const ContentWrap = styled.div`
   width: 300px;
   display: flex;
   flex-flow: column nowrap;
-  height: 635px;
+  height: 100%;
   justify-content: space-between;
   padding: 1% 4%;
 `;
@@ -206,6 +231,7 @@ const Summary = styled.div`
   flex-flow: column nowrap;
   height: 300px;
   justify-content: space-around;
+  margin-bottom:35%;
 `;
 const EachSummary = styled.div`
   color: #000000;
@@ -244,5 +270,10 @@ const RunBtn = styled.input`
   background-color: #ffe227;
   border-radius: 8px;
 `;
+
+const AlertMsg = styled.div`
+  text-align:center;
+  color:red;
+`
 
 export default RoutineBox;

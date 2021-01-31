@@ -18,6 +18,7 @@ import {
   CreateRoutineContainer,
   RunRoutineContainer,
   MyRoutinesContainer,
+  ControlBarContainer
 } from './containers';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import styled from 'styled-components';
@@ -47,35 +48,37 @@ const App = ({
 
   const FeaturePage = (): JSX.Element => {
     return (
-      <Wrap>
-        <MainWrap className="wrap">
-          <HeaderStyle className="header">
-            <HeaderContainer />
-          </HeaderStyle>
-          <Bottom>
-            <SideWrap>
-              <Side className="side-bar">
-                <SideBarContainer />
-                <TabBtn onClick={Btn}>
-                  {open === true ? <TabRightIcon /> : <TabLeftIcon />}
-                </TabBtn>
-              </Side>
-            </SideWrap>
-            <Main className="main">
-              <Switch>
-                <Route path={'/dashboard'} component={DashboardContainer} />
-                <Route
-                  path={'/createRoutine'}
-                  component={CreateRoutineContainer}
-                />
-                <Route path={'/usersroutine'} component={MyRoutinesContainer} />
-                <Route path={'/runroutine'} component={RunRoutineContainer} />
-                <Route path={'/mypage'} component={MyPageContainer} />
-              </Switch>
-            </Main>
-          </Bottom>
-        </MainWrap>
-      </Wrap>
+        <Wrap>
+          <MainWrap className="wrap">
+            <HeaderStyle className="header">
+              <HeaderContainer />
+            </HeaderStyle>
+            <Bottom>
+              <SideWrap>
+                <Side className="side-bar">
+                  <SideBarContainer />
+                  <TabBtn onClick={Btn}>
+                    {open === true ? <TabRightIcon /> : <TabLeftIcon />}
+                  </TabBtn>
+                </Side>
+              </SideWrap>
+              <Main className="main">
+                {location.pathname === '/dashboard' || location.pathname === '/createroutine'?
+                   <ControlBarContainer />: ''}
+                <Switch>
+                  <Route path={'/dashboard'} component={DashboardContainer} />
+                  <Route
+                    path={'/createRoutine'}
+                    component={CreateRoutineContainer}
+                  />
+                  <Route path={'/usersroutine'} component={MyRoutinesContainer} />
+                  <Route path={'/runroutine'} component={RunRoutineContainer} />
+                  <Route path={'/mypage'} component={MyPageContainer} />
+                </Switch>
+              </Main>
+            </Bottom>
+          </MainWrap>
+        </Wrap>
     );
   };
 

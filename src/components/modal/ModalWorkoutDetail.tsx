@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Workout } from '../../modules/reducers/workoutList';
 import { ModalWorkoutProps } from '../../containers/DashboardContainer';
 
 const ModalWorkoutDetail = ({
+  myWorkouts,
   workoutDetail,
   offWorkoutModal,
   saveOrRemoveWorkout,
@@ -29,7 +29,7 @@ const ModalWorkoutDetail = ({
         </ModalTop>
         <Title>{title.toUpperCase()}</Title>
         <Wrap>
-          <ImgFrame src={image[0]} />
+          <ImgFrame src={image[0]} alt={title}/>
           <Description>
             <Summary>
               <Explanation>{category}</Explanation>
@@ -50,7 +50,7 @@ const ModalWorkoutDetail = ({
             <ControlBtn>
               <SaveBtn
                 type="button"
-                value="SAVE IT!"
+                value={myWorkouts.map(el => el.id).includes(id)?"UNSAVE IT":"SAVE IT!"}
                 onClick={() => saveOrRemoveWorkout(id)}
               />
             </ControlBtn>
