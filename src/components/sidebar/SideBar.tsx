@@ -50,7 +50,7 @@ const StyledLink = styled(Link)`
 
 const LinkWrap = styled.div`
   &:hover {
-    background-color: #f0f0f0;
+    background-color: #d1cccc;
   }
 `;
 

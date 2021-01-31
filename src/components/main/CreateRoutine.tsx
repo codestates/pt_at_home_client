@@ -119,10 +119,10 @@ const CreateRoutine = ({
     }
   }, []);
 
-  const allClear = ():void => {
-    setRoutineCards([])
-    setCards(myWorkoutsIdList)
-  }
+  const allClear = (): void => {
+    setRoutineCards([]);
+    setCards(myWorkoutsIdList);
+  };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -179,8 +179,8 @@ const Wrap = styled.div`
   height: 100%;
   display: flex;
   justify-content: space-between;
-  // padding: 50px 100px 0 20px;
-  padding: 0.5% 1%;
+  padding: 50px 100px 0 20px;
+  margin-top: 95px;
 `;
 
 const DropWrap = styled.div`

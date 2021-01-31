@@ -28,44 +28,42 @@ const _WorkoutCard = ({myWorkoutCard}:MyWorkoutCardProps) => {
     };
 
 const Card = styled.div`
-  width:225px;
-  height:110px;
-  align-items:center;
-  box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
+  width: 225px;
+  height: 110px;
+  align-items: center;
   display: flex;
   background-color: #212330;
   border-radius: 10px;
-  margin-top:7px;
+  margin-top: 7px;
   transition: 400ms ease;
-`
+`;
 
 const CardImgWrap = styled.div``;
 
 const CardImg = styled.img`
   width: 100px;
-  height:100px;
+  height: 100px;
   border-radius: 15px;
-  padding:10%;
+  padding: 10%;
 `;
 
 const CardContents = styled.div`
   padding: 0 10px 0 0;
-  width:120px;
-  height
+  width: 120px;
 `;
 
 const Title = styled.h1`
   font-size: 20px;
-  text-align:center;
+  text-align: center;
   color: #f0f0f0;
-  padding-top:5%;
+  padding-top: 5%;
 `;
 
 const ExplanationWrap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top:5%;
+  padding-top: 5%;
 `;
 
 const Explanation = styled.div`

@@ -15,13 +15,13 @@ const GlobalStyle = createGlobalStyle`
   /* other styles */
   html, body, #root {
     height: 100%;
-    
+    background-color: #e0e5ec;
   }
   * {
     box-sizing: border-box;
   }
 `;
-// background-color: #13141c;
+
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />
