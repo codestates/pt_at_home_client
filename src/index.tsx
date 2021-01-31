@@ -5,9 +5,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import reportWebVitals from './reportWebVitals';
-import { Provider } from 'react-redux'
-import store from './store'
-export let URI:string = 'http://localhost:8080'
+import { Provider } from 'react-redux';
+import store from './store';
+export let URI: string = 'http://localhost:8080';
 // export const URI:string = 'https://savemehomt.com'
 
 const GlobalStyle = createGlobalStyle`
@@ -15,13 +15,13 @@ const GlobalStyle = createGlobalStyle`
   /* other styles */
   html, body, #root {
     height: 100%;
-    
+    background-color: #e0e5ec;
   }
   * {
     box-sizing: border-box;
   }
 `;
-// background-color: #13141c;
+
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />

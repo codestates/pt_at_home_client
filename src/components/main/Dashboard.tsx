@@ -48,12 +48,12 @@ const Dashboard = ({
 };
 
 const Wrap = styled.div`
+  margin-top: 95px;
 `;
 const BodyWrap = styled.div`
   display: flex;
   justify-content: center;
   margin: 0 auto;
-
 `;
 const CardWrap = styled.ul`
   list-style: none;
