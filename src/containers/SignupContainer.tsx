@@ -29,7 +29,7 @@ export interface SignupProps {
 const SignupContainer = ():JSX.Element => {
     const dispatch = useDispatch()
     const history = useHistory()
-    const redirectURI = 'http://localhost:3000'
+    const redirectURI = 'https://savemehomt'
     const KAKAO_CLIENT_ID = 'd50abf58bec9012f2e4c9691ebbfbc6e'
     const KAKAO_AUTH_URL =`https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_CLIENT_ID}&redirect_uri=${redirectURI}/dashboard`
     const GOOGLE_CLIENT_ID = '627663661717-8gh0906boel3ojvbsv45l0om88p3injo.apps.googleusercontent.com'
