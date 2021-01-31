@@ -8,6 +8,7 @@ import { RootState } from '../modules/reducers'
 import { actionSetUserInfo, actionLogin, actionSetMyWorkouts, actionSetMyRoutines } from '../modules/actions'
 import { URI } from '../index'
 import axios from 'axios'
+import styled from 'styled-components';
 axios.defaults.withCredentials = true
 
 interface LoginData {
@@ -84,9 +85,9 @@ const LoginContainer = ({prevPath}:LoginContProps):JSX.Element => {
     }
 
     return (
-        <div>
+        <>
             <Login loginHandler={loginHandler}/>
-        </div>
+        </>
     );
 };
 
