@@ -53,7 +53,7 @@ const BodyWrap = styled.div`
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  background-color:#E0E5EC;
+  background-color:#E0E5EC
 
 `;
 const CardWrap = styled.ul`

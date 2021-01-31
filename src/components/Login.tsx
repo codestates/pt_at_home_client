@@ -40,7 +40,7 @@ const Login = ({
                     <LoginSocial>
                         <LoginGithub onClick={githubLoginHandler}></LoginGithub>
                         <LoginGoogle onClick={googleLoginHandler}></LoginGoogle>
-                        <input type="SignUpbutton" value="KAKAO LOGIN" onClick={kakaoLoginHandler}/>
+                        <input type="button" value="KAKAO LOGIN" onClick={kakaoLoginHandler}/>
                     </LoginSocial>
                     <SignUpContainer>
                         <SignUpText>Not a member ?</SignUpText>
@@ -149,7 +149,7 @@ const LoginSocial = styled.div`
 `;
 
 const LoginGithub = styled.button`
-    background-image: url(${google});
+    background-image: url(${github});
     background-repeat: no-repeat;
     border : 1px solid white;
     border-radius : 30px;
@@ -159,7 +159,7 @@ const LoginGithub = styled.button`
 `;
 
 const LoginGoogle = styled.button`
-    background-image: url(${github});
+    background-image: url(${google});
     background-repeat: no-repeat;
     border : 1px solid white;
     border-radius : 30px;
