@@ -34,7 +34,7 @@ const CreateRoutineCard = ({
         >
           <Card onClick={() => clickWorkoutCardHandler(area,workout)}>
             <CardImgWrap>
-              <CardImg src={image[0]} />
+              <CardImg src={image[1]} />
             </CardImgWrap>
             <CardContents>
               <CardTop>
