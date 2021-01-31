@@ -151,8 +151,7 @@ const ControlBar = ({
   });
 
   useEffect(() => {  
-        console.log('dfasdfasdfasdfadfs', category, tool, part)
-        // filterHandler({category, tool, part})
+        filterHandler({category, tool, part})
   }, [filterArr])
 
 

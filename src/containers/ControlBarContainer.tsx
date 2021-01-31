@@ -58,38 +58,37 @@ const ControlBarContainer = () => {
 
   //completed
   const searchHandler = async (keywordData:KeywordData) => {
-      axios.post<SearchResponse>(`${URI}/main/search`, keywordData, {
-          headers:{
-              'Content-Type':'application/json',
-              'Authorization':`Bearer ${auth.token}`
-          }})
-          .then(res => {
-              if (res.data.message === 'ok') {
-                  dispatch(actionSetWorkoutList(res.data.data))
-                  if (isDashboardRoutine) dispatch(actionToggleDashboardType(false))
-              } else if (res.data.message === 'not found') {
-                  dispatch(actionSetWorkoutList([]))
-              }
-          })
+    axios.post<SearchResponse>(`${URI}/main/search`, keywordData, {
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization':`Bearer ${auth.token}`
+        }})
+        .then(res => {
+            if (res.data.message === 'ok') {
+                dispatch(actionSetWorkoutList(res.data.data))
+                if (isDashboardRoutine) dispatch(actionToggleDashboardType(false))
+            } else if (res.data.message === 'not found') {
+                dispatch(actionSetWorkoutList([]))
+            }
+        })
   }
   // completed
   const filterHandler = (filterData:FilterData) => {  
-      axios.post<FilterResponse>(`${URI}/main/filter`, {...filterData, path:path.substring(1)}, {
-          headers:{
-              'Content-Type':'application/json',
-              'Authorization':`Bearer ${auth.token}`
-          }})
-          .then(res => {
-              console.log(res.data.data)
-              if (res.data.message === 'ok') {
-                  actionSetWorkoutList(res.data.data)
-              } else if (res.data.message === 'not found') {
-                  actionSetWorkoutList([])
-              }
-              if (isDashboardRoutine) dispatch(actionToggleDashboardType(false))
-          })
+    axios.post<FilterResponse>(`${URI}/main/filter`, {...filterData, path:path.substring(1)}, {
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization':`Bearer ${auth.token}`
+        }})
+        .then(res => {
+            console.log(res.data.data)
+            if (res.data.message === 'ok') {
+                actionSetWorkoutList(res.data.data)
+            } else if (res.data.message === 'not found') {
+                actionSetWorkoutList([])
+            }
+            if (isDashboardRoutine) dispatch(actionToggleDashboardType(false))
+        })
     }
-  };
 
   const clickRoutineHandler = async () => {
     let { token, expDate } = auth;

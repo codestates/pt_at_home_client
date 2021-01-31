@@ -128,18 +128,16 @@ const DashboardContainer = ():JSX.Element => {
             'Authorization':`Bearer ${auth.token}`
         }})
         .then(res => {
-          
             if (res.data.message === 'ok') {
-              
                 dispatch(actionSetMyRoutines(res.data.data))
             }
         })
     }
   }, [isLogin])
 
-  useEffect(() => {
-    getWorkoutList()
-  }, [isLogin.isLogin])
+  // useEffect(() => {
+  //   getWorkoutList()
+  // }, [isLogin.isLogin])
 
   const getWorkoutList = async () => {
     axios.get<WorkoutListResponse>(`${URI}/main`, {
@@ -149,9 +147,9 @@ const DashboardContainer = ():JSX.Element => {
     }})
         .then(res => {
           console.log(res)
-            // if (res.data.message === 'ok') {
+            if (res.data.message === 'ok') {
                 dispatch(actionSetWorkoutList(res.data.data))
-            // } 
+            } 
         })
 }
 
