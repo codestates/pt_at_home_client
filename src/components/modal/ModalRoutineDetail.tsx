@@ -28,19 +28,19 @@ const ModalRoutineDetail = ({
             <input type="button" value="X" onClick={offRoutineModal} />
           </CloseBtn>
         </ModalTop>
-        <Title>{routineDetail.title}</Title>
+        <Title>{routineDetail?.title}</Title>
         <Main>
           <CardList>
-            {routineDetail.workout.map((el) => (
+            {routineDetail?.workout?.map((el) => (
               <_WorkoutCard key={el.id} myWorkoutCard={el} />
             ))}
           </CardList>
           <Description>
             <Summary>
               <Explanation>{`${
-                routineDetail.workout.reduce(
+                routineDetail?.workout?.reduce(
                   (acc, cur) =>
-                    acc + (cur.image.length === 2 ? cur.myCount : 0),
+                    acc + (cur?.image?.length === 2 ? cur?.myCount : 0),
                   0,
                 ) / 60
               } Min`}</Explanation>
@@ -49,8 +49,8 @@ const ModalRoutineDetail = ({
                   (acc, cur) =>
                     acc +
                     cur.calrorie *
-                      (Math.round(cur.myCount / cur.count) *
-                        Math.round(cur.mySetCount / cur.setCount)),
+                      (Math.round(cur.myCount / cur.myCount) *
+                        Math.round(cur.mySetCount / cur.mySetCount)),
                   0,
                 ),
               )} kcal`}</Explanation>

@@ -28,6 +28,7 @@ const Wrap = styled.div`
   display: flex;
   flex-direction: row;
   border-bottom: solid 1px #ededed;
+  
 `;
 
 const HeaderWrap = styled.div`

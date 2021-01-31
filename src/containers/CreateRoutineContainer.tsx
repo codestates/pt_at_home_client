@@ -42,11 +42,7 @@ const CreateRoutineContainer = (): JSX.Element => {
   const path = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
-  const currentRoutine = useSelector(
-    (state: RootState) => state.currentRoutine,
-  );
   const myWorkouts = useSelector((state: RootState) => state.myWorkouts);
-  const myRoutines = useSelector((state: RootState) => state.myRoutines);
   const isLogin = useSelector((state: RootState) => state.isLogin);
   const auth = useSelector((state: RootState) => state.userInfo.auth);
   const [addedWorkout, setAddedWorkout] = useState<Workout[]>([]);
@@ -63,39 +59,49 @@ const CreateRoutineContainer = (): JSX.Element => {
     };
   }, [path]);
 
+  useEffect(() => {
+    console.log('rerendered')
+  }, [myWorkouts])
+
+  // completed
   const removeWorkout = async () => {
     setModalConfirm(false);
-    let { token, expDate } = auth;
-    let isTokenValid = await actionRenewToken(token, expDate, dispatch);
-    if (isTokenValid) {
-      axios
-        .post(
-          `${URI}/myroutine/removeworkout`,
-          { workoutId: selectedId },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${auth.token}`,
+    if (isLogin.isLogin) {
+      let { token, expDate } = auth;
+      let isTokenValid = await actionRenewToken(token, expDate, dispatch);
+      if (isTokenValid) {
+        axios
+          .post(
+            `${URI}/myroutine/removeworkout`,
+            { workoutId: selectedId },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${auth.token}`,
+              },
             },
-          },
-        )
-        .then((res) => {
-          if (res.data.message === 'ok') {
-            dispatch(actionSetMyWorkouts(res.data.data));
-          }
-        });
+          )
+          .then((res) => {
+            if (res.data.message === 'ok') {
+              dispatch(actionSetMyWorkouts(res.data.data));
+            }
+          });
+      } else {
+        dispatch(actionExpired({ isExpired: true }));
+      }
     } else {
-      dispatch(actionExpired({ isExpired: true }));
+      let removedList = myWorkouts.filter(el => el.id !== selectedId)
+      dispatch(actionSetMyWorkouts(removedList))
     }
     setModalWorkoutDetail(false)
   };
 
+  // completed
   const editMyWorkout = ({
     mySetCount,
     myCount,
     myBreakTime,
   }: CustomWorkout): void => {
-    console.log(mySetCount, myCount, myBreakTime);
     let targetEl = addedWorkout.filter((el) => el.id === selectedId)[0];
     let targetIdx = addedWorkout.indexOf(targetEl);
     let tempArr = [...addedWorkout];
@@ -106,6 +112,7 @@ const CreateRoutineContainer = (): JSX.Element => {
     setAddedWorkout(tempArr);
   };
 
+  // completed
   const dropCardIntoRoutineBox = (cards: ICard[]): void => {
     let selecetedList: Array<Workout> = [];
     for (let i = 0; i < cards.length; i++) {
@@ -119,6 +126,7 @@ const CreateRoutineContainer = (): JSX.Element => {
     setAddedWorkout(selecetedList);
   };
 
+  // completed
   const saveMyRoutine = async (title: string) => {
     let { token, expDate } = auth;
     let isTokenValid = await actionRenewToken(token, expDate, dispatch);
@@ -135,6 +143,7 @@ const CreateRoutineContainer = (): JSX.Element => {
           },
         )
         .then((res) => {
+          console.log(res)
           if (res.data.message === 'ok') {
             dispatch(actionSetMyRoutines(res.data.data));
           } else {
@@ -146,6 +155,7 @@ const CreateRoutineContainer = (): JSX.Element => {
     }
   };
 
+  // completed
   const setCurretRoutine = (): string => {
     if (addedWorkout.length === 0) {
       return '운동을 먼저 추가해주세요'

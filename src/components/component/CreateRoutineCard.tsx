@@ -22,7 +22,17 @@ const CreateRoutineCard = ({
   clickCardBtnHandler,
   clickWorkoutCardHandler,
 }: ICreateCard): JSX.Element => {
-  const { image, title, setCount, count, part, tool } = workout;
+  const title = workout?.title
+  const image = workout?.image
+  const setCount = workout?.setCount
+  const count = workout?.count
+  const parts = workout?.parts
+  const tool = workout?.tool
+
+  // if (workout) {
+
+  // }
+  // const { title, image, setCount, count, parts, tool } = workout;
 
   return (
     <Draggable draggableId={draggableId} index={index}>
@@ -34,11 +44,11 @@ const CreateRoutineCard = ({
         >
           <Card onClick={() => clickWorkoutCardHandler(area,workout)}>
             <CardImgWrap>
-              <CardImg src={image[1]} />
+              <CardImg src={workout?image[1]:''} />
             </CardImgWrap>
             <CardContents>
               <CardTop>
-                <Title>{title.toUpperCase()}</Title>
+                <Title>{title?.toUpperCase()}</Title>
                 <GearBtn
                   type="button"
                   value={area === 'cards' ? 'X' : 'i'}
@@ -51,12 +61,12 @@ const CreateRoutineCard = ({
 
               <ExplanationWrap>
                 <Explanation>
-                  {image.length === 1 ? `${count} 초` : `${count} 회`}
+                  {image?.length === 1 ? `${count} 초` : `${count} 회`}
                 </Explanation>
                 <Explanation>{`${setCount} 세트`}</Explanation>
                 <Explanation>
-                  {part.map((el, idx) => {
-                    if (idx === part.length - 1) return el;
+                  {parts?.map((el, idx) => {
+                    if (idx === parts.length - 1) return el;
                     else return el + ', ';
                   })}
                 </Explanation>

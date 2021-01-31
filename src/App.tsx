@@ -25,22 +25,16 @@ import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 
 const App = ({
-  match,
   history,
   location,
 }: RouteComponentProps): JSX.Element => {
   const isExpired = useSelector((state: RootState) => state.isLogin.isExpired);
-  const [prevPath, setPrevPath] = useState(location.pathname);
 
   useEffect(() => {
     if (isExpired) {
       history.push('/login');
     }
   }, [isExpired]);
-
-  useEffect(() => {
-    setPrevPath(location.pathname);
-  }, [prevPath]);
 
   const FeaturePage = (): JSX.Element => {
     const [open, setOpen] = useState<boolean>(true);
@@ -94,7 +88,7 @@ const App = ({
       ) : location.pathname === '/signup' ? (
         <SignupContainer />
       ) : location.pathname === '/login' ? (
-        <LoginContainer prevPath={prevPath} />
+        <LoginContainer />
       ) : (
         <FeaturePage />
       )}

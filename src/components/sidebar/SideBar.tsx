@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { SideBarProps } from '../../containers/SideBarContainer';
 
 const SideBar = ({
-  getWorkoutList,
   getMyRoutines,
   getMyWorkouts,
 }: SideBarProps): JSX.Element => {

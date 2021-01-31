@@ -156,7 +156,7 @@ const initialState:UserInfo = {
     userName:'GUEST',
     email:'',
     auth:{
-        token:'adfasdfadfadfadf',
+        token:'',
         expDate:''
     },
     createdAt:'',

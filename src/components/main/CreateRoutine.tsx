@@ -20,10 +20,10 @@ const initialChoseWorkout: WorkoutOfRoutine = {
   title: '',
   instruction: '',
   image: ['', ''],
-  part: ['', ''],
-  setCount: 0,
-  count: 0,
-  breakTime: 0,
+  parts: ['', ''],
+  // setCount: 0,
+  // count: 0,
+  // breakTime: 0,
   mySetCount: 0,
   myCount: 0,
   myBreakTime: 0,
@@ -64,6 +64,12 @@ const CreateRoutine = ({
   const [cards, setCards] = useState<ICard[]>(myWorkoutsIdList);
   const [routineCards, setRoutineCards] = useState<ICard[]>([]);
   const [area, setArea] = useState('');
+
+  useEffect(() => {
+    setCards(myWorkouts.map((el) =>
+    Object.assign({ id: String(el.id) }),
+  ))
+  }, [myWorkouts])
 
   const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
     // console.log('result : ', result);

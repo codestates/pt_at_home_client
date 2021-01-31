@@ -2,11 +2,14 @@ import React from 'react';
 import Header from '../components/header/Header'
 import { useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState, appReducer, rootReducer } from '../modules/reducers'
+import { RootState } from '../modules/reducers'
 import {
   actionLogout,
   actionRenewToken,
-  actionExpired
+  actionExpired,
+  actionSetUserInfo,
+  actionSetMyRoutines,
+  actionSetMyWorkouts
 } from '../modules/actions'
 import { URI } from '../index'
 import axios from 'axios'
@@ -69,7 +72,9 @@ const HeaderContainer = ():JSX.Element => {
                 console.log('logout', res)
                 if (res.data.message === 'signout success') {
                     dispatch(actionLogout({isLogin:false, isExpired:false, type:'guest'}))
-                    // dispatch(appReducer(undefined, {type:'LOGOUT'}))
+                    dispatch(actionSetUserInfo({id:0, userName:'', email:'', auth:{token:'', expDate:''}}))
+                    dispatch(actionSetMyRoutines([]))
+                    dispatch(actionSetMyWorkouts([]))
                 }
             })
       } else {

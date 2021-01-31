@@ -19,8 +19,9 @@ const ModalWorkoutDetail = ({
     setCount,
     count,
     breakTime,
-    part,
+    parts,
   } = workoutDetail;
+
   return (
     <>
       <Layer onClick={offWorkoutModal} />
@@ -42,8 +43,8 @@ const ModalWorkoutDetail = ({
               </Explanation>
               <Explanation>{`Break Time: ${breakTime}`}</Explanation>
               <Explanation>
-                {part.map((el, idx) => {
-                  if (idx === part.length - 1) return el;
+                {parts.map((el, idx) => {
+                  if (idx === parts.length - 1) return el;
                   else return el + ', ';
                 })}
               </Explanation>

@@ -7,8 +7,8 @@ import reset from 'styled-reset';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux'
 import store from './store'
-export let URI:string = 'http://localhost:8080'
-// export const URI:string = 'https://savemehomt.com'
+// export let URI:string = 'http://localhost:8080'
+export const URI:string = 'https://savemehomt.com'
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
