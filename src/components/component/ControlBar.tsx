@@ -4,14 +4,8 @@ import styled from 'styled-components';
 import { BiX, BiSearch } from 'react-icons/bi';
 import { useOnClickDocument } from '../../hooks/useOnClickDocument';
 import { BsFillCaretDownFill } from 'react-icons/bs';
-import { ControlBarProps } from '../../containers/ControlBarContainer';
-
-interface IFilterOption {
-  label: string;
-  value: string;
-  category: string;
-  isDefault?: boolean;
-}
+import { FilterData, KeywordData } from '../../containers/ControlBarContainer';
+import { IFilterOption } from '../../App';
 
 interface IFilter {
   id: number;
@@ -130,18 +124,28 @@ const filterModels: IFilter[] = [
   },
 ];
 
+export interface ControlBarProps {
+  searchHandler(keywordData: KeywordData): void;
+  clickRoutineHandler(): void;
+  filterHandler(filterData: FilterData): void;
+  filterArr: IFilterOption[];
+  setFilterArr: React.Dispatch<React.SetStateAction<IFilterOption[]>>;
+}
+
 const ControlBar = ({
   searchHandler,
   clickRoutineHandler,
   filterHandler,
+  filterArr,
+  setFilterArr,
 }: ControlBarProps): JSX.Element => {
   const path = useLocation().pathname;
   const dropdownRefs = [useRef(), useRef()];
-  const [filterArr, setFilterArr] = useState<IFilterOption[]>([]);
   const [toggleDropDown, setToggleDropDown] = useState(false);
   const [category, setCategory] = useState('');
   const [tool, setTool] = useState<string[]>([]);
   const [part, setPart] = useState<string[]>([]);
+  const [isFocus, setIsFocus] = useState<boolean>(false);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [dropdownModels, setDropdownModels] = useState(() => {
     return filterModels.map((filter) => {
@@ -150,10 +154,9 @@ const ControlBar = ({
     });
   });
 
-  useEffect(() => {  
-        filterHandler({category, tool, part})
-  }, [filterArr])
-
+  useEffect(() => {
+    filterHandler({ category, tool, part });
+  }, [filterArr]);
 
   const allClose = () => {
     setDropdownModels(
@@ -243,14 +246,14 @@ const ControlBar = ({
   };
 
   const handleClickRoutineBtn = () => {
-    clickRoutineHandler()
+    clickRoutineHandler();
     setFilterArr([]);
-  }
+  };
 
   const handleClickStrechingBtn = () => {
-    filterHandler({ category: '스트레칭', part: [], tool: [] })
+    filterHandler({ category: '스트레칭', part: [], tool: [] });
     setFilterArr([]);
-  }
+  };
 
   return (
     <ControlBarWrap>
@@ -292,9 +295,7 @@ const ControlBar = ({
               </div>
             );
           })}
-          <CustomSelect
-            onClick={handleClickStrechingBtn}
-          >
+          <CustomSelect onClick={handleClickStrechingBtn}>
             STRETCHING
           </CustomSelect>
           {path === '/createroutine' ? (
@@ -307,12 +308,23 @@ const ControlBar = ({
           ''
         ) : (
           <SearchInputWrap>
-            <SearchInput
-              placeholder="검색어를 입력해주세요."
-              value={searchKeyword}
-              onChange={changeSearchHandler}
-            />
-            <Search onClick={clickSearchHandler} />
+            <FakeInput isFocus={isFocus}>
+              <SearchInput
+                placeholder="검색어를 입력해주세요."
+                value={searchKeyword}
+                onChange={changeSearchHandler}
+                onFocus={(e) => {
+                  e.stopPropagation();
+                  setIsFocus(true);
+                }}
+                onBlur={(e) => {
+                  e.stopPropagation();
+                  setIsFocus(false);
+                }}
+                className="input"
+              />
+              <Search onClick={clickSearchHandler} />
+            </FakeInput>
           </SearchInputWrap>
         )}
       </Wrap>
@@ -349,13 +361,11 @@ const ControlBar = ({
 };
 
 const ControlBarWrap = styled.div`
-  background-color: #e0e5ec;
+  background-color: #f2f3f7;
   width: 100%;
-  padding: 15px 0 0 60px;
+  padding: 15px 0 0 30px;
   display: flex;
   flex-flow: column nowrap;
-  height: 95px;
-  box-shadow: rgb(0 0 0 / 24%) 10px 2px 8px;
 `;
 
 const Wrap = styled.div`
@@ -367,7 +377,7 @@ const FilterWrap = styled.div`
 `;
 
 const CustomSelect = styled.div`
-  background-color: #f0f0f0;
+  background-color: #f2f3f7;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border: none;
   outline: none;
@@ -384,10 +394,11 @@ const CustomSelect = styled.div`
 `;
 const CustomOptionItem = styled.div`
   padding: 5px;
+  line-height: 20px;
   display: ${(props: { isdefault: boolean }) =>
     props.isdefault ? 'none' : 'block'};
   &:hover {
-    background-color: #dadada;
+    background-color: #d2d7e8;
     &:nth-child(2) {
       border-radius: 5px 5px 0 0;
     }
@@ -403,28 +414,41 @@ const CustomOption = styled.div`
   left: 0;
   top: ${(props: { width: number; height: number }) => `${props.height}px`};
   width: ${(props: { width: number; height: number }) => `${props.width}px`};
-  background-color: #f0f0f0;
+  background-color: #f2f3f7;
   text-align: center;
   border-radius: 5px;
+  margin-top: 5px;
 `;
 
 const SearchInputWrap = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  padding-right: 267px;
+  padding-right: 30px;
 `;
 
-const SearchInput = styled.input`
+const FakeInput = styled.div`
   width: 300px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+  box-shadow: ${(props: { isFocus: boolean }) =>
+    !props.isFocus
+      ? 'inset 2px 2px 5px #9d9ea1, inset -5px -5px 10px #fff'
+      : 'inset 1px 1px 2px #9d9ea1, inset -1px -1px 2px #fff;'};
   border: none;
-  padding: 1px 40px 1px 15px;
+  padding: 1px 0px 1px 15px;
   line-height: 30px;
   outline: none;
   color: #000000;
-  border-radius: 5px;
+  border-radius: 300px;
+`;
+
+const SearchInput = styled.input`
+  background: none;
+  border: none;
+  outline: none;
+  width: 250px;
   &:focus {
     &::-webkit-input-placeholder {
       color: transparent;
@@ -445,25 +469,25 @@ const SearchInput = styled.input`
 `;
 const FilterCard = styled.span`
   width: 90px;
-  background-color: #f0f0f0;
+  background-color: #f2f3f7;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   color: #000000;
   border-radius: 5px;
   display: flex;
   justify-content: space-between;
-  margin-right: 10px;
+  margin: 0 10px 10px;
   padding: 3px;
 `;
 const Clear = styled.button`
   width: 50px;
-  background-color: #f0f0f0;
+  background-color: #f2f3f7;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   color: #000000;
   border-radius: 5px;
   display: flex;
   border: none;
   justify-content: center;
-  margin-left: 20px;
+  margin: 0 10px 10px;
   padding: 3px 15x;
   outline: none;
   align-items: center;
@@ -473,9 +497,6 @@ const Clear = styled.button`
   }
 `;
 const Search = styled(BiSearch)`
-  position: relative;
-  top: 22%;
-  right: 13%;
   font-size: 20px;
   color: #000000;
   cursor: pointer;

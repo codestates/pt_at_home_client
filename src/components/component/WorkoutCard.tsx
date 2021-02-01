@@ -7,7 +7,7 @@ import { Workout } from '../../modules/reducers/workoutList';
 interface WorkoutCardProps {
   workoutCard: Workout;
   clickWorkoutCard(id: number): void;
-  saveOrRemoveWorkout(id:number):void;
+  saveOrRemoveWorkout(id: number): void;
   myWorkouts: Array<Workout>;
 }
 
@@ -15,9 +15,11 @@ const WorkoutCard = ({
   workoutCard,
   myWorkouts,
   clickWorkoutCard,
-  saveOrRemoveWorkout
+  saveOrRemoveWorkout,
 }: WorkoutCardProps): JSX.Element => {
-  const [color, setColor] = useState<boolean>(myWorkouts.filter(el => el.id === workoutCard.id)[0]?true:false);
+  const [color, setColor] = useState<boolean>(
+    myWorkouts.filter((el) => el.id === workoutCard.id)[0] ? true : false,
+  );
   const ChangeColor = () => {
     setColor(!color);
   };
@@ -32,7 +34,7 @@ const WorkoutCard = ({
             onClick={(e) => {
               e.stopPropagation();
               ChangeColor();
-              saveOrRemoveWorkout(workoutCard.id)
+              saveOrRemoveWorkout(workoutCard.id);
             }}
             changeColor={color}
           />
@@ -49,9 +51,13 @@ const CardDiv = styled.div`
   color: currentColor;
   text-decoration: none;
   display: inline-table;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  height: 100%;
 `;
 const Card = styled.div`
   width: 320px;
+  height: 100%;
   display: block;
   background-color: #f0f0f0;
   border-radius: 5px;
@@ -61,7 +67,8 @@ const CardImgWrap = styled.div`
   height: 225px;
 `;
 const CardImg = styled.img`
-  width: 100%;
+  width: 320px;
+  height: 225px;
   border-radius: 5px 5px 0px 0px;
 `;
 const CardContents = styled.div`

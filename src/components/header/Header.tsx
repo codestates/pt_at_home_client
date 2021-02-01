@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import HeaderMiddle from './hederMiddle/HeaderMiddle';
 import { HeaderProps } from '../../containers/HeaderContainer';
-import SaveMeHomtLogo from '../../img/Logo.png';
 
 const Header = ({
   isLogin,
@@ -12,7 +11,6 @@ const Header = ({
 }: HeaderProps): JSX.Element => {
   return (
     <Wrap>
-      <Logo src={SaveMeHomtLogo} />
       <HeaderWrap id="asd">
         <HeaderMiddle
           title={title}
@@ -26,8 +24,6 @@ const Header = ({
 const Wrap = styled.div`
   display: flex;
   flex-direction: row;
-  border-bottom: solid 1px #ededed;
-  
 `;
 
 const HeaderWrap = styled.div`
@@ -36,10 +32,5 @@ const HeaderWrap = styled.div`
   flex-direction: column;
   width: 100%;
   padding: 40px 15px 15px 40px;
-`;
-const Logo = styled.img`
-  width: 125px;
-  height: 125px;
-  margin: 0 35px;
 `;
 export default Header;

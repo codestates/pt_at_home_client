@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { SideBarProps } from '../../containers/SideBarContainer';
+import Logo from '../../img/savemehomt_logo.svg';
 
 const SideBar = ({
   getMyRoutines,
@@ -9,6 +10,7 @@ const SideBar = ({
 }: SideBarProps): JSX.Element => {
   return (
     <Wrap>
+      <SaveLogo src={Logo} />
       <LinkWrap>
         <StyledLink to="/dashboard">Dashboard</StyledLink>
       </LinkWrap>
@@ -36,10 +38,16 @@ const Wrap = styled.div`
   width: 100%;
 `;
 
+const SaveLogo = styled.img`
+  width: 170px;
+  position: fixed;
+  top: 10px;
+  left: 25px;
+`;
 const StyledLink = styled(Link)`
   color: #000000;
   text-decoration: none;
-  font-size: 25px;
+  font-size: 22px;
   font-weight: 700;
   width: 100%;
   display: block;
@@ -50,7 +58,7 @@ const StyledLink = styled(Link)`
 
 const LinkWrap = styled.div`
   &:hover {
-    background-color: #d1cccc;
+    background-color: #b4c2f6;
   }
 `;
 

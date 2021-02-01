@@ -178,11 +178,11 @@ const SaveBtn = styled.input`
   border-radius: 20px;
   background-color: #d9e8fd;
   color: #30475e;
-  box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
+  box-shadow: -5px -5px 20px #e0e5ec, 5px 5px 20px #babecc;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   &:hover {
-    box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+    box-shadow: -2px -2px 5px #e0e5ec, 2px 2px 5px #babecc;
   }
   &:active {
     box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #e0e5ec;

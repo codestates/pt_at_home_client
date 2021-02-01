@@ -24,11 +24,14 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 
+export interface IFilterOption {
+  label: string;
+  value: string;
+  category: string;
+  isDefault?: boolean;
+}
 
-const App = ({
-  history,
-  location,
-}: RouteComponentProps): JSX.Element => {
+const App = ({ history, location }: RouteComponentProps): JSX.Element => {
   const isExpired = useSelector((state: RootState) => state.isLogin.isExpired);
 
   useEffect(() => {
@@ -39,6 +42,7 @@ const App = ({
 
   const FeaturePage = (): JSX.Element => {
     const [open, setOpen] = useState<boolean>(true);
+    const [filterArr, setFilterArr] = useState<IFilterOption[]>([]);
 
     const toggleBtn = () => {
       setOpen(!open);
@@ -46,28 +50,31 @@ const App = ({
     return (
       <Wrap>
         <MainWrap className="wrap">
-          <HeaderStyle className="header">
+          <CSSTransition in={open} timeout={0} classNames={'sidebar'}>
+            <SideWrap className="sidebar">
+              <Side className="side-bar">
+                <SideBarContainer />
+                <TabBtn onClick={toggleBtn}>
+                  {open ? <TabLeftIcon /> : <TabRightIcon />}
+                </TabBtn>
+              </Side>
+            </SideWrap>
+          </CSSTransition>
+          <HeaderStyle className="header" in={open}>
             <HeaderContainer />
+            {location.pathname === '/dashboard' ||
+            location.pathname === '/createroutine' ? (
+              <ControlBarContainer
+                filterArr={filterArr}
+                setFilterArr={setFilterArr}
+              />
+            ) : (
+              ''
+            )}
           </HeaderStyle>
           <Bottom>
-            <CSSTransition in={open} timeout={0} classNames={'sidebar'}>
-              <SideWrap className="sidebar">
-                <Side className="side-bar">
-                  <SideBarContainer />
-                  <TabBtn onClick={toggleBtn}>
-                    {open ? <TabLeftIcon /> : <TabRightIcon />}
-                  </TabBtn>
-                </Side>
-              </SideWrap>
-            </CSSTransition>
             <CSSTransition in={open} timeout={0} classNames={'main'}>
               <Main className="main" isShowSidebar={open}>
-                {location.pathname === '/dashboard' ||
-                location.pathname === '/createroutine' ? (
-                  <ControlBarContainer />
-                ) : (
-                  ''
-                )}
                 <Switch>
                   <Route path={'/dashboard'} component={DashboardContainer} />
                   <Route
@@ -127,7 +134,7 @@ const TabBtn = styled.div`
 `;
 const SideWrap = styled.div`
   border-right: solid 1px #ededed;
-  background-color: #ececec;
+  background-color: #ffffff;
   position: fixed;
   top: 0;
   left: 0;
@@ -136,7 +143,7 @@ const SideWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2;
+  z-index: 10000000;
   &.sidebar-enter {
     transform: translateX(-230px);
   }
@@ -167,8 +174,24 @@ const HeaderStyle = styled.div`
   width: 100%;
   z-index: 99;
   position: fixed;
-  background-color: #fbd46d;
+  background-color: #f2f3f7;
   top: 0;
+  box-shadow: 0 1px 6px 0 rgb(32 33 36 / 28%);
+  padding: ${(props: { in: boolean }) =>
+    props.in ? '0 0 0 255px' : '0 0 0 25px'};
+  &.main-enter {
+    padding: '0 0 0 25px';
+  }
+  &.main-enter-done {
+    transform: '0 0 0 255px';
+  }
+  &.main-exit {
+    transform: '0 0 0 255px';
+  }
+  &.main-exit-done {
+    transform: '0 0 0 25px';
+  }
+  transition: padding 300ms;
 `;
 const MainWrap = styled.div`
   width: 100%;
