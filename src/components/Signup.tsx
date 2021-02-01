@@ -42,7 +42,6 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
             <SignUpInputSection>
             <SignUpMainConteiner>
                         <SignUpText>Sign up</SignUpText>
-                        <SignUpEmailText>email</SignUpEmailText>
                         <SignUpInput
                           type="email"
                           name="email"
@@ -50,7 +49,6 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
                           value={email}
                           onChange={handleChange}
                         />
-                        <SignUpEmailText>user name</SignUpEmailText>
                         <SignUpInput
                           type="text"
                           name="userName"
@@ -58,7 +56,6 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
                           value={userName}
                           onChange={handleChange}
                         />
-                        <SignUpEmailText>password</SignUpEmailText>
                         <SignUpInput
                           type="password"
                           name="password"
@@ -66,7 +63,6 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
                           value={password}
                           onChange={handleChange}
                         />
-                        <SignUpEmailText>confirm password</SignUpEmailText>
                         <SignUpInput
                           type="password"
                           name="confirmPW"
@@ -77,7 +73,7 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
                         <SignUpButton
                           type="button"
                           onClick={clickSignupHandler}
-                          value="Signup"
+                          value="SIGN UP"
                         />
                 </SignUpMainConteiner>
             </SignUpInputSection>

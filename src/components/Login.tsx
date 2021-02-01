@@ -46,11 +46,10 @@ const Login = ({
                 </LoginLogoBox>
                     <LoginMainContainer>
                         <LoginText>Login</LoginText>
-                        <EmailText>email</EmailText>
                         <LoginInput type="email" placeholder='email' name='email' value={email} onChange={handleChange}/>
-                        <EmailText>password</EmailText>
+
                         <LoginInput type="password" placeholder='password' name='password' value={password} onChange={handleChange}/>
-                        <LoginButton type="button" value="Login" onClick={clickLoginHandler}/>
+                        <LoginButton type="button" value="LOGIN" onClick={clickLoginHandler}/>
                         <LineBox></LineBox>
                         <LoginSocial>
                             <LoginGithub onClick={githubLoginHandler}></LoginGithub>
@@ -176,7 +175,7 @@ const LineBox = styled.div`
     text-align : center;
     overflow : visible;
     &:after {
-        content : 'Or';
+        content : 'OR';
         position : relative;
         top: -7px;
         background-color : #F2F3F7;
@@ -226,6 +225,7 @@ const SignUpContainer = styled.div`
     margin-top : 40px;
     display : flex;
     flex-direction : row;
+    justify-content : center;
 `;
 
 const SignUpText = styled.h3`
