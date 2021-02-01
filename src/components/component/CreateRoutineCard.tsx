@@ -94,7 +94,7 @@ const Card = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #ffffff;
+  background-color: #f6f5f5;
   border-radius: 4px;
   margin-bottom: 1.5%;
   transition: 400ms ease;
@@ -120,7 +120,7 @@ const CardTop = styled.div`
   margin: 0px 0px 15px 5px;
 `;
 const Title = styled.h1`
-  font-size: 25px;
+  font-size: 18px;
   color: #000000;
 `;
 

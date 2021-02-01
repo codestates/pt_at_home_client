@@ -20,6 +20,12 @@ const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
   }
+
+  body {
+    @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+    font-family: 'Nanum Gothic', sans-serif;
+    // @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nanum+Myeongjo&display=swap');
+    // font-family: 'Nanum Myeongjo', serif;
 `;
 
 ReactDOM.render(

@@ -48,7 +48,7 @@ export interface ControlBarProps {
   filterHandler(filterData: FilterData): void;
 }
 
-const ControlBarContainer = () => {
+const ControlBarContainer = ():JSX.Element => {
   const path = useLocation().pathname;
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.userInfo.auth);
