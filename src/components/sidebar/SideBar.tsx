@@ -1,27 +1,18 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { SideBarProps } from '../../containers/SideBarContainer';
-import Logo from '../../img/savemehomt_logo_500.svg';
+import Logo from '../../img/savemehomt_logo.svg';
 
 const SideBar = ({
   getMyRoutines,
   getMyWorkouts,
 }: SideBarProps): JSX.Element => {
-  const history = useHistory();
-  const [currentPage, setCurrentPage] = useState('dashboard');
   return (
     <Wrap>
       <SaveLogo src={Logo} />
-      <LinkWrap isActive={currentPage === 'dashboard'}>
-        <Button
-          onClick={() => {
-            history.push('/dashboard');
-            setCurrentPage('dashboard');
-          }}
-        >
-          Dashboard
-        </Button>
+      <LinkWrap>
+        <StyledLink to="/dashboard">Dashboard</StyledLink>
       </LinkWrap>
       <LinkWrap onClick={getMyWorkouts}>
         <StyledLink to="/createroutine">Create Routine</StyledLink>
@@ -69,8 +60,6 @@ const LinkWrap = styled.div`
   &:hover {
     background-color: #b4c2f6;
   }
-  background-color: ${(props: { isActive: boolean }) =>
-    props.isActive ? '#fff' : 'inherit'};
 `;
 
 export default SideBar;
