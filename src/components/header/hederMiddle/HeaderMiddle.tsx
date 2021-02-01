@@ -59,19 +59,20 @@ const LoginBtn = styled.button`
   align-items: center;
   border: none;
   border-radius: 20px;
-  background-color: #fbd46d;
-  box-shadow: -5px -5px 20px #f7b506, 5px 5px 20px #f7b506;
+  background: #f2f3f7;
+  box-shadow: -3px -8px 7px #fff, 5px 5px 20px #9d9ea1;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   &:hover {
-    box-shadow: -2px -2px 5px #fbd46d, 2px 2px 5px #f7b506;
+    box-shadow: -2px -2px 5px #fff, 2px 2px 5px #9d9ea1;
   }
   &:active {
-    box-shadow: inset 1px 1px 2px #f7b506, inset -1px -1px 2px #fbd46d;
+    box-shadow: inset 1px 1px 2px #9d9ea1, inset -1px -1px 2px #fff;
   }
 `;
 const LoginLink = styled(Link)`
-  color: #3220eb;
+  color: #b2c0f6;
+  font-weight: 700;
   text-decoration: none;
   width: 100%;
   padding: 0 20px;

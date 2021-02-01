@@ -15,40 +15,43 @@ import { Routine } from '../modules/reducers/routineList';
 import { URI } from '../index';
 import axios from 'axios';
 import styled from 'styled-components';
+import { IFilterOption } from '../App';
 axios.defaults.withCredentials = true;
 
-interface KeywordData {
+export interface KeywordData {
   keyword: string;
 }
 
-interface FilterData {
+export interface FilterData {
   category: string;
-  tool: Array<string>;
-  part: Array<string>;
+  tool: string[];
+  part: string[];
 }
 
 interface SearchResponse {
-  data: Array<Workout>;
+  data: Workout[];
   message: string;
 }
 
 interface FilterResponse {
-  data: Array<Workout>;
+  data: Workout[];
   message: string;
 }
 
 interface RoutineResponse {
-  data: Array<Routine>;
+  data: Routine[];
   message: string;
 }
 
-export interface ControlBarProps {
-  searchHandler(keywordData: KeywordData): void;
-  clickRoutineHandler(): void;
-  filterHandler(filterData: FilterData): void;
+interface IControlBarContainer {
+  filterArr: IFilterOption[];
+  setFilterArr: React.Dispatch<React.SetStateAction<IFilterOption[]>>;
 }
 
-const ControlBarContainer = () => {
+const ControlBarContainer = ({
+  filterArr,
+  setFilterArr,
+}: IControlBarContainer): JSX.Element => {
   const path = useLocation().pathname;
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.userInfo.auth);
@@ -126,15 +129,15 @@ const ControlBarContainer = () => {
         searchHandler={searchHandler}
         clickRoutineHandler={clickRoutineHandler}
         filterHandler={filterHandler}
+        filterArr={filterArr}
+        setFilterArr={setFilterArr}
       />
     </Wrap>
   );
 };
 
 const Wrap = styled.div`
-  position: fixed;
   width: 100%;
-  height: 95px;
   z-index: 1;
 `;
 export default ControlBarContainer;

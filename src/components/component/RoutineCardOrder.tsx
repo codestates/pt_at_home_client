@@ -41,14 +41,14 @@ const RoutineCardOrder = ({routineCards, routineOrder}:RoutineCardProps) => {
 export const CardBox = styled.div`
     transform:${(props:{order:{routineOrder:number, length:number, idx:number}}) => 
         props.order.routineOrder === props.order.idx ? 
-        `scale(${1.2}) translateY(-${props.order.routineOrder*100}%)` :
+        `scale(${1.3}) translateY(-${props.order.routineOrder*100}%)` :
         `translateY(-${props.order.routineOrder*120}%)`
     
     // `scale(${}) translateY(-${props.order.routineOrder*100}%)` 
     };
 
     background-color:${(props:{order:{routineOrder:number, length:number, idx:number}}) => 
-        props.order.routineOrder === props.order.idx? `green`:'grey'
+        props.order.routineOrder === props.order.idx? `#fad586`:'#f6f5f5'
     };
    
     filter:${(props:{order:{routineOrder:number, length:number, idx:number}}) => 

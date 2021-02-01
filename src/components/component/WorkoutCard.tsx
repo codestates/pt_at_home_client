@@ -66,7 +66,8 @@ const CardImgWrap = styled.div`
   height: 225px;
 `;
 const CardImg = styled.img`
-  width: 100%;
+  width: 320px;
+  height: 225px;
   border-radius: 5px 5px 0px 0px;
 `;
 const CardContents = styled.div`

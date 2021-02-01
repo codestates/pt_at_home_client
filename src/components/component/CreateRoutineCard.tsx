@@ -90,7 +90,10 @@ const Card = styled.div`
   align-items: center;
   justify-content: space-between;
   background-color: #f6f5f5;
+<<<<<<< HEAD
   border: 1px solid rgba(255, 255, 255, 0.2);
+=======
+>>>>>>> 1f600d92fa3c58d48a678935622776eefbc15d6c
   border-radius: 4px;
   transition: all 0.2s ease-in-out;
   cursor: pointer;

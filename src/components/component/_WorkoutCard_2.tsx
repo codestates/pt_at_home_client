@@ -1,4 +1,4 @@
-import React, {useRef} from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { MyWorkoutCardProps } from '../modal/ModalRoutineDetail'
 
@@ -45,7 +45,7 @@ const CardImgWrap = styled.div``;
 const CardImg = styled.img`
   width: 150px;
   height:130px;
-  border-radius: 15px;
+  border-radius: 20px;
   padding:10%;
 `;
 
@@ -56,10 +56,11 @@ const CardContents = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 20px;
+  font-size: 18px;
   text-align:center;
-  color: #f0f0f0;
+  color: #555555;
   padding-top:5%;
+  font-weight:bold;
 `;
 
 const ExplanationWrap = styled.div`

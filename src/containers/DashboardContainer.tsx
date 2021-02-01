@@ -172,6 +172,7 @@ const DashboardContainer = (): JSX.Element => {
         },
       })
       .then((res) => {
+        console.log(res);
         // if (res.data.message === 'ok') {
         dispatch(actionSetWorkoutList(res.data.data));
         // }
