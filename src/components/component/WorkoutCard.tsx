@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { GoHeart } from 'react-icons/go';
 import { Workout } from '../../modules/reducers/workoutList';
 
+
 interface WorkoutCardProps {
   workoutCard: Workout;
   clickWorkoutCard(id: number): void;

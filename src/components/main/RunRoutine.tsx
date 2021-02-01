@@ -3,11 +3,12 @@ import { CurrentRoutineProps } from '../../containers/RunRoutineContainer';
 import RoutineCardOrder from '../component/RoutineCardOrder'
 import styled from 'styled-components';
 import ReactAudioPlayer from 'react-audio-player';
+import finishImg from '../../img/Finish_2.png'
+import readyImg from '../../img/Ready.png'
 const bgm1 = 'https://ptathomebucket.s3.ap-northeast-2.amazonaws.com/bgm2.mp3'
 const bgm2 = 'https://ptathomebucket.s3.ap-northeast-2.amazonaws.com/bgm1.wav'
-const countedSound = 'https://ptathomebucket.s3.ap-northeast-2.amazonaws.com/counted.mp3'
+const countedSound = new Audio('https://ptathomebucket.s3.ap-northeast-2.amazonaws.com/counted.mp3')
 const breakTimeImage = 'https://ptathomebucket.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%B2%E1%84%89%E1%85%B5%E1%86%A8.jpeg'
-
 
 
 type SetInterval = ReturnType<typeof setInterval>;
@@ -33,6 +34,7 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
   
   
   useEffect(() => {
+    // countedSound.play()
     if (
       counter === totalCount + 1 &&
       (status === 'start' || status === 'resume')
@@ -71,7 +73,10 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
     } else if (status === 'resume' && repeat === 'repeat') {
       setIntervImg(setInterval(() => setImgIdx(imgIdx++), 1500));
     } else if (status === 'resume') {
-      setIntervCounter(setInterval(() => setCounter(counter++), 1000));
+      setIntervCounter(setInterval(() => {
+        setCounter(counter++)
+        countedSound.play()
+      }, 1000));
     } else if (status === 'pause') {
       setIntervCounter(clearInterval(intervCounter));
       setIntervImg(clearInterval(intervImg));
@@ -139,7 +144,10 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
       setRepeat('repeat');
     } else {
       setCounter(counter++);
-      setIntervCounter(setInterval(() => setCounter(counter++), 1000));
+      setIntervCounter(setInterval(() => {
+        setCounter(counter++)
+        countedSound.play()
+      }, 1000));
     }
   };
 
@@ -161,6 +169,7 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
   };
 
   const resumeHandler = () => {
+    countedSound.play()
     if (status === 'pause') {
       setStatus('resume');
     } else if (status === 'pauseBreak') {
@@ -171,6 +180,7 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
   const resetHandler = () => {
     setImgIdx(1)
     setRoutineOrder(0)
+    setCounter(0)
     setStatus('ready')
     setRepeat('ready')
   }
@@ -181,12 +191,13 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
           <RunWrap>
         {/* <div>{currentWorkout.id}</div> */}
           <ImgBox>
-            <ImgStyle src={status === 'break'?breakTimeImage:currentImg} />
+            <ImgStyle src={status === 'break' || status === 'pauseBreak' ?breakTimeImage:(status === 'ready'? readyImg:(status === 'finish'?finishImg:currentImg))} />
           </ImgBox>
           <CountAndBtn>
             <ControlTop>
-              <Title>{status === 'break'?'BREAK TIME':(status === 'finish'?'FINISHED':currentWorkout?.title.toUpperCase())}</Title>
-              <CountWrap>{`${counter}/${
+              <Title>{currentWorkout?.title.toUpperCase()}</Title>
+              <Status>{status === 'break'?'BREAK TIME':(status === 'finish'?'FINISHED':(status==='ready'? 'READY':(status === 'pause' || status === 'pauseBreak' ? 'PAUSED':'')))}</Status>
+              <CountWrap>{`${counter} | ${
                 status === 'break' || status === 'pauseBreak'
                   ? breakCount
                   : totalCount
@@ -221,20 +232,20 @@ const Wrap = styled.div`
   display: flex;
   height: 100%;
   justify-content:space-between;
-  padding-top:1%;
-  
+  padding-top:1%;  
 `;
 
 const RunWrap = styled.div`
   // flex: 1;
   display:flex;
-  justify-content:space-between;
+  justify-content:space-around;
+  width:1050px;
   height:85%;
   margin-left:2%;
-  background-color: #f0f0f0;
+  background-color: #222831;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 5px;
-  padding: 10px;
+  padding: 20px 5px;
 `;
 const ImgBox = styled.div`
   display:flex;
@@ -243,11 +254,11 @@ const ImgBox = styled.div`
   border-radius: 5px;
   background-color:white;
   padding:15px;
-  width:725px;
+  width:700px;
 `
 const ImgStyle = styled.img`
   border-radius: 5px;
-  width:100%;
+  width:90%;
 `;
 
 const CountAndBtn = styled.div`
@@ -262,27 +273,38 @@ const CountAndBtn = styled.div`
 const ControlTop = styled.div`
   display:flex;
   flex-flow:column nowrap;
-  height:42%;
+  height:58%;
   justify-content:space-between;
+  padding: 15px 0;
   align-items:center;
   margin-top:5%;
+  width:275px;
+  color:#f5f4f4
 
 `
 const Title = styled.div`
   font-weight:bold;
-  font-size:2.3rem;
-  
+  font-size:1.8rem;
+
+`
+
+const Status = styled.div`
+  display:flex;
+  align-items:center;
+  font-weight:bold;
+  font-size:1.7rem;
+  height:50px;
 `
 
 const CountWrap = styled.div`
   display:flex;
   justify-content:center;
   align-items:center;
-  width:170px;
+  width:275px;
   height:170px;
   font-size: 4rem;
-  border-radius: 50%;
-  background-color: #f7d89f;
+  text-shadow:3px 3px grey;
+
 `;
 
 const ButtonWrap = styled.div`
@@ -315,11 +337,11 @@ const CardWrap = styled.div`
   display:flex;
   flex-flow:column nowrap;
   align-items:center;
-  margin-right:8%;
+  margin-right:75px;
   overflow:hidden;
   padding:10px 10px 10px 10px;
   height:85%;
-  width:400px;
+  width:500px;
   border-radius:8px;
   padding-top:220px;
 `;
