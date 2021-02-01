@@ -178,8 +178,8 @@ const RoutineBox = ({
 const Wrap = styled.div`
   display: flex;
   padding: 20px 0 20px 20px;
-  background-color: #e0e5ec;
-  box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
+  background-color: #f2f3f7;
+  box-shadow: -3px -8px 7px #fff, 5px 5px 20px #9d9ea1;
   justify-content: space-between;
   border-radius: 5px;
   position: fixed;
@@ -187,14 +187,14 @@ const Wrap = styled.div`
 `;
 
 const CardWrap = styled.div`
-  background-color: #d9e8fd;
+  background-color: #e9eef5;
   box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
   width: 310px;
   height: 100%;
   border-radius: 5px;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 10px;
+  padding: 5px 10px;
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -202,7 +202,7 @@ const CardWrap = styled.div`
     background: none;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: #abbcfb;
+    background-color: #30475e;
     border-radius: 6px;
   }
 `;
@@ -214,10 +214,22 @@ const ClearBtnWrap = styled.div`
 `;
 
 const ClearBtn = styled.input`
-  border: 2px solid grey;
-  padding: 1% 2%;
-  border-radius: 5px;
-  background-color: #fff29b;
+  outline: none;
+  font-weight: 700;
+  margin: 5px 0 5px 0;
+  color: #ff0000;
+  border: none;
+  border-radius: 10px;
+  background: #f2f3f7;
+  box-shadow: -3px -8px 7px #fff, 5px 5px 20px #9d9ea1;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+  }
+  &:active {
+    box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #e0e5ec;
+  }
 `;
 
 const ContentWrap = styled.div`
@@ -271,12 +283,12 @@ const SaveBtn = styled.input`
   font-size: 1.5rem;
   font-weight: 700;
   margin: 10% 0;
-  height: 35px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
-  background-color: #d9e8fd;
   color: #30475e;
-  box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
+  height: 35px;
+  border: none;
+  border-radius: 20px;
+  background: #f2f3f7;
+  box-shadow: -3px -8px 7px #fff, 5px 5px 20px #9d9ea1;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   &:hover {
@@ -290,15 +302,13 @@ const RunBtn = styled.input`
   outline: none;
   font-size: 1.5rem;
   font-weight: 700;
-  margin: 5% 0;
-  padding: 5% 3%;
-  height: 50px;
-  display: block;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
-  background-color: #d9e8fd;
+  margin: 10% 0;
   color: #30475e;
-  box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
+  height: 35px;
+  border: none;
+  border-radius: 20px;
+  background: #f2f3f7;
+  box-shadow: -3px -8px 7px #fff, 5px 5px 20px #9d9ea1;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   &:hover {

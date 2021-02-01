@@ -79,22 +79,23 @@ const DraggableWrap = styled.div`
   text-decoration: none;
   display: inline-table;
   outline: none;
+  border: none;
+  border-radius: 10px;
   // margin: 0 30px 15px 0;
-  margin: 1.2% 1.2%;
-  width: 280px;
-  height: 130px;
+  margin: 0 5px 20px 10px;
+  width: 120px;
+  height: 120px;
 `;
 const Card = styled.div`
   outline: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #f6f5f5;
-<<<<<<< HEAD
-  border: 1px solid rgba(255, 255, 255, 0.2);
-=======
->>>>>>> 1f600d92fa3c58d48a678935622776eefbc15d6c
-  border-radius: 4px;
+  background-color: #f2f3f7;
+  border: none;
+  border-radius: 10px;
+  height: 120px;
+  box-shadow: -3px -8px 7px #fff, 5px 5px 20px #9d9ea1;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   &:hover {
@@ -107,26 +108,28 @@ const Card = styled.div`
 
 const CardImgWrap = styled.div``;
 const CardImg = styled.img`
-  width: 110px;
-  height: 110px;
-  border-radius: 5px;
-  margin: 10px;
+  width: 120px;
+  height: 120px;
+  border-radius: 10px 0 0 10px;
 `;
 const CardContents = styled.div`
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: column;
+  justify-content: center;
   width: 150px;
-  padding: 0 10px 0 0;
+  height: 100%;
+  padding: 5px 10px 5px 0;
 `;
 
 const CardTop = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 0px 0px 15px 5px;
+  margin: 0px 0px 10px 5px;
 `;
 const Title = styled.h1`
   font-size: 18px;
-  color: #000000;
+  color: #30475e;
+  font-weight: 700;
 `;
 
 const GearBtn = styled.button`
@@ -139,7 +142,7 @@ const GearBtn = styled.button`
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   background-color: #f6f5f5;
-  box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
+  box-shadow: -3px -8px 7px #fff, 5px 5px 20px #9d9ea1;
   transition: all 0.2s ease-in-out;
   padding: 0;
   cursor: pointer;
@@ -158,16 +161,15 @@ const ExplanationWrap = styled.div`
 `;
 const Explanation = styled.div`
   font-size: 14px;
-  color: #000000;
-  background-color: #d6e6ea;
-  margin: 0 0 4px 0px;
+  color: #555555;
+  font-weight: 700;
   width: 100%;
   padding: 3px 5px 3px 10px;
   border-radius: 5px;
 `;
 const Close = styled(BiX)`
   font-size: 20px;
-  color: #000000;
+  color: #ff0000;
 `;
 const Info = styled(BiBulb)`
   font-size: 20px;
