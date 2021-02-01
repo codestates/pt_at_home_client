@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import { LoginProps } from '../containers/LoginContainer';
 import img from '../img/img1.png';
 import logo from '../img/savemehomt_logo.png'
-import kakao from '../img/kakao.png'
-import google from '../img/google.png'
-import github from '../img/github.png'
+import kakao from '../img/kakao.svg'
+import google from '../img/google.svg'
+import github from '../img/github.svg'
 
 
 const Login = ({
@@ -41,35 +41,44 @@ const Login = ({
                 <Bottom>Heathy is the important</Bottom>
             </LoginSectionImg>
             <SectionLogin>
-                <LoginLogo src={logo}></LoginLogo>
-                <LoginMainContainer>
-                    <LoginText>Login</LoginText>
-                    <EmailText>email</EmailText>
-                    <LoginInput type="email" placeholder='email' name='email' value={email} onChange={handleChange}/>
-                    <EmailText>password</EmailText>
-                    <LoginInput type="password" placeholder='password' name='password' value={password} onChange={handleChange}/>
-                    <LoginButton type="button" value="Login" onClick={clickLoginHandler}/>
-                    <LineBox></LineBox>
-                    <LoginSocial>
-                        <LoginGithub onClick={githubLoginHandler}></LoginGithub>
-                        <LoginGoogle onClick={googleLoginHandler}></LoginGoogle>
-                        <LoginKakao type="button" value="KAKAO LOGIN" onClick={kakaoLoginHandler}/>
-                    </LoginSocial>
-                    <SignUpContainer>
-                        <SignUpText>Not a member ?</SignUpText>
-                        <SignUpLink to={'/signup'}>Click here</SignUpLink>
-                    </SignUpContainer>
-                </LoginMainContainer>
+                <LoginLogoBox>
+                    <LoginLogo src={logo}></LoginLogo>
+                </LoginLogoBox>
+                    <LoginMainContainer>
+                        <LoginText>Login</LoginText>
+                        <EmailText>email</EmailText>
+                        <LoginInput type="email" placeholder='email' name='email' value={email} onChange={handleChange}/>
+                        <EmailText>password</EmailText>
+                        <LoginInput type="password" placeholder='password' name='password' value={password} onChange={handleChange}/>
+                        <LoginButton type="button" value="Login" onClick={clickLoginHandler}/>
+                        <LineBox></LineBox>
+                        <LoginSocial>
+                            <LoginGithub onClick={githubLoginHandler}></LoginGithub>
+                            <LoginGoogle onClick={googleLoginHandler}></LoginGoogle>
+                            <LoginKakao type="button" value="KAKAO LOGIN" onClick={kakaoLoginHandler}/>
+                        </LoginSocial>
+                        <SignUpContainer>
+                            <SignUpText>Not a member ?</SignUpText>
+                            <SignUpLink to={'/signup'}>Click here</SignUpLink>
+                        </SignUpContainer>
+                    </LoginMainContainer>
             </SectionLogin>
         </MainContainer>
     );
 };
 
+const LoginLogoBox = styled.div`
+    margin-bottom : 160px;
+    width : 100%;
+    display : flex;
+    justify-content : flex-end;
+`;
+
 const SignUpLink = styled(Link)`
     text-decoration: none;
     font-size : 20px;
     margin-left : 15px;
-    color : #f4be70;
+    color : #aa6a0c;
 `;
 
 const MainContainer = styled.div`
@@ -88,10 +97,7 @@ const LoginSectionImg = styled.section`
 `;
 
 const LoginLogo = styled.img`
-position: relative;
-right: -537;
-top: -196px;
-max-width: 100px;
+    max-width: 100px;
 `;
 
 const Img = styled.img`
@@ -119,7 +125,7 @@ const SectionLogin = styled.section`
 const LoginMainContainer = styled.div`
     display : flex;
     flex-direction : column;
-    height : 50%;
+    height : 100%;
 `;
 
 const LoginText = styled.h2`
@@ -140,7 +146,7 @@ const LoginInput = styled.input`
     height : 2.5rem;
     margin : 5px;
     border : 1px solid transparent;
-    background-color : #f3f3f4;
+    background-color : white;
     margin-bottom : 15px;
     border-radius : 10px;
     :: placeholder {
@@ -165,7 +171,7 @@ const LoginButton = styled.input`
 `;
 
 const LineBox = styled.div`
-    border-top : 1px solid #e0e0e0;
+    border-top : 1px solid #3938048a;
     margin : 20px;
     text-align : center;
     overflow : visible;
@@ -173,7 +179,7 @@ const LineBox = styled.div`
         content : 'Or';
         position : relative;
         top: -7px;
-        background-color : White;
+        background-color : #F2F3F7;
         padding : 10px;
     }
 `;
@@ -189,7 +195,7 @@ const LoginSocial = styled.div`
 const LoginGithub = styled.button`
     background-image: url(${github});
     background-repeat: no-repeat;
-    border : 1px solid white;
+    border : 1px solid #F2F3F7;
     border-radius : 30px;
     height : 54px;
     width : 58px;
@@ -200,7 +206,7 @@ const LoginGithub = styled.button`
 const LoginGoogle = styled.button`
     background-image: url(${google});
     background-repeat: no-repeat;
-    border : 1px solid white;
+    border : 1px solid #F2F3F7;
     border-radius : 30px;
     height : 56px;
     width : 56px;
@@ -210,7 +216,7 @@ const LoginGoogle = styled.button`
 const LoginKakao = styled.button`
     background-image: url(${kakao});
     background-repeat: no-repeat;
-    border : 1px solid white;
+    border : 1px solid #F2F3F7;
     border-radius : 30px;
     height : 60px;
     width : 61px;
