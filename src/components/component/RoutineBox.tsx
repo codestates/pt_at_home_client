@@ -189,7 +189,7 @@ const Wrap = styled.div`
 const CardWrap = styled.div`
   background-color: #d9e8fd;
   box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
-  width: 320px;
+  width: 310px;
   height: 100%;
   border-radius: 5px;
   overflow-y: auto;
@@ -263,7 +263,7 @@ const Content = styled.div`
 const ControlBtn = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  padding: 0 15%;
+  padding: 0 10%;
 `;
 
 const SaveBtn = styled.input`

@@ -24,6 +24,7 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 
+
 const App = ({
   history,
   location,
@@ -63,7 +64,7 @@ const App = ({
               <Main className="main" isShowSidebar={open}>
                 {location.pathname === '/dashboard' ||
                 location.pathname === '/createroutine' ? (
-                  <ControlBarContainer open={open} />
+                  <ControlBarContainer />
                 ) : (
                   ''
                 )}
