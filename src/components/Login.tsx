@@ -8,7 +8,6 @@ import kakao from '../img/kakao.svg'
 import google from '../img/google.svg'
 import github from '../img/github.svg'
 
-
 const Login = ({
     loginHandler,
     kakaoLoginHandler,
@@ -42,13 +41,13 @@ const Login = ({
             </LoginSectionImg>
             <SectionLogin>
                 <LoginLogoBox>
-                    <LoginLogo src={logo}></LoginLogo>
+                   <Link to='/'><LoginLogo src={logo}></LoginLogo></Link>
                 </LoginLogoBox>
                     <LoginMainContainer>
                         <LoginText>Login</LoginText>
                         <LoginInput type="email" placeholder='email' name='email' value={email} onChange={handleChange}/>
-
                         <LoginInput type="password" placeholder='password' name='password' value={password} onChange={handleChange}/>
+                        <AlertMsg>{alertMsg}</AlertMsg>
                         <LoginButton type="button" value="LOGIN" onClick={clickLoginHandler}/>
                         <LineBox></LineBox>
                         <LoginSocial>
@@ -57,8 +56,8 @@ const Login = ({
                             <LoginKakao type="button" value="KAKAO LOGIN" onClick={kakaoLoginHandler}/>
                         </LoginSocial>
                         <SignUpContainer>
-                            <SignUpText>Not a member ?</SignUpText>
-                            <SignUpLink to={'/signup'}>Click here</SignUpLink>
+                            <SignUpText>Not a member yet?</SignUpText>
+                            <SignUpLink to={'/signup'}>Click me to Signup!</SignUpLink>
                         </SignUpContainer>
                     </LoginMainContainer>
             </SectionLogin>
@@ -96,7 +95,11 @@ const LoginSectionImg = styled.section`
 `;
 
 const LoginLogo = styled.img`
-    max-width: 100px;
+position: absolute;
+top:30px;
+right:40px;
+max-width: 100px;
+
 `;
 
 const Img = styled.img`
@@ -151,11 +154,16 @@ const LoginInput = styled.input`
     :: placeholder {
         font-size : 16px;
     }
-
     &:focus {
         outline : none;
     }
 `;
+
+const AlertMsg = styled.div`
+    text-align:center;
+    color:#de4463;
+    padding:10px 0;
+`
 
 const LoginButton = styled.input`
     font-size : 20px;
@@ -225,7 +233,7 @@ const SignUpContainer = styled.div`
     margin-top : 40px;
     display : flex;
     flex-direction : row;
-    justify-content : center;
+    justify-content:center;
 `;
 
 const SignUpText = styled.h3`

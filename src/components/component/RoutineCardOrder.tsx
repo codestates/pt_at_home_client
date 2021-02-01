@@ -53,7 +53,7 @@ export const CardBox = styled.div`
     };
 
     background-color:${(props:{order:{routineOrder:number, length:number, idx:number}}) => 
-        props.order.routineOrder === props.order.idx? `#fad586`:'#f6f5f5'
+        props.order.routineOrder === props.order.idx? `#f0efef`:'#797a7e'
     };
    
     filter:${(props:{order:{routineOrder:number, length:number, idx:number}}) => 
@@ -64,6 +64,10 @@ export const CardBox = styled.div`
     props.order.routineOrder === props.order.idx? '1':'0'
     };
    
+    color: ${(props:{order:{routineOrder:number, length:number, idx:number}}) => 
+    props.order.routineOrder === props.order.idx? '#555555':'white'
+    };
+
     border-radius: 10px;
     transition: 500ms ease;
     width:300px;

@@ -91,11 +91,10 @@ const ControlBarContainer = ({
         },
       )
       .then((res) => {
-        console.log(res.data.data);
         if (res.data.message === 'ok') {
-          actionSetWorkoutList(res.data.data);
+          dispatch(actionSetWorkoutList(res.data.data))
         } else if (res.data.message === 'not found') {
-          actionSetWorkoutList([]);
+          dispatch(actionSetWorkoutList([]))
         }
         if (isDashboardRoutine) dispatch(actionToggleDashboardType(false));
       });

@@ -7,7 +7,10 @@ import finishImg from '../../img/Finish_2.png'
 import readyImg from '../../img/Ready.png'
 const bgm1 = 'https://ptathomebucket.s3.ap-northeast-2.amazonaws.com/bgm2.mp3'
 const bgm2 = 'https://ptathomebucket.s3.ap-northeast-2.amazonaws.com/bgm1.wav'
-const countedSound = new Audio('https://ptathomebucket.s3.ap-northeast-2.amazonaws.com/counted.mp3')
+const countedSound = new Audio('https://ptathomebucket.s3.ap-northeast-2.amazonaws.com/count-1.mp3')
+const slideSound = new Audio('https://ptathomebucket.s3.ap-northeast-2.amazonaws.com/slide-1.mp33')
+const finishSound = new Audio('https://ptathomebucket.s3.ap-northeast-2.amazonaws.com/finish-sound.mp3')
+// const countedSound = new Audio('https://ptathomebucket.s3.ap-northeast-2.amazonaws.com/counted.mp3')
 const breakTimeImage = 'https://ptathomebucket.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%B2%E1%84%89%E1%85%B5%E1%86%A8.jpeg'
 
 
@@ -29,12 +32,13 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
   let currentWorkout = workout[routineOrder];
   let totalCount = workout[routineOrder]?.myCount;
   let breakCount = workout[routineOrder]?.myBreakTime;
-  const intervalTime = 1400 / (workout[routineOrder]?.image.length - 1)
-  let num = useMemo(() => routineOrder + 1, [routineOrder]);
-  
+  const intervalTime = 1800 / (workout[routineOrder]?.image.length - 1)
+  let num = useMemo(() => routineOrder + 1, [routineOrder]);  
   
   useEffect(() => {
-    // countedSound.play()
+    if (status === 'start' || status === 'resume') {
+      countedSound.play()
+    }
     if (
       counter === totalCount + 1 &&
       (status === 'start' || status === 'resume')
@@ -75,7 +79,6 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
     } else if (status === 'resume') {
       setIntervCounter(setInterval(() => {
         setCounter(counter++)
-        countedSound.play()
       }, 1000));
     } else if (status === 'pause') {
       setIntervCounter(clearInterval(intervCounter));
@@ -86,10 +89,17 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
   }, [status]);
 
   useEffect(() => {
-    if (status !== 'pause' && status !== 'pauseBreak' && status !== 'finish' && status !== 'ready') {
+    if (status === 'ready') {
       setAudioPlay(true)
     }
-  }, [status, audioPlay])
+    if (status === 'finish') {
+      finishSound.play()
+      setAudioPlay(false)
+    } if (routineOrder > 0) {
+      slideSound.play()
+    }
+  }, [status, routineOrder])
+
 
   // start 를 누르면 status 를 start로 바꾼다
   // staus 가 start 면 runworkout을 실행한다
@@ -146,7 +156,6 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
       setCounter(counter++);
       setIntervCounter(setInterval(() => {
         setCounter(counter++)
-        countedSound.play()
       }, 1000));
     }
   };
@@ -169,7 +178,6 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
   };
 
   const resumeHandler = () => {
-    countedSound.play()
     if (status === 'pause') {
       setStatus('resume');
     } else if (status === 'pauseBreak') {
@@ -178,11 +186,14 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
   };
 
   const resetHandler = () => {
+    setAudioPlay(false)
     setImgIdx(1)
     setRoutineOrder(0)
     setCounter(0)
     setStatus('ready')
     setRepeat('ready')
+    setIntervCounter(clearInterval(intervCounter))
+    setIntervImg(clearInterval(intervImg))
   }
 
   return (
@@ -217,7 +228,7 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
           </CountAndBtn>
       </RunWrap>
       <RoutineAudio>
-          <ReactAudioPlayer src={bgm2} autoPlay={audioPlay}  controls volume={0.3}/>
+          <ReactAudioPlayer src={bgm2} autoPlay={audioPlay}  controls volume={0.1}/>
       </RoutineAudio>
       </div>
       
@@ -242,8 +253,8 @@ const RunWrap = styled.div`
   width:1050px;
   height:85%;
   margin-left:2%;
-  background-color: #222831;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: #ebecf1;
+  box-shadow: rgba(0, 0, 0, 1) 0px 5px 10px;
   border-radius: 5px;
   padding: 20px 5px;
 `;
@@ -279,13 +290,13 @@ const ControlTop = styled.div`
   align-items:center;
   margin-top:5%;
   width:275px;
-  color:#f5f4f4
+  color:#555555
 
 `
 const Title = styled.div`
   font-weight:bold;
-  font-size:1.8rem;
-
+  font-size:2rem;
+  text-shadow: 2px 2px 5px white;
 `
 
 const Status = styled.div`
@@ -294,6 +305,8 @@ const Status = styled.div`
   font-weight:bold;
   font-size:1.7rem;
   height:50px;
+  text-shadow: 2px 2px 5px white;
+
 `
 
 const CountWrap = styled.div`
@@ -303,7 +316,7 @@ const CountWrap = styled.div`
   width:275px;
   height:170px;
   font-size: 4rem;
-  text-shadow:3px 3px grey;
+  text-shadow: 2px 2px 5px white;
 
 `;
 

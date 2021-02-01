@@ -43,8 +43,8 @@ const Card = styled.div`
 const CardImgWrap = styled.div``;
 
 const CardImg = styled.img`
-  width: 150px;
-  height:130px;
+  width: 140px;
+  height:140px;
   border-radius: 20px;
   padding:10%;
 `;
@@ -58,7 +58,6 @@ const CardContents = styled.div`
 const Title = styled.h1`
   font-size: 18px;
   text-align:center;
-  color: #555555;
   padding-top:5%;
   font-weight:bold;
 `;

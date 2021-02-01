@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SignupProps } from '../containers/SignupContainer';
-import img from '../img/img4.svg'
+import { Link } from 'react-router-dom'
+import img from '../img/img4.png'
 import logo from '../img/savemehomt_logo.png'
 
 const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLoginHandler }: SignupProps): JSX.Element => {
@@ -26,7 +27,7 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
     } else if (!/^[0-9a-zA-Z]([-_\]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(email)) {
       setAlertMsg("이메일 형식이 아닙니다.")
     } else if (!/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&+=]).*$/.test(password)) {
-      setAlertMsg("대문자, 소문자, 특수문자, 숫자형식이 하나이상 들어가야 합니다. 비밀번호가 8 - 15 여야 합니다.")
+      setAlertMsg(`대/소문자, 특수문자, 숫자가 하나 이상씩 들어가야 합니다. 비밀번호가 8-15여야 합니다.`)
     } else {
       signupHandler({ email, userName, password })  
     }
@@ -36,7 +37,7 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
     <>
       <SignUpMainContainer>
         <SignUpLogoBox>
-            <SignUpLogo src={logo}></SignUpLogo>
+            <Link to='/'><SignUpLogo src={logo}></SignUpLogo></Link>
         </SignUpLogoBox>
         <SingnUpSectionBox>
             <SignUpInputSection>
@@ -70,6 +71,7 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
                           value={confirmPW}
                           onChange={handleChange}
                         />
+                        <AlertMsg>{alertMsg}</AlertMsg>
                         <SignUpButton
                           type="button"
                           onClick={clickSignupHandler}
@@ -104,7 +106,11 @@ const SignUpLogoBox = styled.div`
 `;
 
 const SignUpLogo = styled.img`
-    max-height:100px;
+position: absolute;
+top:30px;
+left:40px;
+max-height:100px;
+
 `;
 
 
@@ -163,6 +169,12 @@ const SignUpInput = styled.input`
         outline : none;
     }
 `;
+
+const AlertMsg = styled.div`
+    text-align:center;
+    color:#de4463;
+    padding:10px 0;
+`
 
 const SignUpButton = styled.input`
     width : 400px;
