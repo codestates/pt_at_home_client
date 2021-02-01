@@ -24,7 +24,7 @@ const Dashboard = ({
     <Wrap>
       <BodyWrap>
         <CardWrap>
-          {isDashboardRoutine
+          {isDashboardRoutine && routineList
             ? routineList.map((el) => (
                 <Cardli key={el.routineId}>
                   <RoutineCard
