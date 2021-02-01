@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { MyPageProps } from '../../containers/MyPageContainer';
-import chart from '../../img/chart.png';
+import chart from '../../img/chart2.png';
 import graph from '../../img/graph.png';
+
 
 const MyPage = ({
   isLogin,
@@ -34,24 +35,26 @@ const MyPage = ({
           <Main>
             <MainTop>
               <Title>회원 정보</Title>
-              <EditBtn>
-                <Btn onClick={EditButton}>
-                  {!edit ? '수정하기' : '수정취소'}
-                </Btn>
-              </EditBtn>
             </MainTop>
-            <ContentsWrap>
               <Contents>
+                <EditWap>
                 {!edit ? (
                   <EditRow>
-                    <NameRow>{`닉네임 : ${userName}`}</NameRow>
-                    <EmailRow>{`이메일 : ${email}`}</EmailRow>
+                    <UserIngoBox>
+                      <NameRow>{`이메일 : ${email}`}</NameRow>
+                      <EmailRow>{`닉네임 : ${userName}`}</EmailRow>
+                    </UserIngoBox>
+                    <BtnBox>
+                      <Btn onClick={EditButton}>
+                      {!edit ? '수정하기' : '수정취소'}
+                      </Btn>
+                    </BtnBox>
                   </EditRow>
                 ) : (
                   <EditRow>
                     <InfoRow>
                       <NameRow>
-                        {`닉네임 : `}
+                        {`변경할 닉네임 : `}
                         <Editinput
                           type="text"
                           value={userName}
@@ -86,22 +89,36 @@ const MyPage = ({
                       </PasswordRow>
                     </InfoRow>
                     <SaveBtnWrap>
-                      <Btn
-                        onClick={() => updateUserInfo({ userName, password })}
-                      >
-                        저장하기
-                      </Btn>
+                      <BtnBoxEdit>
+                        <Btn onClick={EditButton}>
+                            {!edit ? '수정하기' : '수정취소'}
+                        </Btn>
+                        <Btn
+                          onClick={() => updateUserInfo({ userName, password })}
+                        >
+                          저장하기
+                        </Btn>
+                      </BtnBoxEdit>
                     </SaveBtnWrap>
                   </EditRow>
                 )}
-                <DeleteWrap>
-                  <Btn onClick={() => resignHandler(userInfo.email)}>
-                    회원 탈퇴
-                  </Btn>
-                </DeleteWrap>
+                </EditWap>
               </Contents>
-            </ContentsWrap>
-            <img src={graph} />
+              <LineInfo></LineInfo>
+            <GraphWap>
+              <ImgText>하루 총 칼리로와 하루 총 운동시간 지표입니다. 일주일 단위로 표시됩니다.</ImgText>
+              <Img src={graph}></Img>
+            </GraphWap>
+            <LineGraph></LineGraph>
+            <GraphWap>
+              <Img src={chart}></Img>
+              <ImgText>부위별 운동량 지표입니다.</ImgText>
+            </GraphWap>
+            <ResignBtnBox>
+              <Btn onClick={() => resignHandler(userInfo.email)}>
+                  회원 탈퇴
+              </Btn>
+            </ResignBtnBox>
           </Main>
         </MainWrap>
       ) : (
@@ -111,8 +128,95 @@ const MyPage = ({
   );
 };
 
+const LineInfo = styled.div`
+width : 70%;
+border-top : 1px solid #e0e0e0;
+margin : 20px;
+text-align : center;
+overflow : visible;
+  &:after {
+    content : 'Chart';
+    position : relative;
+    top : -7px;
+    background-color : White;
+    padding : 10px;
+  }
+`;
+
+const LineGraph = styled.div`
+width : 80%;
+border-top : 1px solid #e0e0e0;
+margin : 20px;
+text-align : center;
+overflow : visible;
+  &:after {
+    content : 'Graph';
+    position : relative;
+    top : -7px;
+    background-color : White;
+    padding : 10px;
+  }
+`;
+
+
+const ResignBtnBox = styled.div`
+  margin-bottom : 50px;
+  width: 100%;
+  display : flex;
+  justify-content : flex-end;
+  padding : 0 155px 0 0;
+
+`;
+
+const BtnBoxEdit = styled.div`
+  margin-left : 130px;
+  display : flex;
+  flex-direction : column;
+  width : 130px;
+`;
+
+const UserIngoBox = styled.div`
+  font-size : 18px;
+  margin-top : 12px;
+  width: 50%;
+  display : flex;
+  flex-direction : column;
+`;
+
+const BtnBox = styled.div`
+  margin-left : 148px;
+  width: 20%;
+  display : flex;
+  flex-direction : column;
+  justify-content: center;
+
+`;
+
+
+const ImgText = styled.p`
+  font-size : 20px;
+  width : 40%;
+  height : 100%;
+  text-align : center;
+`;
+
+const Img = styled.img`
+  width : 60%;
+`;
+
+const GraphWap = styled.div`
+  display : flex;
+  flex-direction : row;
+  width : 90%;
+  height : 90%;
+
+`;
+
+const EditWap = styled.div`
+  width : 80%;
+`;
+
 const Wrap = styled.div`
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -123,8 +227,6 @@ const MainWrap = styled.div`
   margin: 0 130px;
   display: flex;
   justify-content: center;
-  border-left: solid 1px #f0f0f0;
-  border-right: solid 1px #f0f0f0;
 `;
 const Main = styled.div`
   width: 100%;
@@ -133,11 +235,11 @@ const Main = styled.div`
   flex-direction: column;
 `;
 const MainTop = styled.div`
+  margin-top : 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 1200px;
-  border-bottom: solid 1px #f0f0f0;
+  width: 100%;
 `;
 const Title = styled.div`
   padding: 15px 75px;
@@ -145,36 +247,31 @@ const Title = styled.div`
   font-weight: 700;
   color: #000000;
 `;
-const EditBtn = styled.span`
-  height: 35%;
-  position: relative;
-  top: -15px;
-`;
-const ContentsWrap = styled.div`
-  display: flex;
-  height: 100%;
-  width: 100%;
-`;
+
 const Contents = styled.div`
   display: flex;
   width: 100%;
-  flex-direction: column;
-  padding: 50px 0 0 0;
+  align-items : center;
+  flex-direction: row;
+  padding: 30px 0 40px 0;
 `;
 const NameRow = styled.div`
+  text-align : left;
   margin-bottom: 20px;
 `;
 const InfoRow = styled.div`
   text-align: end;
-  padding: 0 24px;
 `;
 const EmailRow = styled.div``;
 const PasswordRow = styled.div`
+  text-align : left;
   margin-bottom: 15px;
 `;
 const EditRow = styled.div`
-  width: 400px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  display : flex;
+  flex-direction : row;
+  height : 100%;
+  width: 600px;
   box-shadow: 9px 9px 16px rgb(163 177 198 / 60%),
     -9px -9px 16px rgb(255 255 255 / 50%);
   border-radius: 20px;
@@ -182,6 +279,8 @@ const EditRow = styled.div`
   margin-left: 65px;
 `;
 const Btn = styled.button`
+  font-size : 14px;
+  margin-bottom : 7px;
   outline: none;
   height: 30px;
   padding: 15px;
@@ -205,12 +304,23 @@ const SaveBtnWrap = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
-const DeleteWrap = styled.div`
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
+const Editinput = styled.input`
+font-size : 16px;
+padding-left : 15px;
+width : 100%;
+height : 2rem;
+margin : 5px;
+border : 1px solid transparent;
+background-color : #f3f3f4;
+border-radius : 10px;
+:: placeholder {
+    font-size : 16px;
+}
+
+&:focus {
+    outline : none;
+}
+
+
 `;
-const Editinput = styled.input``;
 export default MyPage;

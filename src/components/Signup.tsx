@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SignupProps } from '../containers/SignupContainer';
+import img from '../img/img4.png'
+import logo from '../img/savemehomt_logo.png'
 
 const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLoginHandler }: SignupProps): JSX.Element => {
   const [email, setEmail] = useState('');
@@ -18,10 +20,9 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
   return (
     <>
       <SignUpMainContainer>
-        <SignUpImgSection>
-        </SignUpImgSection>
+        <SignUpLogo src={logo}></SignUpLogo>
         <SignUpInputSection>
-            <SignUpMainConteiner>
+        <SignUpMainConteiner>
                     <SignUpText>Sign up</SignUpText>
                     <SignUpEmailText>email</SignUpEmailText>
                     <SignUpInput
@@ -31,6 +32,7 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
                       value={email}
                       onChange={handleChange}
                     />
+                    <SignUpEmailText>user name</SignUpEmailText>
                     <SignUpInput
                       type="text"
                       name="userName"
@@ -38,6 +40,7 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
                       value={userName}
                       onChange={handleChange}
                     />
+                    <SignUpEmailText>password</SignUpEmailText>
                     <SignUpInput
                       type="password"
                       name="password"
@@ -45,6 +48,7 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
                       value={password}
                       onChange={handleChange}
                     />
+                    <SignUpEmailText>confirm password</SignUpEmailText>
                     <SignUpInput
                       type="password"
                       name="confirmPW"
@@ -59,32 +63,28 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
                     />
             </SignUpMainConteiner>
         </SignUpInputSection>
+        <SignUpImgSection>
+          <Top></Top>
+          <SignUpImg src={img}></SignUpImg>
+          <Bottom></Bottom>
+        </SignUpImgSection>
       </SignUpMainContainer>
-      {/* <input type="SignUpbutton" value="KAKAO LOGIN" onClick={kakaoLoginHandler}/>
-      <input type="button" value="GOOGLE LOGIN" onClick={googleLoginHandler}/>
-      <input type="button" value="GITHUB LOGIN" onClick={githubLoginHandler}/> */}
     </>
   );
 };
+
+const SignUpLogo = styled.img`
+position: relative;
+right: -1785px;
+top : -14px;
+max-width: 100px;
+max-height:100px;
+`;
 
 
 const SignUpMainContainer= styled.div`
     height : 100%;
     display : flex;
-
-
-`;
-
-const SignUpImgSection = styled.section`
-    display : flex;
-    flex-direction : column;
-    height : 100%;
-    width : 500px;
-    @media (max-width: 938px) {
-        display : none;
-    }
-
-
 `;
 
 const SignUpInputSection = styled.section`
@@ -93,6 +93,10 @@ const SignUpInputSection = styled.section`
     display : flex;
     flex-direction : column;
     justify-content : center;
+    margin-left : 93px;
+    @media (max-width: 598px) {
+      margin-left : 0px;
+  }
 `;
 
 const SignUpMainConteiner = styled.div`
@@ -114,8 +118,9 @@ const SignUpEmailText = styled.h3`
 `;
 
 
-
 const SignUpInput = styled.input`
+    font-size : 16px;
+    padding-left : 15px;
     width : 400px;
     height : 2.5rem;
     margin : 5px;
@@ -123,6 +128,12 @@ const SignUpInput = styled.input`
     background-color : #f3f3f4;
     margin-bottom : 15px;
     border-radius : 10px;
+    :: placeholder {
+        font-size : 16px;
+    }
+    &:focus {
+        outline : none;
+    }
 `;
 
 const SignUpButton = styled.input`
@@ -130,11 +141,35 @@ const SignUpButton = styled.input`
     height : 2.5rem;
     margin : 5px;
     border : 1px solid transparent;
-    background-color : #ff7f7fa8;
+    background-color :#f497ad;
     margin-bottom : 15px;
     border-radius : 10px;
+    font-size : 20px;
+`;
 
 
+const SignUpImgSection = styled.section`
+    display : flex;
+    flex-direction : column;
+    height : 100%;
+    width : 50%;
+    @media (max-width: 938px) {
+        display : none;
+    }
+`;
+
+const Top = styled.div`
+    height : 30%;
+
+`;
+
+const SignUpImg = styled.img`
+    height : 100%;
+
+`;
+
+const Bottom = styled.div`
+    height : 30%;
 `;
 
 
