@@ -242,6 +242,16 @@ const ControlBar = ({
     }
   };
 
+  const handleClickRoutineBtn = () => {
+    clickRoutineHandler()
+    setFilterArr([]);
+  }
+
+  const handleClickStrechingBtn = () => {
+    filterHandler({ category: '스트레칭', part: [], tool: [] })
+    setFilterArr([]);
+  }
+
   return (
     <ControlBarWrap>
       <Wrap>
@@ -283,16 +293,14 @@ const ControlBar = ({
             );
           })}
           <CustomSelect
-            onClick={() =>
-              filterHandler({ category: '스트레칭', part: [], tool: [] })
-            }
+            onClick={handleClickStrechingBtn}
           >
             STRETCHING
           </CustomSelect>
           {path === '/createroutine' ? (
             ''
           ) : (
-            <CustomSelect onClick={clickRoutineHandler}>ROUTINE</CustomSelect>
+            <CustomSelect onClick={handleClickRoutineBtn}>ROUTINE</CustomSelect>
           )}
         </FilterWrap>
         {path === '/createroutine' ? (

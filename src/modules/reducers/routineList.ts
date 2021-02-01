@@ -6,9 +6,9 @@ export interface WorkoutOfRoutine {
     instruction:string;
     image:string[];
     parts:string[];
-    // setCount:number;
-    // count:number;
-    // breakTime:number;
+    setCount?:number;
+    count?:number;
+    breakTime?:number;
     mySetCount:number;
     myCount:number;
     myBreakTime: number;

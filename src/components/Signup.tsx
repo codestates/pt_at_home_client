@@ -94,6 +94,7 @@ right: -1785px;
 top : -14px;
 max-width: 100px;
 max-height:100px;
+right:-1540px;
 `;
 
 

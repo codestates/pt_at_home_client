@@ -89,7 +89,7 @@ const LoginSectionImg = styled.section`
 
 const LoginLogo = styled.img`
 position: relative;
-right: -648px;
+right: -537;
 top: -196px;
 max-width: 100px;
 `;
