@@ -165,7 +165,7 @@ const Side = styled.div`
   display: flex;
   justify-content: center;
   align-items: start;
-  padding: 200px 0 0 0;
+  padding: 200px 15px 0 0;
 `;
 
 const HeaderStyle = styled.div`

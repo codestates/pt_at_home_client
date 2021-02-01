@@ -85,7 +85,7 @@ const Frame = styled.div`
   width: 800px;
   display: flex;
   flex-direction: column;
-  background-color: #e0e5ec;
+  background-color: #f2f3f7;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   transition: 400ms ease;
@@ -115,8 +115,8 @@ const CloseBtn = styled.button`
   align-items: center;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
-  background-color: #d9e8fd;
-  box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
+  background-color: #f2f3f7;
+  box-shadow: -3px -8px 7px #fff, 5px 5px 20px #9d9ea1;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   &:hover {
@@ -128,7 +128,7 @@ const CloseBtn = styled.button`
 `;
 const Close = styled(BiX)`
   font-size: 30px;
-  color: #304752;
+  color: #ff0000;
 `;
 const Title = styled.div`
   width: 100%;
@@ -170,19 +170,18 @@ const ControlBtn = styled.div`
 const SaveBtn = styled.input`
   outline: none;
   font-size: 1.5rem;
-  font-weight: 700;
-  width: 200px;
-  height: 50px;
-  display: block;
+  padding: 5px 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
-  background-color: #d9e8fd;
-  color: #30475e;
-  box-shadow: -5px -5px 20px #e0e5ec, 5px 5px 20px #babecc;
+  background-color: #f2f3f7;
+  box-shadow: -3px -8px 7px #fff, 5px 5px 20px #9d9ea1;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   &:hover {
-    box-shadow: -2px -2px 5px #e0e5ec, 2px 2px 5px #babecc;
+    box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
   }
   &:active {
     box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #e0e5ec;
@@ -199,12 +198,25 @@ const Explanation = styled.div`
 `;
 
 const Instruction = styled.div`
+  height: 80px;
   color: #555555;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 700;
   margin: 7px 5px 5px 5px;
   padding: 10px 10px 10px;
   border-radius: 20px;
-  line-height: 19px;
+  line-height: 24px;
+  max-height: 80px;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    border-radius: 6px;
+    background: none;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #30475e;
+    border-radius: 6px;
+  }
 `;
 export default ModalWorkoutDetail;
