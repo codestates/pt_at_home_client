@@ -159,9 +159,9 @@ const DashboardContainer = (): JSX.Element => {
     }
   }, [isLogin]);
 
-  useEffect(() => {
-    getWorkoutList();
-  }, [isLogin.isLogin]);
+  // useEffect(() => {
+  //   getWorkoutList();
+  // }, [isLogin.isLogin]);
 
   const getWorkoutList = async () => {
     axios

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { SideBarProps } from '../../containers/SideBarContainer';
-import Logo from '../../img/savemehomt_logo.svg';
+import Logo from '../../img/savemehomt_logo.png';
 
 const SideBar = ({
   getMyRoutines,

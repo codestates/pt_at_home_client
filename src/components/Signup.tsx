@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SignupProps } from '../containers/SignupContainer';
+import { Link } from 'react-router-dom'
 import img from '../img/img4.png'
 import logo from '../img/savemehomt_logo.png'
 
@@ -26,7 +27,7 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
     } else if (!/^[0-9a-zA-Z]([-_\]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(email)) {
       setAlertMsg("이메일 형식이 아닙니다.")
     } else if (!/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&+=]).*$/.test(password)) {
-      setAlertMsg("대문자, 소문자, 특수문자, 숫자형식이 하나이상 들어가야 합니다. 비밀번호가 8 - 15 여야 합니다.")
+      setAlertMsg(`대/소문자, 특수문자, 숫자가 하나 이상씩 들어가야 합니다. 비밀번호가 8-15여야 합니다.`)
     } else {
       signupHandler({ email, userName, password })  
     }
@@ -35,11 +36,11 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
   return (
     <>
       <SignUpMainContainer>
-        <SignUpLogo src={logo}></SignUpLogo>
+        <Link to='/'><SignUpLogo src={logo}></SignUpLogo></Link>
         <SignUpInputSection>
         <SignUpMainConteiner>
                     <SignUpText>Sign up</SignUpText>
-                    <SignUpEmailText>email</SignUpEmailText>
+                    {/* <SignUpEmailText>email</SignUpEmailText> */}
                     <SignUpInput
                       type="email"
                       name="email"
@@ -47,7 +48,7 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
                       value={email}
                       onChange={handleChange}
                     />
-                    <SignUpEmailText>user name</SignUpEmailText>
+                    {/* <SignUpEmailText>user name</SignUpEmailText> */}
                     <SignUpInput
                       type="text"
                       name="userName"
@@ -55,7 +56,7 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
                       value={userName}
                       onChange={handleChange}
                     />
-                    <SignUpEmailText>password</SignUpEmailText>
+                    {/* <SignUpEmailText>password</SignUpEmailText> */}
                     <SignUpInput
                       type="password"
                       name="password"
@@ -63,7 +64,7 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
                       value={password}
                       onChange={handleChange}
                     />
-                    <SignUpEmailText>confirm password</SignUpEmailText>
+                    {/* <SignUpEmailText>confirm password</SignUpEmailText> */}
                     <SignUpInput
                       type="password"
                       name="confirmPW"
@@ -71,6 +72,7 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
                       value={confirmPW}
                       onChange={handleChange}
                     />
+                    <AlertMsg>{alertMsg}</AlertMsg>
                     <SignUpButton
                       type="button"
                       onClick={clickSignupHandler}
@@ -89,12 +91,12 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
 };
 
 const SignUpLogo = styled.img`
-position: relative;
-right: -1785px;
-top : -14px;
+position: absolute;
+top:30px;
+left:40px;
+max-width: 120px;
 max-width: 100px;
 max-height:100px;
-right:-1540px;
 `;
 
 
@@ -151,6 +153,12 @@ const SignUpInput = styled.input`
         outline : none;
     }
 `;
+
+const AlertMsg = styled.div`
+    text-align:center;
+    color:#de4463;
+    padding:10px 0;
+`
 
 const SignUpButton = styled.input`
     width : 400px;
