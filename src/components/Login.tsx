@@ -17,10 +17,21 @@ const Login = ({
 }:LoginProps):JSX.Element => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [alertMsg, setAlertMsg] = useState('')
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>):void => {
         if (e.target.name === 'email') setEmail(e.target.value)
         else if (e.target.name === 'password') setPassword(e.target.value)
+    }
+
+    const clickLoginHandler = () => {
+        if (!email || !password ) {
+          setAlertMsg("모든 항목은 필수입니다.")
+        } else if (!/^[0-9a-zA-Z]([-_\]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(email)) {
+          setAlertMsg("이메일 형식이 아닙니다.")
+        } else {
+            loginHandler({email, password}, 'savemehomt')
+        }
     }
 
     return (
@@ -37,7 +48,7 @@ const Login = ({
                     <LoginInput type="email" placeholder='email' name='email' value={email} onChange={handleChange}/>
                     <EmailText>password</EmailText>
                     <LoginInput type="password" placeholder='password' name='password' value={password} onChange={handleChange}/>
-                    <LoginButton type="button" value="Login" onClick={() => loginHandler({email, password}, 'savemehomt')}/>
+                    <LoginButton type="button" value="Login" onClick={clickLoginHandler}/>
                     <LineBox></LineBox>
                     <LoginSocial>
                         <LoginGithub onClick={githubLoginHandler}></LoginGithub>

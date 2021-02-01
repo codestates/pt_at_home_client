@@ -20,10 +20,10 @@ const initialChoseWorkout: WorkoutOfRoutine = {
   title: '',
   instruction: '',
   image: ['', ''],
-  part: ['', ''],
-  setCount: 0,
-  count: 0,
-  breakTime: 0,
+  parts: ['', ''],
+  // setCount: 0,
+  // count: 0,
+  // breakTime: 0,
   mySetCount: 0,
   myCount: 0,
   myBreakTime: 0,
@@ -64,6 +64,12 @@ const CreateRoutine = ({
   const [cards, setCards] = useState<ICard[]>(myWorkoutsIdList);
   const [routineCards, setRoutineCards] = useState<ICard[]>([]);
   const [area, setArea] = useState('');
+
+  useEffect(() => {
+    setCards(myWorkouts.map((el) =>
+    Object.assign({ id: String(el.id) }),
+  ))
+  }, [myWorkouts])
 
   const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
     // console.log('result : ', result);
@@ -113,10 +119,10 @@ const CreateRoutine = ({
     }
   }, []);
 
-  const allClear = ():void => {
-    setRoutineCards([])
-    setCards(myWorkoutsIdList)
-  }
+  const allClear = (): void => {
+    setRoutineCards([]);
+    setCards(myWorkoutsIdList);
+  };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -173,8 +179,8 @@ const Wrap = styled.div`
   height: 100%;
   display: flex;
   justify-content: space-between;
-  // padding: 50px 100px 0 20px;
-  padding: 0.5% 1%;
+  padding: 50px 100px 0 20px;
+  margin-top: 95px;
 `;
 
 const DropWrap = styled.div`

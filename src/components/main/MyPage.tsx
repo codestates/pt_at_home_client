@@ -30,7 +30,7 @@ const MyPage = ({
 
   return (
     <Wrap>
-      {!isLogin ? (
+      {isLogin ? (
         <MainWrap>
           <Main>
             <MainTop>

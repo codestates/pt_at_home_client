@@ -102,12 +102,12 @@ const DashboardContainer = ():JSX.Element => {
       axios.post(`${URI}/users/${source}`, {authCode:authorizationCode},{headers:{'Content-Type':'application/json'}})
       .then(res => {
         if (res.data.message === 'auth success') {
-          actionSetUserInfo(res.data.data)
-          actionLogin({isLogin:true, isExpired:false, type:source})
+          dispatch(actionSetUserInfo(res.data.data))
+          dispatch(actionLogin({isLogin:true, isExpired:false, type:source}))
         } else {
           console.log('guest')
           history.push('/signup')
-          actionSetLoginType({type:'guest'})
+          dispatch(actionSetLoginType({type:'guest'}))
         }
       })
     }
@@ -140,22 +140,18 @@ const DashboardContainer = ():JSX.Element => {
   }, [isLogin.isLogin])
 
   const getWorkoutList = async () => {
-    let { token, expDate } = auth
-    let isTokenValid = await actionRenewToken(token, expDate, dispatch)
-    if (isTokenValid) {
-        axios.get<WorkoutListResponse>(`${URI}/main`, {
-            headers:{
-            'Content-Type':'application/json',
-            'Authorization':`Bearer ${auth.token}`
-        }})
-            .then(res => {
-                if (res.data.message === 'ok') {
-                    dispatch(actionSetWorkoutList(res.data.data))
-                } 
-            })
-    }  
+    axios.get<WorkoutListResponse>(`${URI}/main`, {
+        headers:{
+        'Content-Type':'application/json',
+        'Authorization':`Bearer ${auth.token}`
+    }})
+        .then(res => {
+          console.log(res)
+            // if (res.data.message === 'ok') {
+                dispatch(actionSetWorkoutList(res.data.data))
+            // } 
+        })
 }
-  
 
   const clickWorkoutCard = (id:number):void => {
     let currentWorkout:Workout = workoutList.filter(el => el.id === id)[0]
@@ -182,32 +178,41 @@ const DashboardContainer = ():JSX.Element => {
   }
 
   const saveOrRemoveWorkout = async (id:number) => {
-    let { token, expDate } = auth
-    let isTokenValid = await actionRenewToken(token, expDate, dispatch)
-    if (isTokenValid) {
+    if (isLogin.isLogin) {
+      let { token, expDate } = auth
+      let isTokenValid = await actionRenewToken(token, expDate, dispatch)
+      if (isTokenValid) {
+        let savedWorkouts = myWorkouts.map(el => el.id)
+        if (savedWorkouts.includes(id)) {
+          axios.post<SaveOrRemoveWorkoutResponse>(`${URI}/myroutine/removeworkout`,{workoutId:id}, {
+            headers:{
+              'Content-Type':'application/json',
+              'Authorization':`Bearer ${auth.token}`
+            }})
+            .then(res => {
+              if (res.data.message === 'ok') {
+                dispatch(actionSetMyWorkouts(res.data.data))
+              }
+            })
+        } else {
+          axios.post<SaveOrRemoveWorkoutResponse>(`${URI}/myroutine/saveworkout`,{workoutId:id}, {
+            headers:{
+              'Content-Type':'application/json',
+              'Authorization':`Bearer ${auth.token}`
+            }})
+            .then(res => {
+              if (res.data.message === 'ok') {
+                dispatch(actionSetMyWorkouts(res.data.data))
+              }
+            })
+        }
+      }
+    } else {
       let savedWorkouts = myWorkouts.map(el => el.id)
       if (savedWorkouts.includes(id)) {
-        axios.post<SaveOrRemoveWorkoutResponse>(`${URI}/myroutine/removeworkout`,{workoutId:id}, {
-          headers:{
-            'Content-Type':'application/json',
-            'Authorization':`Bearer ${auth.token}`
-          }})
-          .then(res => {
-            if (res.data.message === 'ok') {
-              actionSetMyWorkouts(res.data.data)
-            }
-          })
+        dispatch(actionSetMyWorkouts(myWorkouts.filter(el => el.id !== id)))
       } else {
-        axios.post<SaveOrRemoveWorkoutResponse>(`${URI}/myroutine/saveworkout`,{workoutId:id}, {
-          headers:{
-            'Content-Type':'application/json',
-            'Authorization':`Bearer ${auth.token}`
-          }})
-          .then(res => {
-            if (res.data.message === 'ok') {
-              actionSetMyWorkouts(res.data.data)
-            }
-          })
+        dispatch(actionSetMyWorkouts([...myWorkouts, ...workoutList.filter(el => el.id === id)]))
       }
     }
     setWorkoutModal(false)
@@ -227,7 +232,7 @@ const DashboardContainer = ():JSX.Element => {
             }})
             .then(res => {
               if (res.data.message === 'ok') {
-                actionSetMyRoutines(res.data.data)
+                dispatch(actionSetMyRoutines(res.data.data))
               }
             })
         } else {
@@ -238,7 +243,7 @@ const DashboardContainer = ():JSX.Element => {
             }})
             .then(res => {
               if (res.data.message === 'ok') {
-                actionSetMyRoutines(res.data.data)
+                dispatch(actionSetMyRoutines(res.data.data))
               }
             })
         }

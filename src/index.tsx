@@ -15,13 +15,19 @@ const GlobalStyle = createGlobalStyle`
   /* other styles */
   html, body, #root {
     height: 100%;
-    
+    background-color: #e0e5ec;
   }
   * {
     box-sizing: border-box;
   }
+
+  body {
+    @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+    font-family: 'Nanum Gothic', sans-serif;
+    // @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nanum+Myeongjo&display=swap');
+    // font-family: 'Nanum Myeongjo', serif;
 `;
-// background-color: #13141c;
+
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />

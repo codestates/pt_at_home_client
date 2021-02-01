@@ -4,7 +4,7 @@ import { RootState } from '../modules/reducers'
 import SideBar from '../components/sidebar/SideBar'
 import { Workout } from '../modules/reducers/workoutList'
 import { Routine } from '../modules/reducers/routineList'
-import { actionSetWorkoutList, actionSetMyWorkouts, actionSetMyRoutines, actionRenewToken } from '../modules/actions'
+import { actionSetMyWorkouts, actionSetMyRoutines, actionRenewToken } from '../modules/actions'
 import { URI } from '../index'
 import axios from 'axios'
 axios.defaults.withCredentials = true
@@ -25,7 +25,6 @@ export interface MyWorkoutsResponse {
 }
 
 export interface SideBarProps {
-  getWorkoutList(): void;
   getMyRoutines(): void;
   getMyWorkouts(): void;
 }
@@ -33,28 +32,13 @@ export interface SideBarProps {
 const SideBarContainer = ():JSX.Element => {
     const dispatch = useDispatch()
     const userInfo = useSelector((state:RootState) => state.userInfo)
+    const currentRoutine = useSelector((state:RootState) => state.currentRoutine)
+    const isLogin = useSelector((state:RootState) => state.isLogin.isLogin)
     const auth = userInfo.auth
-
-    // completed - dashboard가 잘 작동하면 지워도 되는 코드
-    const getWorkoutList = async () => {
-        let { token, expDate } = auth
-        let isTokenValid = await actionRenewToken(token, expDate, dispatch)
-        if (isTokenValid) {
-            axios.get<WorkoutListResponse>(`${URI}/main`, {
-                headers:{
-                'Content-Type':'application/json',
-                'Authorization':`Bearer ${userInfo.auth.token}`
-            }})
-                .then(res => {
-                    if (res.data.message === 'ok') {
-                        dispatch(actionSetWorkoutList(res.data.data))
-                    } 
-                })
-        }  
-    }
 
     //completed
     const  getMyRoutines = async () => {
+      if (isLogin) {
         let { token, expDate } = auth
         let isTokenValid = await actionRenewToken(token, expDate, dispatch)
         if (isTokenValid) {
@@ -69,10 +53,12 @@ const SideBarContainer = ():JSX.Element => {
                     }
                 })
         }
+      }
     }
 
     // completed
     const getMyWorkouts = async () => {
+      if (isLogin) {
         let { token, expDate } = auth
         let isTokenValid = await actionRenewToken(token, expDate, dispatch)
         if (isTokenValid) {
@@ -87,11 +73,11 @@ const SideBarContainer = ():JSX.Element => {
                     }
                 })
         }
+      }
     }
 
   return (
     <SideBar
-      getWorkoutList={getWorkoutList} // dashboard 가 잘 작동하면 지워도 되는 props 
       getMyRoutines={getMyRoutines}
       getMyWorkouts={getMyWorkouts}
     />

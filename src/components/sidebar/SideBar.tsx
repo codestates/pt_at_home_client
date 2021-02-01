@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { SideBarProps } from '../../containers/SideBarContainer';
 
 const SideBar = ({
-  getWorkoutList,
   getMyRoutines,
   getMyWorkouts,
 }: SideBarProps): JSX.Element => {
@@ -51,7 +50,7 @@ const StyledLink = styled(Link)`
 
 const LinkWrap = styled.div`
   &:hover {
-    background-color: #f0f0f0;
+    background-color: #d1cccc;
   }
 `;
 

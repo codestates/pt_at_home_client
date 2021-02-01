@@ -1,16 +1,15 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { BiX, BiSearch } from 'react-icons/bi';
 import { useOnClickDocument } from '../../hooks/useOnClickDocument';
 import { BsFillCaretDownFill } from 'react-icons/bs';
-import { ControlBarProps } from '../../containers/ControlBarContainer'
-
+import { ControlBarProps } from '../../containers/ControlBarContainer';
 
 interface IFilterOption {
   label: string;
   value: string;
-  category:string;
+  category: string;
   isDefault?: boolean;
 }
 
@@ -35,52 +34,52 @@ const filterModels: IFilter[] = [
         label: 'EXCERCISES',
         value: 'excercises',
         isDefault: true,
-        category:'part'
+        category: 'part',
       },
       {
         label: '등',
         value: 'back',
-        category:'part'
+        category: 'part',
       },
       {
         label: '허리',
         value: 'waist',
-        category:'part'
+        category: 'part',
       },
       {
         label: '복부',
         value: 'stomach',
-        category:'part'
+        category: 'part',
       },
       {
         label: '하체',
         value: 'lower body',
-        category:'part'
+        category: 'part',
       },
       {
         label: '가슴',
         value: 'chest',
-        category:'part'
+        category: 'part',
       },
       {
         label: '엉덩이',
         value: 'hip',
-        category:'part'
+        category: 'part',
       },
       {
         label: '코어',
         value: 'core',
-        category:'part'
+        category: 'part',
       },
       {
         label: '허벅지',
         value: 'thigh',
-        category:'part'
+        category: 'part',
       },
       {
         label: '어깨',
         value: 'shoulder',
-        category:'part'
+        category: 'part',
       },
     ],
   },
@@ -95,37 +94,37 @@ const filterModels: IFilter[] = [
         label: 'EQUIPMENT',
         value: 'equipment',
         isDefault: true,
-        category:'tool'
+        category: 'tool',
       },
       {
         label: '맨손',
         value: 'none',
-        category:'tool'
+        category: 'tool',
       },
       {
         label: '기구',
         value: 'tools',
-        category:'tool'
+        category: 'tool',
       },
       {
         label: '아령',
         value: 'dumbbell',
-        category:'tool'
+        category: 'tool',
       },
       {
         label: '밴드',
         value: 'band',
-        category:'tool'
+        category: 'tool',
       },
       {
         label: '박스',
         value: 'box',
-        category:'tool'
+        category: 'tool',
       },
       {
         label: '볼',
         value: 'ball',
-        category:'tool'
+        category: 'tool',
       },
     ],
   },
@@ -134,16 +133,16 @@ const filterModels: IFilter[] = [
 const ControlBar = ({
   searchHandler,
   clickRoutineHandler,
-  filterHandler
-}:ControlBarProps): JSX.Element => {
-  const path = useLocation().pathname
+  filterHandler,
+}: ControlBarProps): JSX.Element => {
+  const path = useLocation().pathname;
   const dropdownRefs = [useRef(), useRef()];
   const [filterArr, setFilterArr] = useState<IFilterOption[]>([]);
-  const [toggleDropDown, setToggleDropDown] = useState(false)
-  const [category, setCategory] = useState('')
-  const [tool, setTool] = useState<string[]>([])
-  const [part, setPart] = useState<string[]>([])
-  const [searchKeyword, setSearchKeyword] = useState('')
+  const [toggleDropDown, setToggleDropDown] = useState(false);
+  const [category, setCategory] = useState('');
+  const [tool, setTool] = useState<string[]>([]);
+  const [part, setPart] = useState<string[]>([]);
+  const [searchKeyword, setSearchKeyword] = useState('');
   const [dropdownModels, setDropdownModels] = useState(() => {
     return filterModels.map((filter) => {
       filter.ref = dropdownRefs[filter.id];
@@ -151,11 +150,10 @@ const ControlBar = ({
     });
   });
 
-  useEffect(() => {
-      if (filterArr.length !== 0) {
+  useEffect(() => {  
         filterHandler({category, tool, part})
-      }
   }, [filterArr])
+
 
   const allClose = () => {
     setDropdownModels(
@@ -166,14 +164,16 @@ const ControlBar = ({
     );
   };
 
-  const changeSearchHandler = (e:React.ChangeEvent<HTMLInputElement>):void => {
-    setSearchKeyword(e.target.value)
-  }
+  const changeSearchHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    setSearchKeyword(e.target.value);
+  };
 
-  const clickSearchHandler = ():void => {
-    searchHandler({keyword:searchKeyword})
-    setSearchKeyword('')
-  }
+  const clickSearchHandler = (): void => {
+    searchHandler({ keyword: searchKeyword });
+    setSearchKeyword('');
+  };
 
   useOnClickDocument(dropdownRefs[0], (event) => {
     if (event.target === dropdownRefs[0].current) {
@@ -196,50 +196,49 @@ const ControlBar = ({
   });
 
   const onChangeSelect = (id: number, op: IFilterOption) => {
-    console.log(id, op)
+    console.log(id, op);
     toggleDropdwon(id);
 
     const hasLabel = filterArr.some((item) => item.label === op.label);
-    const hasNone = filterArr.some(item => item.label === '맨손')
     if (!hasLabel) {
-        if (op.label === '기구') {
-            let temp = filterArr.filter(item => item.category !== 'tool')
-            setFilterArr([...temp, op])
-            setCategory('기구')
-        }
-        else if (op.label === '맨손') {
-            let temp = filterArr.filter(item => item.category !== 'tool')
-            setFilterArr([...temp, op])
-            setCategory('맨손')
-        } else if (op.label !== '기구' && op.category === 'tool') {
-            let temp = filterArr.filter(item => item.label !== '맨손' && item.label !== '기구' )
-            setFilterArr([...temp, op])
-            setTool([...tool, op.label])
-        } else if (op.category === 'part') {
-            setPart([...part, op.label])
-            setFilterArr([...filterArr, op])
-        }
-        else setFilterArr([...filterArr, op])
+      if (op.label === '기구') {
+        let temp = filterArr.filter((item) => item.category !== 'tool');
+        setFilterArr([...temp, op]);
+        setCategory('기구');
+      } else if (op.label === '맨손') {
+        let temp = filterArr.filter((item) => item.category !== 'tool');
+        setFilterArr([...temp, op]);
+        setCategory('맨손');
+      } else if (op.label !== '기구' && op.category === 'tool') {
+        let temp = filterArr.filter(
+          (item) => item.label !== '맨손' && item.label !== '기구',
+        );
+        setFilterArr([...temp, op]);
+        setTool([...tool, op.label]);
+      } else if (op.category === 'part') {
+        setPart([...part, op.label]);
+        setFilterArr([...filterArr, op]);
+      } else setFilterArr([...filterArr, op]);
     }
     // const filterRemove = filterArr.filter((item) => item.label === op.label);
-    // if (filterRemove.length === 0) setFilterArr([...filterArr, op]);   
+    // if (filterRemove.length === 0) setFilterArr([...filterArr, op]);
   };
 
   const toggleDropdwon = (id: number) => {
-    setToggleDropDown(!toggleDropDown)
+    setToggleDropDown(!toggleDropDown);
     if (toggleDropDown) {
-        setDropdownModels(
-          dropdownModels.map((model) => {
-            if (model.isShow && model.id === id) {
-              model.isShow = false;
-            } else {
-              model.isShow = model.id === id;
-            }
-            return model;
-          }),
-        );
+      setDropdownModels(
+        dropdownModels.map((model) => {
+          if (model.isShow && model.id === id) {
+            model.isShow = false;
+          } else {
+            model.isShow = model.id === id;
+          }
+          return model;
+        }),
+      );
     } else {
-        allClose()
+      allClose();
     }
   };
 
@@ -283,13 +282,31 @@ const ControlBar = ({
               </div>
             );
           })}
-          <CustomSelect onClick={() => filterHandler({category:'스트레칭', part:[], tool:[]})}>STRETCHING</CustomSelect>
-          {path === '/createroutine'?'':<CustomSelect onClick={clickRoutineHandler}>ROUTINE</CustomSelect>}
+          <CustomSelect
+            onClick={() =>
+              filterHandler({ category: '스트레칭', part: [], tool: [] })
+            }
+          >
+            STRETCHING
+          </CustomSelect>
+          {path === '/createroutine' ? (
+            ''
+          ) : (
+            <CustomSelect onClick={clickRoutineHandler}>ROUTINE</CustomSelect>
+          )}
         </FilterWrap>
-        {path === '/createroutine'?'':<SearchInputWrap>
-          <SearchInput placeholder="검색어를 입력해주세요." value={searchKeyword} onChange={changeSearchHandler}/>
-          <Search onClick={clickSearchHandler}/>
-        </SearchInputWrap>}
+        {path === '/createroutine' ? (
+          ''
+        ) : (
+          <SearchInputWrap>
+            <SearchInput
+              placeholder="검색어를 입력해주세요."
+              value={searchKeyword}
+              onChange={changeSearchHandler}
+            />
+            <Search onClick={clickSearchHandler} />
+          </SearchInputWrap>
+        )}
       </Wrap>
       <TagWrap>
         {filterArr &&
@@ -310,9 +327,9 @@ const ControlBar = ({
           <Clear
             onClick={() => {
               setFilterArr([]);
-              setTool([])
-              setPart([])
-              setCategory('')
+              setTool([]);
+              setPart([]);
+              setCategory('');
             }}
           >
             Clear
@@ -324,21 +341,21 @@ const ControlBar = ({
 };
 
 const ControlBarWrap = styled.div`
-    margin-top:1.5%;
-    padding-left:2%;
-    padding-right:4%;
-    display:flex;
-    flex-flow:column nowrap;
-`
+  background-color: #e0e5ec;
+  width: 100%;
+  padding: 15px 0 0 60px;
+  display: flex;
+  flex-flow: column nowrap;
+  height: 95px;
+  box-shadow: rgb(0 0 0 / 24%) 10px 2px 8px;
+`;
 
 const Wrap = styled.div`
   display: flex;
-  
   margin-bottom: 15px;
 `;
 const FilterWrap = styled.div`
   display: flex;
-  flex: 1;
 `;
 
 const CustomSelect = styled.div`
@@ -384,10 +401,14 @@ const CustomOption = styled.div`
 `;
 
 const SearchInputWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 267px;
 `;
 
 const SearchInput = styled.input`
-  width:300px;
+  width: 300px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   background: #f0f0f0;
   border: none;

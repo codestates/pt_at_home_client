@@ -19,20 +19,21 @@ const ModalWorkoutDetail = ({
     setCount,
     count,
     breakTime,
-    part,
+    parts,
   } = workoutDetail;
+
   return (
     <>
       <Layer onClick={offWorkoutModal} />
       <Frame>
-        <ModalTop>
+        <Top>
+          <Title>{title.toUpperCase()}</Title>
           <CloseBtn onClick={offWorkoutModal}>
             <Close />
           </CloseBtn>
-        </ModalTop>
-        <Title>{title.toUpperCase()}</Title>
+        </Top>
         <Wrap>
-          <ImgFrame src={image[0]} alt={title}/>
+          <ImgFrame src={image[0]} alt={title} />
           <Description>
             <Summary>
               <Explanation>{category}</Explanation>
@@ -42,8 +43,8 @@ const ModalWorkoutDetail = ({
               </Explanation>
               <Explanation>{`Break Time: ${breakTime}`}</Explanation>
               <Explanation>
-                {part.map((el, idx) => {
-                  if (idx === part.length - 1) return el;
+                {parts.map((el, idx) => {
+                  if (idx === parts.length - 1) return el;
                   else return el + ', ';
                 })}
               </Explanation>
@@ -53,7 +54,11 @@ const ModalWorkoutDetail = ({
             <ControlBtn>
               <SaveBtn
                 type="button"
-                value={myWorkouts.map(el => el.id).includes(id)?"UNSAVE IT":"SAVE IT!"}
+                value={
+                  myWorkouts.map((el) => el.id).includes(id)
+                    ? 'UNSAVE'
+                    : 'SAVE !'
+                }
                 onClick={() => saveOrRemoveWorkout(id)}
               />
             </ControlBtn>
@@ -68,11 +73,11 @@ const Layer = styled.div`
   width: 100%;
   height: 100%;
   background-color: #000000;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
-  opacity: 0.3;
+  opacity: 0.6;
 `;
 
 const Frame = styled.div`
@@ -80,23 +85,24 @@ const Frame = styled.div`
   width: 800px;
   display: flex;
   flex-direction: column;
-  background-color: #212121;
+  background-color: #e0e5ec;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6),
-    -9px -9px 16px rgba(255, 255, 255, 0.5);
   border-radius: 20px;
   transition: 400ms ease;
-  position: absolute;
+  position: fixed;
   left: 30%;
   top: 23%;
   padding: 5px;
   z-index: 1000;
 `;
 
-const ModalTop = styled.div`
+const Top = styled.div`
+  font-weight: 700;
   display: flex;
-  justify-content: flex-end;
-  padding: 5px 5px 0 0;
+  margin: 0px 20px;
+  padding: 5px 0px 5px 5px;
+  border-bottom: 3px solid #00587a;
+  width: 93%;
 `;
 const CloseBtn = styled.button`
   outline: none;
@@ -104,11 +110,12 @@ const CloseBtn = styled.button`
   width: 40px;
   height: 30px;
   display: flex;
+  margin: 10px 0;
   justify-content: center;
   align-items: center;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
-  background-color: #ffffff;
+  background-color: #d9e8fd;
   box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
@@ -116,21 +123,20 @@ const CloseBtn = styled.button`
     box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
   }
   &:active {
-    box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #ffffff;
+    box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #e0e5ec;
   }
 `;
 const Close = styled(BiX)`
   font-size: 30px;
-  color: #ae1100;
+  color: #304752;
 `;
 const Title = styled.div`
-  width: 93%;
-  color: #ffffff;
+  width: 100%;
+  color: #30475e;
   text-align: left;
   font-size: 2.5rem;
-  margin: 0 0 5px 20px;
-  padding-bottom: 15px;
-  border-bottom: solid 2px #32e0c4;
+  margin: 0px 0px 0px 0px;
+  padding: 5px 0px 10px 10px;
 `;
 
 const Wrap = styled.div`
@@ -140,17 +146,8 @@ const Wrap = styled.div`
   height: 80%;
 `;
 
-const ImgFrameWrap = styled.div`
-  width: 450px;
-  height: 340px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6),
-    -9px -9px 16px rgba(255, 255, 255, 0.5);
-  border-radius: 20px;
-`;
-
 const ImgFrame = styled.img`
-  width: 100%;
+  width: 60%;
   border-radius: 20px;
 `;
 
@@ -173,12 +170,14 @@ const ControlBtn = styled.div`
 const SaveBtn = styled.input`
   outline: none;
   font-size: 1.5rem;
+  font-weight: 700;
   width: 200px;
   height: 50px;
   display: block;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
-  background-color: #ffffff;
+  background-color: #d9e8fd;
+  color: #30475e;
   box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
@@ -186,23 +185,26 @@ const SaveBtn = styled.input`
     box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
   }
   &:active {
-    box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #ffffff;
+    box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #e0e5ec;
   }
 `;
 
 const Explanation = styled.div`
-  font-size: 1rem;
-  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  color: #555555;
   margin: 7px 5px 5px 5px;
   padding: 6px 10px 6px;
-  border-bottom: 2px solid #f4be70;
+  border-bottom: 1px solid #00587a;
 `;
 
 const Instruction = styled.div`
-  font-size: 1rem;
-  color: #ffffff;
+  color: #555555;
+  font-size: 20px;
+  font-weight: 700;
   margin: 7px 5px 5px 5px;
   padding: 10px 10px 10px;
   border-radius: 20px;
+  line-height: 19px;
 `;
 export default ModalWorkoutDetail;

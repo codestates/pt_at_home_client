@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from './modules/reducers';
-import Root from './components/Root';
+import Landing from './components/Landing';
 import {
   DashboardContainer,
   MyPageContainer,
@@ -18,29 +18,24 @@ import {
   CreateRoutineContainer,
   RunRoutineContainer,
   MyRoutinesContainer,
-  ControlBarContainer
+  ControlBarContainer,
 } from './containers';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 
+
 const App = ({
-  match,
   history,
   location,
 }: RouteComponentProps): JSX.Element => {
   const isExpired = useSelector((state: RootState) => state.isLogin.isExpired);
-  const [prevPath, setPrevPath] = useState(location.pathname);
 
   useEffect(() => {
     if (isExpired) {
       history.push('/login');
     }
   }, [isExpired]);
-
-  useEffect(() => {
-    setPrevPath(location.pathname);
-  }, [prevPath]);
 
   const FeaturePage = (): JSX.Element => {
     const [open, setOpen] = useState<boolean>(true);
@@ -67,15 +62,22 @@ const App = ({
             </CSSTransition>
             <CSSTransition in={open} timeout={0} classNames={'main'}>
               <Main className="main" isShowSidebar={open}>
-              {location.pathname === '/dashboard' || location.pathname === '/createroutine'?
-                <ControlBarContainer />: ''}
+                {location.pathname === '/dashboard' ||
+                location.pathname === '/createroutine' ? (
+                  <ControlBarContainer />
+                ) : (
+                  ''
+                )}
                 <Switch>
                   <Route path={'/dashboard'} component={DashboardContainer} />
                   <Route
                     path={'/createRoutine'}
                     component={CreateRoutineContainer}
                   />
-                  <Route path={'/usersroutine'} component={MyRoutinesContainer} />
+                  <Route
+                    path={'/usersroutine'}
+                    component={MyRoutinesContainer}
+                  />
                   <Route path={'/runroutine'} component={RunRoutineContainer} />
                   <Route path={'/mypage'} component={MyPageContainer} />
                 </Switch>
@@ -90,11 +92,11 @@ const App = ({
   return (
     <>
       {location.pathname === '/' ? (
-        <Root />
+        <Landing />
       ) : location.pathname === '/signup' ? (
         <SignupContainer />
       ) : location.pathname === '/login' ? (
-        <LoginContainer prevPath={prevPath} />
+        <LoginContainer />
       ) : (
         <FeaturePage />
       )}
@@ -125,7 +127,7 @@ const TabBtn = styled.div`
 `;
 const SideWrap = styled.div`
   border-right: solid 1px #ededed;
-  background-color: #ffffff;
+  background-color: #ececec;
   position: fixed;
   top: 0;
   left: 0;
@@ -134,7 +136,7 @@ const SideWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
+  z-index: 2;
   &.sidebar-enter {
     transform: translateX(-230px);
   }
@@ -165,7 +167,7 @@ const HeaderStyle = styled.div`
   width: 100%;
   z-index: 99;
   position: fixed;
-  background-color: #ffffff;
+  background-color: #fbd46d;
   top: 0;
 `;
 const MainWrap = styled.div`

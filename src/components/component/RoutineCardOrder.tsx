@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useRef } from 'react';
+import React, {useRef } from 'react';
 import _WorkoutCard_2 from './_WorkoutCard_2'
 import { MyWorkoutCardProps } from '../modal/ModalRoutineDetail'
 import styled, {css} from 'styled-components'
@@ -32,7 +32,7 @@ const RoutineCardOrder = ({routineCards, routineOrder}:RoutineCardProps) => {
     // }
     return (
         <>
-            {displayCards.map((el, idx) => <CardBox  ref={cardRef}  key={idx}  order={{routineOrder, length:routineCards.length, idx:idx}}><_WorkoutCard_2  myWorkoutCard={el}/></CardBox>)}
+            {routineCards.map((el, idx) => <CardBox  ref={cardRef}  key={idx}  order={{routineOrder, length:routineCards.length, idx:idx}}><_WorkoutCard_2  myWorkoutCard={el}/></CardBox>)}
 
         </>
     );
@@ -40,22 +40,23 @@ const RoutineCardOrder = ({routineCards, routineOrder}:RoutineCardProps) => {
 
 export const CardBox = styled.div`
     transform:${(props:{order:{routineOrder:number, length:number, idx:number}}) => 
-        props.order.routineOrder === props.order.idx-1? `scale(${1.2}) translateY(-${props.order.routineOrder*100}%)` :
+        props.order.routineOrder === props.order.idx ? 
+        `scale(${1.3}) translateY(-${props.order.routineOrder*100}%)` :
         `translateY(-${props.order.routineOrder*120}%)`
     
     // `scale(${}) translateY(-${props.order.routineOrder*100}%)` 
     };
 
     background-color:${(props:{order:{routineOrder:number, length:number, idx:number}}) => 
-        props.order.routineOrder === props.order.idx-1? `green`:'grey'
+        props.order.routineOrder === props.order.idx? `#fad586`:'#f6f5f5'
     };
    
     filter:${(props:{order:{routineOrder:number, length:number, idx:number}}) => 
-    props.order.routineOrder === props.order.idx-1? 'blur(0px)':'blur(1px)'
+    props.order.routineOrder === props.order.idx? 'blur(0px)':'blur(1px)'
     };
 
     z-index:${(props:{order:{routineOrder:number, length:number, idx:number}}) => 
-    props.order.routineOrder === props.order.idx-1? '1':'0'
+    props.order.routineOrder === props.order.idx? '1':'0'
     };
    
     border-radius: 10px;
