@@ -1,31 +1,69 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { SideBarProps } from '../../containers/SideBarContainer';
 import Logo from '../../img/savemehomt_logo.png';
+import {
+  BsLayoutTextWindowReverse,
+  BsShiftFill,
+  BsAlarmFill,
+  BsFillHeartFill,
+  BsFillPersonFill,
+} from 'react-icons/bs';
+
+enum InfoPageNames {
+  Home = 'home',
+  Dashboard = 'dashboard',
+  CreateRoutine = 'createRoutine',
+  MyRoutine = 'myRoutine',
+  MyPage = 'myPage',
+  RunRoutine = 'runRoutine',
+}
 
 const SideBar = ({
   getMyRoutines,
   getMyWorkouts,
 }: SideBarProps): JSX.Element => {
+  const history = useHistory();
+  const [currentPage, setCurrentPage] = useState<InfoPageNames>(
+    InfoPageNames.Home,
+  );
+  const changePage = (name: InfoPageNames) => {
+    setCurrentPage(name);
+  };
   return (
     <Wrap>
       <SaveLogo src={Logo} />
       <LinkWrap>
-        <StyledLink to="/dashboard">Dashboard</StyledLink>
+        <StyledLink onClick={() => history.push('/dashboard')}>
+          <DashBoardIcon />
+          Dashboard
+        </StyledLink>
       </LinkWrap>
       <LinkWrap onClick={getMyWorkouts}>
-        <StyledLink to="/createroutine">Create Routine</StyledLink>
+        <StyledLink onClick={() => history.push('/createroutine')}>
+          <CreateIcon />
+          Create Routine
+        </StyledLink>
       </LinkWrap>
       <LinkWrap>
-        <StyledLink to="/runroutine">Run Routine</StyledLink>
+        <StyledLink onClick={() => history.push('/runroutine')}>
+          <RunIcon />
+          Run Routine
+        </StyledLink>
       </LinkWrap>
       <LinkWrap onClick={getMyRoutines}>
-        <StyledLink to="/usersroutine">My Routines</StyledLink>
+        <StyledLink onClick={() => history.push('/usersroutine')}>
+          <MyRoutineIcon />
+          My Routines
+        </StyledLink>
       </LinkWrap>
       <LinkWrap>
         {' '}
-        <StyledLink to="/mypage">My Page</StyledLink>
+        <StyledLink onClick={() => history.push('/mypage')}>
+          <MyPageIcon />
+          My Page
+        </StyledLink>
       </LinkWrap>
     </Wrap>
   );
@@ -44,22 +82,42 @@ const SaveLogo = styled.img`
   top: 10px;
   left: 25px;
 `;
-const StyledLink = styled(Link)`
+const StyledLink = styled.button`
+  outline: none;
+  text-align: left;
   color: #000000;
+  background: none;
+  border: none;
   text-decoration: none;
   font-size: 22px;
   font-weight: 700;
   width: 100%;
-  display: block;
+  display: flex;
+  align-items: center;
   height: 50px;
   padding: 10px;
   box-sizing: border-box;
 `;
 
 const LinkWrap = styled.div`
+  margin-bottom: 5px;
   &:hover {
     background-color: #b4c2f6;
   }
 `;
-
+const DashBoardIcon = styled(BsLayoutTextWindowReverse)`
+  font-size: 22px;
+`;
+const CreateIcon = styled(BsShiftFill)`
+  font-size: 22px;
+`;
+const RunIcon = styled(BsAlarmFill)`
+  font-size: 22px;
+`;
+const MyRoutineIcon = styled(BsFillHeartFill)`
+  font-size: 22px;
+`;
+const MyPageIcon = styled(BsFillPersonFill)`
+  font-size: 22px;
+`;
 export default SideBar;

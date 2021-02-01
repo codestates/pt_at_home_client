@@ -36,73 +36,88 @@ const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLo
   return (
     <>
       <SignUpMainContainer>
-        <Link to='/'><SignUpLogo src={logo}></SignUpLogo></Link>
-        <SignUpInputSection>
-        <SignUpMainConteiner>
-                    <SignUpText>Sign up</SignUpText>
-                    {/* <SignUpEmailText>email</SignUpEmailText> */}
-                    <SignUpInput
-                      type="email"
-                      name="email"
-                      placeholder="Email"
-                      value={email}
-                      onChange={handleChange}
-                    />
-                    {/* <SignUpEmailText>user name</SignUpEmailText> */}
-                    <SignUpInput
-                      type="text"
-                      name="userName"
-                      placeholder="User Name"
-                      value={userName}
-                      onChange={handleChange}
-                    />
-                    {/* <SignUpEmailText>password</SignUpEmailText> */}
-                    <SignUpInput
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                      value={password}
-                      onChange={handleChange}
-                    />
-                    {/* <SignUpEmailText>confirm password</SignUpEmailText> */}
-                    <SignUpInput
-                      type="password"
-                      name="confirmPW"
-                      placeholder="Confirm Password"
-                      value={confirmPW}
-                      onChange={handleChange}
-                    />
-                    <AlertMsg>{alertMsg}</AlertMsg>
-                    <SignUpButton
-                      type="button"
-                      onClick={clickSignupHandler}
-                      value="Signup"
-                    />
-            </SignUpMainConteiner>
-        </SignUpInputSection>
-        <SignUpImgSection>
-          <Top></Top>
-          <SignUpImg src={img}></SignUpImg>
-          <Bottom></Bottom>
-        </SignUpImgSection>
+        <SignUpLogoBox>
+            <Link to='/'><SignUpLogo src={logo}></SignUpLogo></Link>
+        </SignUpLogoBox>
+        <SingnUpSectionBox>
+            <SignUpInputSection>
+            <SignUpMainConteiner>
+                        <SignUpText>Sign up</SignUpText>
+                        <SignUpInput
+                          type="email"
+                          name="email"
+                          placeholder="Email"
+                          value={email}
+                          onChange={handleChange}
+                        />
+                        <SignUpInput
+                          type="text"
+                          name="userName"
+                          placeholder="User Name"
+                          value={userName}
+                          onChange={handleChange}
+                        />
+                        <SignUpInput
+                          type="password"
+                          name="password"
+                          placeholder="Password"
+                          value={password}
+                          onChange={handleChange}
+                        />
+                        <SignUpInput
+                          type="password"
+                          name="confirmPW"
+                          placeholder="Confirm Password"
+                          value={confirmPW}
+                          onChange={handleChange}
+                        />
+                        <AlertMsg>{alertMsg}</AlertMsg>
+                        <SignUpButton
+                          type="button"
+                          onClick={clickSignupHandler}
+                          value="SIGN UP"
+                        />
+                </SignUpMainConteiner>
+            </SignUpInputSection>
+            <SignUpImgSection>
+                <SignUpImg src={img}></SignUpImg>
+            </SignUpImgSection>
+        </SingnUpSectionBox>
       </SignUpMainContainer>
     </>
   );
 };
 
+
+
+
+const SingnUpSectionBox = styled.div`
+    display : flex;
+    flex-direction : row;
+    height : 88%;
+`;
+
+const SignUpLogoBox = styled.div`
+    width : 100%;
+    display : flex;
+    justify-content : flex-end;
+
+
+`;
+
 const SignUpLogo = styled.img`
 position: absolute;
 top:30px;
 left:40px;
-max-width: 120px;
-max-width: 100px;
 max-height:100px;
+
 `;
 
 
 const SignUpMainContainer= styled.div`
     height : 100%;
     display : flex;
+    flex-direction : column;
 `;
 
 const SignUpInputSection = styled.section`
@@ -119,6 +134,7 @@ const SignUpInputSection = styled.section`
 
 const SignUpMainConteiner = styled.div`
     align-items : center;
+    margin-bottom : 140px;
     display : flex;
     flex-direction : column;
     justify-content : center;
@@ -143,7 +159,7 @@ const SignUpInput = styled.input`
     height : 2.5rem;
     margin : 5px;
     border : 1px solid transparent;
-    background-color : #f3f3f4;
+    background-color : white;
     margin-bottom : 15px;
     border-radius : 10px;
     :: placeholder {
@@ -174,26 +190,21 @@ const SignUpButton = styled.input`
 
 const SignUpImgSection = styled.section`
     display : flex;
+    align-items : center;
+    justify-content : center;
     flex-direction : column;
+    margin-bottom : 180px;
     height : 100%;
     width : 50%;
-    @media (max-width: 938px) {
+    @media (max-width: 1264px) {
         display : none;
     }
 `;
 
-const Top = styled.div`
-    height : 30%;
-
-`;
-
 const SignUpImg = styled.img`
-    height : 100%;
+    margin-bottom : 150px;
+    margin-right : 300px;
 
-`;
-
-const Bottom = styled.div`
-    height : 30%;
 `;
 
 
