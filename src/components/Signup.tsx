@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SignupProps } from '../containers/SignupContainer';
 import { Link } from 'react-router-dom'
-import img from '../img/img4.png'
+import img from '../img/img4.svg'
 import logo from '../img/savemehomt_logo.png'
 
 const Signup = ({ signupHandler, kakaoLoginHandler, googleLoginHandler, githubLoginHandler }: SignupProps): JSX.Element => {
@@ -100,17 +100,11 @@ const SingnUpSectionBox = styled.div`
 const SignUpLogoBox = styled.div`
     width : 100%;
     display : flex;
-    justify-content : flex-end;
-
-
 `;
 
 const SignUpLogo = styled.img`
-position: absolute;
-top:30px;
-left:40px;
-max-height:100px;
-
+    max-height:100px;
+    margin: 25px 0 0 25px;
 `;
 
 
