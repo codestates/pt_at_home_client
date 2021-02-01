@@ -32,8 +32,13 @@ const RoutineCardOrder = ({routineCards, routineOrder}:RoutineCardProps) => {
     // }
     return (
         <>
-            {routineCards.map((el, idx) => <CardBox  ref={cardRef}  key={idx}  order={{routineOrder, length:routineCards.length, idx:idx}}><_WorkoutCard_2  myWorkoutCard={el}/></CardBox>)}
-
+            {routineCards.map((el, idx) => 
+                <CardBox  
+                    ref={cardRef}  
+                    key={idx}  
+                    order={{routineOrder, length:routineCards.length, idx:idx}}>
+                    <_WorkoutCard_2  myWorkoutCard={el}/>
+                </CardBox>)}
         </>
     );
 };

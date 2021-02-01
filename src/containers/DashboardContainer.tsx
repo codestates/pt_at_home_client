@@ -93,7 +93,7 @@ const DashboardContainer = ():JSX.Element => {
   useEffect(() => {
     const url = new URL(window.location.href)
     const authorizationCode = url.searchParams.get('code')
-    if (authorizationCode) {
+    if (authorizationCode && !isLogin.isLogin) {
       console.log(authorizationCode, authorizationCode.length)
       let source:string=''
       if (authorizationCode.length === 20) source = 'github'
