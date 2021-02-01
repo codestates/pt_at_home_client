@@ -1,23 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useHistory } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom';
 import { Dashboard } from '../components/main';
-import { ModalWorkoutDetail, ModalRoutineDetail, ModalRequestLogin } from '../components/modal'
-import { Workout } from '../modules/reducers/workoutList'
-import { Routine } from '../modules/reducers/routineList'
-import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '../modules/reducers'
-import { MyWorkoutsResponse, MyRoutinesResponse} from '../containers/SideBarContainer'
-import { URI } from '../index'
-import { 
+import {
+  ModalWorkoutDetail,
+  ModalRoutineDetail,
+  ModalRequestLogin,
+} from '../components/modal';
+import { Workout } from '../modules/reducers/workoutList';
+import { Routine } from '../modules/reducers/routineList';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../modules/reducers';
+import {
+  MyWorkoutsResponse,
+  MyRoutinesResponse,
+} from '../containers/SideBarContainer';
+import { URI } from '../index';
+import {
   actionSetMyWorkouts,
   actionSetMyRoutines,
   actionRenewToken,
   actionSetUserInfo,
   actionLogin,
   actionSetLoginType,
-  actionSetWorkoutList } from '../modules/actions'
-import axios from 'axios'
-axios.defaults.withCredentials = true
+  actionSetWorkoutList,
+} from '../modules/actions';
+import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 interface SaveOrRemoveWorkoutResponse {
   data: Array<Workout>;
@@ -52,213 +60,278 @@ export interface DashboardProps {
 }
 
 export interface ModalRoutineProps {
-  routineDetail:Routine;
+  routineDetail: Routine;
   offRoutineModal(): void;
-  saveOrRemoveRoutine(id:number):void;
+  saveOrRemoveRoutine(id: number): void;
 }
 
 export interface ModalWorkoutProps {
-  workoutDetail:Workout;
-  myWorkouts:Array<Workout>;
-  offWorkoutModal():void;
-  saveOrRemoveWorkout(id:number):void;
-
+  workoutDetail: Workout;
+  myWorkouts: Array<Workout>;
+  offWorkoutModal(): void;
+  saveOrRemoveWorkout(id: number): void;
 }
 
-const DashboardContainer = ():JSX.Element => {
-  const dispatch = useDispatch()
-  const auth = useSelector((state:RootState) => state.userInfo.auth)
-  const {isLogin, workoutList, routineList, myWorkouts, myRoutines, isDashboardRoutine} = useSelector((state:RootState) => state)
-  const [workoutDetail, setWorkoutDetail] = useState(workoutList[0])
-  const [routineDetail, setRoutineDetail] = useState(routineList[0])
-  const [workoutModal, setWorkoutModal] = useState(false)
-  const [routineModal, setRoutineModal] = useState(false)
-  const [loginModal, setLoginModal] = useState(false)
-  const path = useLocation()
-  const history = useHistory()
+const DashboardContainer = (): JSX.Element => {
+  const dispatch = useDispatch();
+  const auth = useSelector((state: RootState) => state.userInfo.auth);
+  const {
+    isLogin,
+    workoutList,
+    routineList,
+    myWorkouts,
+    myRoutines,
+    isDashboardRoutine,
+  } = useSelector((state: RootState) => state);
+  const [workoutDetail, setWorkoutDetail] = useState(workoutList[0]);
+  const [routineDetail, setRoutineDetail] = useState(routineList[0]);
+  const [workoutModal, setWorkoutModal] = useState(false);
+  const [routineModal, setRoutineModal] = useState(false);
+  const [loginModal, setLoginModal] = useState(false);
+  const path = useLocation();
+  const history = useHistory();
 
   useEffect(() => {
     return () => {
-      setWorkoutModal(false)
-      setWorkoutModal(false)
-      setLoginModal(false)
-    }
-  }, [path])
-
+      setWorkoutModal(false);
+      setWorkoutModal(false);
+      setLoginModal(false);
+    };
+  }, [path]);
 
   // 실제 test 필요
   // 깃헙 = 20
   // 구글 = 73
   // 카카오 = 86
   useEffect(() => {
-    const url = new URL(window.location.href)
-    const authorizationCode = url.searchParams.get('code')
+    const url = new URL(window.location.href);
+    const authorizationCode = url.searchParams.get('code');
     if (authorizationCode) {
-      console.log(authorizationCode, authorizationCode.length)
-      let source:string=''
-      if (authorizationCode.length === 20) source = 'github'
-      else if (authorizationCode.length === 73) source = 'google'
-      else if (authorizationCode.length === 86) source = 'kakao'
-      axios.post(`${URI}/users/${source}`, {authCode:authorizationCode},{headers:{'Content-Type':'application/json'}})
-      .then(res => {
-        if (res.data.message === 'auth success') {
-          dispatch(actionSetUserInfo(res.data.data))
-          dispatch(actionLogin({isLogin:true, isExpired:false, type:source}))
-        } else {
-          console.log('guest')
-          history.push('/signup')
-          dispatch(actionSetLoginType({type:'guest'}))
-        }
-      })
+      console.log(authorizationCode, authorizationCode.length);
+      let source: string = '';
+      if (authorizationCode.length === 20) source = 'github';
+      else if (authorizationCode.length === 73) source = 'google';
+      else if (authorizationCode.length === 86) source = 'kakao';
+      axios
+        .post(
+          `${URI}/users/${source}`,
+          { authCode: authorizationCode },
+          { headers: { 'Content-Type': 'application/json' } },
+        )
+        .then((res) => {
+          if (res.data.message === 'auth success') {
+            dispatch(actionSetUserInfo(res.data.data));
+            dispatch(
+              actionLogin({ isLogin: true, isExpired: false, type: source }),
+            );
+          } else {
+            console.log('guest');
+            history.push('/signup');
+            dispatch(actionSetLoginType({ type: 'guest' }));
+          }
+        });
     }
     if (isLogin.isLogin) {
-      axios.get<MyWorkoutsResponse>(`${URI}/myroutine/myworkout`, {
-        headers:{
-        'Content-Type':'application/json',
-        'Authorization':`Bearer ${auth.token}`
-      }})
-        .then(res => {
-            if (res.data.message === 'ok') {
-                dispatch(actionSetMyWorkouts(res.data.data))
-            } 
+      axios
+        .get<MyWorkoutsResponse>(`${URI}/myroutine/myworkout`, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${auth.token}`,
+          },
         })
-      axios.get<MyRoutinesResponse>(`${URI}/myroutine`, {
-        headers:{
-            'Content-Type':'application/json',
-            'Authorization':`Bearer ${auth.token}`
-        }})
-        .then(res => {
-            if (res.data.message === 'ok') {
-                dispatch(actionSetMyRoutines(res.data.data))
-            }
+        .then((res) => {
+          if (res.data.message === 'ok') {
+            dispatch(actionSetMyWorkouts(res.data.data));
+          }
+        });
+      axios
+        .get<MyRoutinesResponse>(`${URI}/myroutine`, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${auth.token}`,
+          },
         })
+        .then((res) => {
+          if (res.data.message === 'ok') {
+            dispatch(actionSetMyRoutines(res.data.data));
+          }
+        });
     }
-  }, [isLogin])
+  }, [isLogin]);
 
-  // useEffect(() => {
-  //   getWorkoutList()
-  // }, [isLogin.isLogin])
+  useEffect(() => {
+    getWorkoutList();
+  }, [isLogin.isLogin]);
 
   const getWorkoutList = async () => {
-    axios.get<WorkoutListResponse>(`${URI}/main`, {
-        headers:{
-        'Content-Type':'application/json',
-        'Authorization':`Bearer ${auth.token}`
-    }})
-        .then(res => {
-          console.log(res)
-            if (res.data.message === 'ok') {
-                dispatch(actionSetWorkoutList(res.data.data))
-            } 
-        })
-}
+    axios
+      .get<WorkoutListResponse>(`${URI}/main`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${auth.token}`,
+        },
+      })
+      .then((res) => {
+        // if (res.data.message === 'ok') {
+        dispatch(actionSetWorkoutList(res.data.data));
+        // }
+      });
+  };
 
-  const clickWorkoutCard = (id:number):void => {
-    let currentWorkout:Workout = workoutList.filter(el => el.id === id)[0]
-    setWorkoutDetail(currentWorkout)
-    setWorkoutModal(true)
-  }
+  const clickWorkoutCard = (id: number): void => {
+    let currentWorkout: Workout = workoutList.filter((el) => el.id === id)[0];
+    setWorkoutDetail(currentWorkout);
+    setWorkoutModal(true);
+  };
 
-  const offWorkoutModal = ():void => {
-    setWorkoutModal(false)
-  }
+  const offWorkoutModal = (): void => {
+    setWorkoutModal(false);
+  };
 
-  const clickRoutineCard = (id:number):void => {
-    let currentRoutine:Routine = routineList.filter(el => el.routineId === id)[0]
-    setRoutineDetail(currentRoutine)
-    setRoutineModal(true)
-  }
+  const clickRoutineCard = (id: number): void => {
+    let currentRoutine: Routine = routineList.filter(
+      (el) => el.routineId === id,
+    )[0];
+    setRoutineDetail(currentRoutine);
+    setRoutineModal(true);
+  };
 
-  const offRoutineModal = ():void => {
-    setRoutineModal(false)
-  }
+  const offRoutineModal = (): void => {
+    setRoutineModal(false);
+  };
 
-  const offLoginModal = ():void => {
-    setLoginModal(false)
-  }
+  const offLoginModal = (): void => {
+    setLoginModal(false);
+  };
 
-  const saveOrRemoveWorkout = async (id:number) => {
+  const saveOrRemoveWorkout = async (id: number) => {
     if (isLogin.isLogin) {
-      let { token, expDate } = auth
-      let isTokenValid = await actionRenewToken(token, expDate, dispatch)
+      let { token, expDate } = auth;
+      let isTokenValid = await actionRenewToken(token, expDate, dispatch);
       if (isTokenValid) {
-        let savedWorkouts = myWorkouts.map(el => el.id)
+        let savedWorkouts = myWorkouts.map((el) => el.id);
         if (savedWorkouts.includes(id)) {
-          axios.post<SaveOrRemoveWorkoutResponse>(`${URI}/myroutine/removeworkout`,{workoutId:id}, {
-            headers:{
-              'Content-Type':'application/json',
-              'Authorization':`Bearer ${auth.token}`
-            }})
-            .then(res => {
+          axios
+            .post<SaveOrRemoveWorkoutResponse>(
+              `${URI}/myroutine/removeworkout`,
+              { workoutId: id },
+              {
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${auth.token}`,
+                },
+              },
+            )
+            .then((res) => {
               if (res.data.message === 'ok') {
-                dispatch(actionSetMyWorkouts(res.data.data))
+                dispatch(actionSetMyWorkouts(res.data.data));
               }
-            })
+            });
         } else {
-          axios.post<SaveOrRemoveWorkoutResponse>(`${URI}/myroutine/saveworkout`,{workoutId:id}, {
-            headers:{
-              'Content-Type':'application/json',
-              'Authorization':`Bearer ${auth.token}`
-            }})
-            .then(res => {
+          axios
+            .post<SaveOrRemoveWorkoutResponse>(
+              `${URI}/myroutine/saveworkout`,
+              { workoutId: id },
+              {
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${auth.token}`,
+                },
+              },
+            )
+            .then((res) => {
               if (res.data.message === 'ok') {
-                dispatch(actionSetMyWorkouts(res.data.data))
+                dispatch(actionSetMyWorkouts(res.data.data));
               }
-            })
+            });
         }
       }
     } else {
-      let savedWorkouts = myWorkouts.map(el => el.id)
+      let savedWorkouts = myWorkouts.map((el) => el.id);
       if (savedWorkouts.includes(id)) {
-        dispatch(actionSetMyWorkouts(myWorkouts.filter(el => el.id !== id)))
+        dispatch(actionSetMyWorkouts(myWorkouts.filter((el) => el.id !== id)));
       } else {
-        dispatch(actionSetMyWorkouts([...myWorkouts, ...workoutList.filter(el => el.id === id)]))
+        dispatch(
+          actionSetMyWorkouts([
+            ...myWorkouts,
+            ...workoutList.filter((el) => el.id === id),
+          ]),
+        );
       }
     }
-    setWorkoutModal(false)
-  }
+    setWorkoutModal(false);
+  };
 
-  const saveOrRemoveRoutine = async (id:number) =>  {
+  const saveOrRemoveRoutine = async (id: number) => {
     if (isLogin.isLogin) {
-      let { token, expDate } = auth
-      let isTokenValid = await actionRenewToken(token, expDate, dispatch)
+      let { token, expDate } = auth;
+      let isTokenValid = await actionRenewToken(token, expDate, dispatch);
       if (isTokenValid) {
-        let savedRoutines = myRoutines.map(el => el.routineId)
+        let savedRoutines = myRoutines.map((el) => el.routineId);
         if (savedRoutines.includes(id)) {
-          axios.post<SaveOrRemoveRoutineResponse>(`${URI}/myroutine/deleteroutine`,{routineId:id}, {
-            headers:{
-              'Content-Type':'application/json',
-              'Authorization':`Bearer ${auth.token}`
-            }})
-            .then(res => {
+          axios
+            .post<SaveOrRemoveRoutineResponse>(
+              `${URI}/myroutine/deleteroutine`,
+              { routineId: id },
+              {
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${auth.token}`,
+                },
+              },
+            )
+            .then((res) => {
               if (res.data.message === 'ok') {
-                dispatch(actionSetMyRoutines(res.data.data))
+                dispatch(actionSetMyRoutines(res.data.data));
               }
-            })
+            });
         } else {
-          axios.post<SaveOrRemoveRoutineResponse>(`${URI}/myroutine/createroutine`,{routineId:id}, {
-            headers:{
-              'Content-Type':'application/json',
-              'Authorization':`Bearer ${auth.token}`
-            }})
-            .then(res => {
+          axios
+            .post<SaveOrRemoveRoutineResponse>(
+              `${URI}/myroutine/createroutine`,
+              { routineId: id },
+              {
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${auth.token}`,
+                },
+              },
+            )
+            .then((res) => {
               if (res.data.message === 'ok') {
-                dispatch(actionSetMyRoutines(res.data.data))
+                dispatch(actionSetMyRoutines(res.data.data));
               }
-            })
+            });
         }
       }
     } else {
-      setLoginModal(true)
+      setLoginModal(true);
     }
   };
-  
+
   return (
     <div>
-      {workoutModal?(<ModalWorkoutDetail myWorkouts={myWorkouts} workoutDetail={workoutDetail} offWorkoutModal={offWorkoutModal} saveOrRemoveWorkout={saveOrRemoveWorkout}/>):''}
-      {routineModal?(<ModalRoutineDetail routineDetail={routineDetail} offRoutineModal={offRoutineModal} saveOrRemoveRoutine={saveOrRemoveRoutine}/>):''}
-      {loginModal?(<ModalRequestLogin offLoginModal={offLoginModal}/>):''}
-      <Dashboard 
+      {workoutModal ? (
+        <ModalWorkoutDetail
+          myWorkouts={myWorkouts}
+          workoutDetail={workoutDetail}
+          offWorkoutModal={offWorkoutModal}
+          saveOrRemoveWorkout={saveOrRemoveWorkout}
+        />
+      ) : (
+        ''
+      )}
+      {routineModal ? (
+        <ModalRoutineDetail
+          routineDetail={routineDetail}
+          offRoutineModal={offRoutineModal}
+          saveOrRemoveRoutine={saveOrRemoveRoutine}
+        />
+      ) : (
+        ''
+      )}
+      {loginModal ? <ModalRequestLogin offLoginModal={offLoginModal} /> : ''}
+      <Dashboard
         isLogin={isLogin.isLogin}
         workoutList={workoutList}
         routineList={routineList}
@@ -275,7 +348,6 @@ const DashboardContainer = ():JSX.Element => {
         saveOrRemoveRoutine={saveOrRemoveRoutine}
       />
     </div>
-    
   );
 };
 export default DashboardContainer;

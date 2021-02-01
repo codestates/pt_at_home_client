@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Img from '../../img/urbanbrush-20190214083430029790.png';
 import { Workout } from '../../modules/reducers/workoutList';
 import { WorkoutOfRoutine } from '../../modules/reducers/routineList';
+import { BiX, BiBulb } from 'react-icons/bi';
 
 interface ICreateCard {
   draggableId: string;
@@ -22,18 +23,12 @@ const CreateRoutineCard = ({
   clickCardBtnHandler,
   clickWorkoutCardHandler,
 }: ICreateCard): JSX.Element => {
-  const title = workout?.title
-  const image = workout?.image
-  const setCount = workout?.setCount
-  const count = workout?.count
-  const parts = workout?.parts
-  const tool = workout?.tool
-
-  // if (workout) {
-
-  // }
-  // const { title, image, setCount, count, parts, tool } = workout;
-
+  const title = workout?.title;
+  const image = workout?.image;
+  const setCount = workout?.setCount;
+  const count = workout?.count;
+  const parts = workout?.parts;
+  const tool = workout?.tool;
   return (
     <Draggable draggableId={draggableId} index={index}>
       {(provided) => (
@@ -42,21 +37,21 @@ const CreateRoutineCard = ({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <Card onClick={() => clickWorkoutCardHandler(area,workout)}>
+          <Card onClick={() => clickWorkoutCardHandler(area, workout)}>
             <CardImgWrap>
-              <CardImg src={workout?image[1]:''} />
+              <CardImg src={workout ? image[1] : ''} />
             </CardImgWrap>
             <CardContents>
               <CardTop>
                 <Title>{title?.toUpperCase()}</Title>
                 <GearBtn
-                  type="button"
-                  value={area === 'cards' ? 'X' : 'i'}
                   onClick={(e) => {
                     e.stopPropagation();
                     clickCardBtnHandler(area, workout);
                   }}
-                />
+                >
+                  {area === 'cards' ? <Close /> : <Info />}
+                </GearBtn>
               </CardTop>
 
               <ExplanationWrap>
@@ -90,14 +85,21 @@ const DraggableWrap = styled.div`
   height: 130px;
 `;
 const Card = styled.div`
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+  outline: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #ffffff;
+  background-color: #f6f5f5;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 4px;
-  margin-bottom: 1.5%;
-  transition: 400ms ease;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+  }
+  &:active {
+    box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #e0e5ec;
+  }
 `;
 
 const CardImgWrap = styled.div``;
@@ -120,13 +122,30 @@ const CardTop = styled.div`
   margin: 0px 0px 15px 5px;
 `;
 const Title = styled.h1`
-  font-size: 25px;
+  font-size: 18px;
   color: #000000;
 `;
 
-const GearBtn = styled.input`
-  width: 30px;
-  font-size: 1rem;
+const GearBtn = styled.button`
+  outline: none;
+  width: 25px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  background-color: #f6f5f5;
+  box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
+  transition: all 0.2s ease-in-out;
+  padding: 0;
+  cursor: pointer;
+  &:hover {
+    box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+  }
+  &:active {
+    box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #e0e5ec;
+  }
 `;
 
 const ExplanationWrap = styled.div`
@@ -137,10 +156,19 @@ const ExplanationWrap = styled.div`
 const Explanation = styled.div`
   font-size: 14px;
   color: #000000;
-  background-color: #f0f0f0;
+  background-color: #d6e6ea;
   margin: 0 0 4px 0px;
   width: 100%;
   padding: 3px 5px 3px 10px;
   border-radius: 5px;
 `;
+const Close = styled(BiX)`
+  font-size: 20px;
+  color: #000000;
+`;
+const Info = styled(BiBulb)`
+  font-size: 20px;
+  color: #000000;
+`;
+
 export default CreateRoutineCard;

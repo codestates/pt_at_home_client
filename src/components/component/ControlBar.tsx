@@ -150,10 +150,9 @@ const ControlBar = ({
     });
   });
 
-  useEffect(() => {  
-        filterHandler({category, tool, part})
-  }, [filterArr])
-
+  useEffect(() => {
+    filterHandler({ category, tool, part });
+  }, [filterArr]);
 
   const allClose = () => {
     setDropdownModels(

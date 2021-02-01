@@ -24,10 +24,7 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 
-const App = ({
-  history,
-  location,
-}: RouteComponentProps): JSX.Element => {
+const App = ({ history, location }: RouteComponentProps): JSX.Element => {
   const isExpired = useSelector((state: RootState) => state.isLogin.isExpired);
 
   useEffect(() => {
@@ -63,7 +60,7 @@ const App = ({
               <Main className="main" isShowSidebar={open}>
                 {location.pathname === '/dashboard' ||
                 location.pathname === '/createroutine' ? (
-                  <ControlBarContainer open={open} />
+                  <ControlBarContainer />
                 ) : (
                   ''
                 )}
@@ -126,7 +123,7 @@ const TabBtn = styled.div`
 `;
 const SideWrap = styled.div`
   border-right: solid 1px #ededed;
-  background-color: #ececec;
+  background-color: #ffffff;
   position: fixed;
   top: 0;
   left: 0;
