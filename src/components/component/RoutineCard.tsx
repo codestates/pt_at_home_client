@@ -25,10 +25,10 @@ const RoutineCard = ({
         </ExplanationWrap>
         <SubWrap>
           <Sub>{`${
-            workout.reduce(
-              (acc, cur) => acc + (cur.image?.length < 3 ? cur.myCount : 0),
+            Math.round(workout.reduce(
+              (acc, cur) => acc + (cur.image?.length < 3 ? cur.myCount : cur.myCount*1.8),
               0,
-            ) / 60
+            ) / 60)
           } min`}</Sub>
           <Sub>{`${numberWithCommas(
             workout.reduce(
@@ -40,6 +40,7 @@ const RoutineCard = ({
               0,
             ),
           )} kcal`}</Sub>
+          <Sub>{`${workout.length} workouts`}</Sub>
         </SubWrap>
       </Wrap>
     </Card>
@@ -51,9 +52,8 @@ function numberWithCommas(x: number): string {
 }
 
 const Card = styled.div`
-  height: 200px;
-  width: 250px;
-  margin: 5% auto;
+  height: 250px;
+  width: 270px;
   box-shadow: -3px -8px 7px #fff, 5px 5px 20px #9d9ea1;
   display: inline-block;
   align-items: center;
@@ -81,17 +81,18 @@ const Wrap = styled.div`
   justify-content: space-evenly;
 `;
 const ExplanationWrap = styled.div`
-  height: 135px;
+  height: 165px;
   width: 130px;
   display: flex;
   padding-top: 5px;
   flex-direction: column;
   align-items: center;
+  margin-top:10px;
   margin-right: 20px;
   overflow-y: scroll;
   background-color: #e9eef5;
   box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
-  border-radius: 5px;
+  border-radius: px;
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -104,12 +105,14 @@ const ExplanationWrap = styled.div`
   }
 `;
 const SubWrap = styled.div`
+  margin-top:10px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 `;
 const Explanation = styled.div`
-  font-size: 14px;
+  font-size: 13px;
+  line-height:1.2;
   color: #000000;
   width: 110px;
   background-color: #f0f0f0;
@@ -119,10 +122,10 @@ const Explanation = styled.div`
   border-radius: 5px;
 `;
 const Sub = styled.div`
-  font-size: 14px;
+  font-size: 16px;
   color: #555555;
   font-weight: 700;
-  margin: 0 0 4px 0px;
+  margin: 5px 5px 4px 0px;
   padding: 3px 0 4px;
 `;
 

@@ -250,7 +250,7 @@ const ControlBar = ({
     setFilterArr([]);
   };
 
-  const handleClickStrechingBtn = () => {
+  const handleClickStretchingBtn = () => {
     filterHandler({ category: '스트레칭', part: [], tool: [] });
     setFilterArr([]);
   };
@@ -295,7 +295,7 @@ const ControlBar = ({
               </div>
             );
           })}
-          <CustomSelect onClick={handleClickStrechingBtn}>
+          <CustomSelect onClick={handleClickStretchingBtn}>
             STRETCHING
           </CustomSelect>
           {path === '/createroutine' ? (
