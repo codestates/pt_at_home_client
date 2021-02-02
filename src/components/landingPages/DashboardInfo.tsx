@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import TransitionPageWrap from './TransitionPageWrap';
-import Backimg from '../../img/DashBoardInfo.jpg';
+import Back1 from '../../img/img51.png';
+import InfoGif from '../../img/dashboard.gif';
+
 const DashboardInfo = () => {
   return (
-    <TransitionPageWrap backgroundColor={'#5a2c2c'}>
+    <TransitionPageWrap backgroundColor={Back1}>
       <Wrap>
         <TextWrap>
-          <Text>몸 관리, 건강 관리 꼭 헬스장 으로 가야 할까요?</Text>
-          <Text>이제부터는 집에서 관리 합시다!</Text>
+          <Gif src={InfoGif} />
         </TextWrap>
-        <Img />
       </Wrap>
     </TransitionPageWrap>
   );
@@ -22,12 +22,9 @@ const Wrap = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const Img = styled.div`
-  width: 640px;
-  height: 447px;
-  background: url(${Backimg});
+const Gif = styled.img`
+  width: 1000px;
 `;
-
 const TextWrap = styled.div``;
 const Text = styled.div``;
 export default DashboardInfo;
