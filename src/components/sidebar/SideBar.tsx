@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { SideBarProps } from '../../containers/SideBarContainer';
 // import Logo from '../../img/savemehomt_logo.png';
@@ -13,55 +13,55 @@ import {
 } from 'react-icons/bs';
 
 enum InfoPageNames {
-  Home = 'home',
   Dashboard = 'dashboard',
   CreateRoutine = 'createRoutine',
   MyRoutine = 'myRoutine',
   MyPage = 'myPage',
   RunRoutine = 'runRoutine',
 }
-
 const SideBar = ({
   getMyRoutines,
   getMyWorkouts,
 }: SideBarProps): JSX.Element => {
   const history = useHistory();
   const [currentPage, setCurrentPage] = useState<InfoPageNames>(
-    InfoPageNames.Home,
+    InfoPageNames.Dashboard,
   );
+  // const [toggle, setToggle] = useState<boolean>(false);
   const changePage = (name: InfoPageNames) => {
     setCurrentPage(name);
   };
+  // const toggle = () => {};
   return (
     <Wrap>
       <Link to="/"><SaveLogo src={Logo} /></Link>
       <LinkWrap>
-        <StyledLink onClick={() => history.push('/dashboard')}>
+        <StyledLink onClick={(e) => history.push('/dashboard')}>
           <DashBoardIcon />
           Dashboard
         </StyledLink>
       </LinkWrap>
       <LinkWrap onClick={getMyWorkouts}>
-        <StyledLink onClick={() => history.push('/createroutine')}>
+        <StyledLink onClick={(e) => history.push('/createroutine')}>
           <CreateIcon />
           Create Routine
         </StyledLink>
       </LinkWrap>
       <LinkWrap>
-        <StyledLink onClick={() => history.push('/runroutine')}>
+        <StyledLink onClick={(e) => history.push('/runroutine')}>
           <RunIcon />
           Run Routine
         </StyledLink>
       </LinkWrap>
       <LinkWrap onClick={getMyRoutines}>
-        <StyledLink onClick={() => history.push('/usersroutine')}>
+        <StyledLink onClick={(e) => history.push('/usersroutine')}>
           <MyRoutineIcon />
           My Routines
         </StyledLink>
       </LinkWrap>
       <LinkWrap>
         {' '}
-        <StyledLink onClick={() => history.push('/mypage')}>
+        <StyledLink onClick={(e) => history.push('/mypage')}>
           <MyPageIcon />
           My Page
         </StyledLink>

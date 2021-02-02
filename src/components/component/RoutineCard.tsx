@@ -11,9 +11,9 @@ const RoutineCard = ({
   routineCard,
   clickRoutineCard,
 }: RoutineCardProps): JSX.Element => {
-  const routineId = routineCard?.routineId
-  const title = routineCard?.title
-  const workout = routineCard?.workout
+  const routineId = routineCard?.routineId;
+  const title = routineCard?.title;
+  const workout = routineCard?.workout;
   return (
     <Card onClick={() => clickRoutineCard(routineId)}>
       <Title>{title.toUpperCase()}</Title>
@@ -24,8 +24,22 @@ const RoutineCard = ({
           ))}
         </ExplanationWrap>
         <SubWrap>
-          <Sub>{`${workout.reduce((acc, cur) => acc + (cur.image?.length < 3 ? cur.myCount : 0),0) / 60} min`}</Sub>
-          <Sub>{`${numberWithCommas(workout.reduce((acc, cur) => acc + cur.calrorie * (Math.round(cur.myCount / cur.myCount) * Math.round(cur.mySetCount / cur.mySetCount)),0),)} kcal`}</Sub>
+          <Sub>{`${
+            workout.reduce(
+              (acc, cur) => acc + (cur.image?.length < 3 ? cur.myCount : 0),
+              0,
+            ) / 60
+          } min`}</Sub>
+          <Sub>{`${numberWithCommas(
+            workout.reduce(
+              (acc, cur) =>
+                acc +
+                cur.calrorie *
+                  (Math.round(cur.myCount / cur.myCount) *
+                    Math.round(cur.mySetCount / cur.mySetCount)),
+              0,
+            ),
+          )} kcal`}</Sub>
         </SubWrap>
       </Wrap>
     </Card>
@@ -40,18 +54,26 @@ const Card = styled.div`
   height: 200px;
   width: 250px;
   margin: 5% auto;
-  box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: -3px -8px 7px #fff, 5px 5px 20px #9d9ea1;
   display: inline-block;
   align-items: center;
-  background-color: #f0f0f0;
-  border-radius: 4px;
-  transition: 400ms ease;
+  background-color: #f2f3f7;
+  border-radius: 10px;
+  transition: all 0.2s ease-in-out;
   padding: 10px;
+  cursor: pointer;
+  &:hover {
+    box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+  }
+  &:active {
+    box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #e0e5ec;
+  }
 `;
 const Title = styled.h1`
   text-align: center;
   font-size: 25px;
-  color: #000000;
+  color: #30475e;
+  font-weight: 700;
   margin: 5px 35px 15px 35px;
 `;
 const Wrap = styled.div`
@@ -60,14 +82,15 @@ const Wrap = styled.div`
 `;
 const ExplanationWrap = styled.div`
   height: 135px;
-  width: 120px;
+  width: 130px;
   display: flex;
   padding-top: 5px;
   flex-direction: column;
   align-items: center;
   margin-right: 20px;
   overflow-y: scroll;
-  background-color: #c2c2c2;
+  background-color: #e9eef5;
+  box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
   border-radius: 5px;
   &::-webkit-scrollbar {
     width: 8px;
@@ -76,7 +99,7 @@ const ExplanationWrap = styled.div`
     background: none;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: #30475e;
     border-radius: 6px;
   }
 `;
@@ -88,15 +111,17 @@ const SubWrap = styled.div`
 const Explanation = styled.div`
   font-size: 14px;
   color: #000000;
+  width: 110px;
   background-color: #f0f0f0;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
   margin: 0px 5px 4px 0px;
   padding: 3px 20px 4px;
   border-radius: 5px;
 `;
 const Sub = styled.div`
   font-size: 14px;
-  color: #000000;
+  color: #555555;
+  font-weight: 700;
   margin: 0 0 4px 0px;
   padding: 3px 0 4px;
 `;
