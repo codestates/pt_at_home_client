@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { CurrentRoutineProps } from '../../containers/RunRoutineContainer';
 import RoutineCardOrder from '../component/RoutineCardOrder'
 import styled from 'styled-components';
@@ -18,7 +18,7 @@ type SetInterval = ReturnType<typeof setInterval>;
 
 const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
   const initialInterve: SetInterval | any = undefined;
-  const { routineId, title, workout } = currentRoutine;
+  const { workout } = currentRoutine;
   let [counter, setCounter] = useState(0);
   let [routineOrder, setRoutineOrder] = useState(0);
   const [intervCounter, setIntervCounter] = useState(initialInterve);
@@ -27,7 +27,6 @@ const RunRoutine = ({ currentRoutine }: CurrentRoutineProps): JSX.Element => {
   let [imgIdx, setImgIdx] = useState(1);
   const [repeat, setRepeat] = useState('ready');
   const [audioPlay, setAudioPlay] = useState(false)
-  const [bgm, setBgm] = useState(bgm1)
   let imgList = workout[routineOrder]?.image;
   let currentWorkout = workout[routineOrder];
   let totalCount = workout[routineOrder]?.myCount;
@@ -330,15 +329,27 @@ const ButtonWrap = styled.div`
 const Row1 = styled.div``;
 const Row2 = styled.div``;
 const Btn = styled.input`
+  margin:15px 0;
   padding: 15px 5px;
-  margin: 5px;
   width: 150px;
-  background-color: #f7d89f;
-  border-radius: 5px;
+  background-color: #e0ece4;
+  border-radius:20px;
   outline: none;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: -3px -8px 7px #fff, 5px 5px 20px #9d9ea1;
+  transition: all 0.2s ease-in-out;
   cursor: pointer;
   font-size:1.2rem;
+  color: #555555;
+  outline: none;
+  cursor: pointer;
+    &:hover {
+        box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+      }
+      &:active {
+        box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #e0e5ec;
+      }
+
 `;
 
 const RoutineAudio = styled.div`

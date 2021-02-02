@@ -1,9 +1,7 @@
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
-import Img from '../../img/urbanbrush-20190214083430029790.png';
 import { Workout } from '../../modules/reducers/workoutList';
-import { WorkoutOfRoutine } from '../../modules/reducers/routineList';
 import { BiX, BiBulb } from 'react-icons/bi';
 
 interface ICreateCard {

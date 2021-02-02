@@ -3,43 +3,21 @@ import styled from 'styled-components';
 import CreateRoutineCard from '../component/CreateRoutineCard';
 // import _WorkoutCard from '../component/_WorkoutCard'
 import RoutineBox from '../component/RoutineBox';
-import { WorkoutOfRoutine } from '../../modules/reducers/routineList';
-import { Workout } from '../../modules/reducers/workoutList';
 import { CreateRoutineProps } from '../../containers/CreateRoutineContainer';
 import {
   DragDropContext,
-  Draggable,
-  DragStart,
+  // Draggable,
+  // DragStart,
   Droppable,
   DropResult,
   ResponderProvided,
 } from 'react-beautiful-dnd';
-
-const initialChoseWorkout: WorkoutOfRoutine = {
-  id: 0,
-  title: '',
-  instruction: '',
-  image: ['', ''],
-  parts: ['', ''],
-  // setCount: 0,
-  // count: 0,
-  // breakTime: 0,
-  mySetCount: 0,
-  myCount: 0,
-  myBreakTime: 0,
-  calrorie: 0,
-  category: 'tool',
-  tool: '',
-};
-
-const initialAddedWorkouts: WorkoutOfRoutine[] = [];
 
 export interface ICard {
   id: string;
 }
 
 const reorder = (list: ICard[], startIndex: number, endIndex: number) => {
-  // console.log('reorder', list,startIndex, endIndex )
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
@@ -80,7 +58,7 @@ const CreateRoutine = ({
     const sourceId = result.source.droppableId;
     const destinationId = result.destination.droppableId;
     if (sourceId === destinationId) {
-      const setter = sourceId === 'RoutineBox' ? routineCards : cards;
+      // const setter = sourceId === 'RoutineBox' ? routineCards : cards;
       const _cards = reorder(
         sourceId === 'RoutineBox' ? routineCards : cards,
         result.source.index,
@@ -180,7 +158,7 @@ const Wrap = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 50px 100px 0 20px;
-  margin-top: 95px;
+  margin-top: 75px;
 `;
 
 const DropWrap = styled.div`

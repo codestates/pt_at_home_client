@@ -5,12 +5,14 @@ import styled from 'styled-components';
 interface IHeader {
   title: string;
   isLogin: boolean;
+  userName:string;
   logoutHandler(): void;
 }
 
 const HeaderMiddle = ({
   title,
   isLogin,
+  userName,
   logoutHandler,
 }: IHeader): JSX.Element => {
   return (
@@ -22,6 +24,7 @@ const HeaderMiddle = ({
       </ItemsDiv>
       <ItemsDiv>
         <RightItem>
+          <UserComment>{`구해줘, ${userName}!`}</UserComment>
           {isLogin ? (
             <LoginBtn onClick={logoutHandler}>LOGOUT</LoginBtn>
           ) : (
@@ -50,6 +53,14 @@ const RightItem = styled(ItemsDiv)`
   justify-content: flex-end;
   padding: 0 15px 0 0;
 `;
+
+const UserComment = styled.div`
+  font-size:1.4rem;
+  color:#555555;
+  font-weight:900;
+  margin-right:30px;
+  letter-spacing:7px;
+`
 const LoginBtn = styled.button`
   outline: none;
   height: 30px;

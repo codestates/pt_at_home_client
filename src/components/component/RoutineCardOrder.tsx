@@ -1,7 +1,6 @@
 import React, {useRef } from 'react';
 import _WorkoutCard_2 from './_WorkoutCard_2'
-import { MyWorkoutCardProps } from '../modal/ModalRoutineDetail'
-import styled, {css} from 'styled-components'
+import styled from 'styled-components'
 import { WorkoutOfRoutine } from '../../modules/reducers/routineList';
 
 interface RoutineCardProps {
@@ -53,7 +52,7 @@ export const CardBox = styled.div`
     };
 
     background-color:${(props:{order:{routineOrder:number, length:number, idx:number}}) => 
-        props.order.routineOrder === props.order.idx? `#f0efef`:'#797a7e'
+        props.order.routineOrder === props.order.idx? `#797a7e`:'#f0efef' 
     };
    
     filter:${(props:{order:{routineOrder:number, length:number, idx:number}}) => 
@@ -65,7 +64,7 @@ export const CardBox = styled.div`
     };
    
     color: ${(props:{order:{routineOrder:number, length:number, idx:number}}) => 
-    props.order.routineOrder === props.order.idx? '#555555':'white'
+    props.order.routineOrder === props.order.idx? '#f6f5f5':'#555555' 
     };
 
     border-radius: 10px;

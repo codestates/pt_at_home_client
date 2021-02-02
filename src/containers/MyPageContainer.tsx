@@ -40,6 +40,13 @@ const MyPageContainer = ():JSX.Element  => {
     // completed
     const resignHandler = (email:string) => {
         dispatch(actionResignUserInfo(email))
+        window.localStorage.removeItem('userId')
+        window.localStorage.removeItem('userEmail')
+        window.localStorage.removeItem('userName')
+        window.localStorage.removeItem('token')
+        window.localStorage.removeItem('expDate')
+        window.localStorage.removeItem('type')
+        window.localStorage.removeItem('isLogin')
         history.push('/')
         // if (userName === userInfo.userName) {
         //     axios.post<ResignResponse>(`${URI}/users/resign`, {userName}, {headers:{'Content-Type':'application/json'}})
