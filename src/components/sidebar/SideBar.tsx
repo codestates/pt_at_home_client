@@ -132,17 +132,27 @@ const LinkWrap = styled.div`
 `;
 const DashBoardIcon = styled(BsLayoutTextWindowReverse)`
   font-size: 22px;
+  margin-left:5px;
+  margin-right:10px;
 `;
 const CreateIcon = styled(BsShiftFill)`
   font-size: 22px;
+  margin-left:5px;
+  margin-right:10px;
 `;
 const RunIcon = styled(BsAlarmFill)`
   font-size: 22px;
+  margin-left:5px;
+  margin-right:10px;
 `;
 const MyRoutineIcon = styled(BsFillHeartFill)`
   font-size: 22px;
+  margin-left:5px;
+  margin-right:10px;
 `;
 const MyPageIcon = styled(BsFillPersonFill)`
   font-size: 22px;
+  margin-left:5px;
+  margin-right:10px;
 `;
 export default SideBar;
