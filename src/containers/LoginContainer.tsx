@@ -73,6 +73,13 @@ const LoginContainer = ():JSX.Element => {
                 if (res.data.message === 'signin success') {
                     dispatch(actionLogin({isLogin:true, isExpired:false, type}))
                     dispatch(actionSetUserInfo(res.data.data))
+                    window.localStorage.setItem('userId', String(res.data.data.id))
+                    window.localStorage.setItem('userEmail', res.data.data.email)
+                    window.localStorage.setItem('userName', res.data.data.userName)
+                    window.localStorage.setItem('token', res.data.data.auth.token)
+                    window.localStorage.setItem('expDate', res.data.data.auth.expDate)
+                    window.localStorage.setItem('type', type)
+                    window.localStorage.setItem('isLogin', 'true')
                     history.push('/dashboard')
                 }
             })

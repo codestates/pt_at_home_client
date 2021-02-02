@@ -44,10 +44,10 @@ interface ResignResponse {
     message:string;
 }
 
-interface renewTokenType {
-    token:string;
-    expDate:string;
-}
+// interface renewTokenType {
+//     token:string;
+//     expDate:string;
+// }
 
 // interface ActionRenewToken {
 //     type:string;
@@ -60,7 +60,7 @@ interface ActionResetUserInfo {
 
 // Action Creator - userInfo
 // completed
-export const actionSetUserInfo = (payload:UserInfo):ActionUserInfo => ({
+export const actionSetUserInfo = (payload:any):ActionUserInfo => ({
     type:SET_USER_INFO,
     payload
 })

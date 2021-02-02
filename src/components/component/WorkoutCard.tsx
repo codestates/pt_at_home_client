@@ -39,7 +39,7 @@ const WorkoutCard = ({
             changeColor={color}
           />
           <Title>{workoutCard.title}</Title>
-          <Part>{workoutCard.parts.map((el) => `${el}, `)}</Part>
+          <Part>{workoutCard.parts.map((el, idx) => idx < workoutCard.parts.length-1?`${el}, `:`${el}`)}</Part>
           <Explanation>{workoutCard.instruction}</Explanation>
         </CardContents>
       </Card>

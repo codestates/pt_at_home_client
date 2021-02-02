@@ -59,10 +59,6 @@ const CreateRoutineContainer = (): JSX.Element => {
     };
   }, [path]);
 
-  useEffect(() => {
-    console.log('rerendered')
-  }, [myWorkouts])
-
   // completed
   const removeWorkout = async () => {
     setModalConfirm(false);
@@ -143,11 +139,10 @@ const CreateRoutineContainer = (): JSX.Element => {
           },
         )
         .then((res) => {
-          console.log(res)
           if (res.data.message === 'ok') {
             dispatch(actionSetMyRoutines(res.data.data));
           } else {
-            console.log(res.data.message);
+            // console.log(res.data.message);
           }
         });
     } else {

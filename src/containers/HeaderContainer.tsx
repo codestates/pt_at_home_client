@@ -69,12 +69,18 @@ const HeaderContainer = ():JSX.Element => {
             'Authorization':`Bearer ${auth.token}`
           }})
             .then(res => {
-                console.log('logout', res)
                 if (res.data.message === 'signout success') {
                     dispatch(actionLogout({isLogin:false, isExpired:false, type:'guest'}))
                     dispatch(actionSetUserInfo({id:0, userName:'', email:'', auth:{token:'', expDate:''}}))
                     dispatch(actionSetMyRoutines([]))
                     dispatch(actionSetMyWorkouts([]))
+                    window.localStorage.removeItem('userId')
+                    window.localStorage.removeItem('userEmail')
+                    window.localStorage.removeItem('userName')
+                    window.localStorage.removeItem('token')
+                    window.localStorage.removeItem('expDate')
+                    window.localStorage.removeItem('type')
+                    window.localStorage.removeItem('isLogin')
                 }
             })
       } else {

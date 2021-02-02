@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SignupProps } from '../containers/SignupContainer';
-import { Link } from 'react-router-dom';
-import img from '../img/img4.svg';
-import logo from '../img/savemehomt_logo.png';
+import { Link } from 'react-router-dom'
+import img from '../img/img4.svg'
+import logo from '../img/savemehomt_logo.png'
+        
+        
 const Signup = ({
   signupHandler,
   kakaoLoginHandler,
@@ -106,12 +108,13 @@ const SingnUpSectionBox = styled.div`
   height: 88%;
 `;
 const SignUpLogoBox = styled.div`
-  width: 100%;
-  display: flex;
+    width : 100%;
+    display : flex;
 `;
+
 const SignUpLogo = styled.img`
-  max-height: 100px;
-  margin: 25px 0 0 25px;
+    max-height:100px;
+    margin: 25px 0 0 25px;
 `;
 const SignUpMainContainer = styled.div`
   height: 100%;
