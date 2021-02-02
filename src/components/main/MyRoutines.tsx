@@ -41,11 +41,11 @@ const CardWrap = styled.ul`
   width: 100%;
   height: 100%;
   flex-wrap: wrap;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 `;
 const Cardli = styled.li`
   width: 270px;
-  margin: 25px;
+  margin: 20px;
 `;
 
 export default MyRoutines;

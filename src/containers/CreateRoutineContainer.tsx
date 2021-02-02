@@ -106,6 +106,7 @@ const CreateRoutineContainer = (): JSX.Element => {
       ...{ mySetCount, myCount, myBreakTime },
     };
     setAddedWorkout(tempArr);
+    setModalCustomWorkout(false)
   };
 
   // completed
