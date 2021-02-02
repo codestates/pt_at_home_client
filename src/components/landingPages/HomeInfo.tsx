@@ -12,13 +12,10 @@ const HomeInfo = () => {
         </LoginBtn>
         <Contents>
           <Img />
-          <TextWrap>
-            <Text>몸 관리, 건강 관리 꼭 헬스장 으로 가야 할까요?</Text>
-            <Text>이제부터는 집에서 관리 합시다!</Text>
-          </TextWrap>
+          <TextWrap></TextWrap>
         </Contents>
         <DashBtn>
-          <DashLink to="/dashboard">운동하러 갑시다!</DashLink>
+          <DashLink to="/dashboard">체험하기</DashLink>
         </DashBtn>
       </ContentsWrap>
     </Wrap>
@@ -111,7 +108,4 @@ const Contents = styled.div`
   margin-bottom: 200px;
 `;
 const TextWrap = styled.div``;
-const Text = styled.div`
-  margin-left: 340px;
-`;
 export default HomeInfo;
