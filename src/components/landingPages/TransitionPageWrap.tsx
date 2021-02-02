@@ -15,8 +15,9 @@ const TransitionPageWrap = ({
 
 const Wrap = styled.div`
   position: absolute;
-  background-color: ${(props: { backgroundColor: string }) =>
-    props.backgroundColor};
+  background-image: url(${(props: { backgroundColor: string }) =>
+    props.backgroundColor});
+  background-size: cover;
   width: 100%;
   height: 100%;
   top: 0;
