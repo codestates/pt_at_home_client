@@ -12,21 +12,21 @@ import {
   BsFillPersonFill,
 } from 'react-icons/bs';
 
-enum InfoPageNames {
+export enum InfoPageNames {
   Dashboard = 'dashboard',
   CreateRoutine = 'createRoutine',
   MyRoutine = 'myRoutine',
+  UsersRoutine = 'usersroutine',
   MyPage = 'myPage',
   RunRoutine = 'runRoutine',
 }
 const SideBar = ({
   getMyRoutines,
   getMyWorkouts,
+  currentPage,
+  setCurrentPage,
 }: SideBarProps): JSX.Element => {
   const history = useHistory();
-  const [currentPage, setCurrentPage] = useState<InfoPageNames>(
-    InfoPageNames.Dashboard,
-  );
   // const [toggle, setToggle] = useState<boolean>(false);
   const changePage = (name: InfoPageNames) => {
     setCurrentPage(name);
@@ -34,37 +34,58 @@ const SideBar = ({
   // const toggle = () => {};
   return (
     <Wrap>
-      <Link to="/"><SaveLogo src={Logo} /></Link>
-      <LinkWrap>
-        <StyledLink onClick={(e) => history.push('/dashboard')}>
-          <DashBoardIcon />
-          Dashboard
-        </StyledLink>
+      <SaveLogo src={Logo} />
+      <LinkWrap
+        onClick={(e) => {
+          changePage(InfoPageNames.Dashboard);
+          history.push('/dashboard');
+        }}
+        isActive={currentPage === InfoPageNames.Dashboard}
+      >
+        <DashBoardIcon />
+        Dashboard
       </LinkWrap>
-      <LinkWrap onClick={getMyWorkouts}>
-        <StyledLink onClick={(e) => history.push('/createroutine')}>
-          <CreateIcon />
-          Create Routine
-        </StyledLink>
+      <LinkWrap
+        isActive={currentPage === InfoPageNames.CreateRoutine}
+        onClick={() => {
+          changePage(InfoPageNames.CreateRoutine);
+          getMyWorkouts();
+          history.push('/createroutine');
+        }}
+      >
+        <CreateIcon />
+        Create Routine
       </LinkWrap>
-      <LinkWrap>
-        <StyledLink onClick={(e) => history.push('/runroutine')}>
-          <RunIcon />
-          Run Routine
-        </StyledLink>
+      <LinkWrap
+        isActive={currentPage === InfoPageNames.RunRoutine}
+        onClick={(e) => {
+          changePage(InfoPageNames.RunRoutine);
+          history.push('/runroutine');
+        }}
+      >
+        <RunIcon />
+        Run Routine
       </LinkWrap>
-      <LinkWrap onClick={getMyRoutines}>
-        <StyledLink onClick={(e) => history.push('/usersroutine')}>
-          <MyRoutineIcon />
-          My Routines
-        </StyledLink>
+      <LinkWrap
+        isActive={currentPage === InfoPageNames.UsersRoutine}
+        onClick={(e) => {
+          changePage(InfoPageNames.UsersRoutine);
+          getMyRoutines();
+          history.push('/usersroutine');
+        }}
+      >
+        <MyRoutineIcon />
+        My Routines
       </LinkWrap>
-      <LinkWrap>
-        {' '}
-        <StyledLink onClick={(e) => history.push('/mypage')}>
-          <MyPageIcon />
-          My Page
-        </StyledLink>
+      <LinkWrap
+        isActive={currentPage === InfoPageNames.MyPage}
+        onClick={(e) => {
+          changePage(InfoPageNames.MyPage);
+          history.push('/mypage');
+        }}
+      >
+        <MyPageIcon />
+        My Page
       </LinkWrap>
     </Wrap>
   );
@@ -83,10 +104,12 @@ const SaveLogo = styled.img`
   top: 10px;
   left: 50px;
 `;
-const StyledLink = styled.button`
+
+const LinkWrap = styled.div`
   outline: none;
   text-align: left;
-  color: #000000;
+  color: ${(props: { isActive: boolean }) =>
+    props.isActive ? '#fbf7a7' : '#000000'};
   background: none;
   border: none;
   text-decoration: none;
@@ -98,12 +121,13 @@ const StyledLink = styled.button`
   height: 50px;
   padding: 10px;
   box-sizing: border-box;
-`;
-
-const LinkWrap = styled.div`
   margin-bottom: 5px;
+  border-radius: 50px;
+  cursor: pointer;
+  background-color: ${(props: { isActive: boolean }) =>
+    props.isActive ? '#afafaf' : '#FFFFFF'};
   &:hover {
-    background-color: #b4c2f6;
+    background-color: #ccc7c7;
   }
 `;
 const DashBoardIcon = styled(BsLayoutTextWindowReverse)`

@@ -1,85 +1,107 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '../modules/reducers'
-import SideBar from '../components/sidebar/SideBar'
-import { Workout } from '../modules/reducers/workoutList'
-import { Routine } from '../modules/reducers/routineList'
-import { actionSetMyWorkouts, actionSetMyRoutines, actionRenewToken } from '../modules/actions'
-import { URI } from '../index'
-import axios from 'axios'
-axios.defaults.withCredentials = true
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../modules/reducers';
+import SideBar, { InfoPageNames } from '../components/sidebar/SideBar';
+import { Workout } from '../modules/reducers/workoutList';
+import { Routine } from '../modules/reducers/routineList';
+import {
+  actionSetMyWorkouts,
+  actionSetMyRoutines,
+  actionRenewToken,
+} from '../modules/actions';
+import { URI } from '../index';
+import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 export interface WorkoutListResponse {
-  data: Array<Workout>;
+  data: Workout[];
   message: string;
 }
 
 export interface MyRoutinesResponse {
-  data: Array<Routine>;
+  data: Routine[];
   message: string;
 }
 
 export interface MyWorkoutsResponse {
-  data: Array<Workout>;
+  data: Workout[];
   message: string;
 }
 
 export interface SideBarProps {
   getMyRoutines(): void;
   getMyWorkouts(): void;
+  currentPage: InfoPageNames;
+  setCurrentPage: React.Dispatch<React.SetStateAction<InfoPageNames>>;
 }
 
-const SideBarContainer = ():JSX.Element => {
-    const dispatch = useDispatch()
-    const userInfo = useSelector((state:RootState) => state.userInfo)
-    const currentRoutine = useSelector((state:RootState) => state.currentRoutine)
-    const isLogin = useSelector((state:RootState) => state.isLogin.isLogin)
-    const auth = userInfo.auth
+interface ISideBarContainer {
+  currentPage: InfoPageNames;
+  setCurrentPage: React.Dispatch<React.SetStateAction<InfoPageNames>>;
+}
 
-    //completed
-    const  getMyRoutines = async () => {
-      if (isLogin) {
-        let { token, expDate } = auth
-        let isTokenValid = await actionRenewToken(token, expDate, dispatch)
-        if (isTokenValid) {
-            axios.get<MyRoutinesResponse>(`${URI}/myroutine`, {
-                headers:{
-                    'Content-Type':'application/json',
-                    'Authorization':`Bearer ${userInfo.auth.token}`
-                }})
-                .then(res => {
-                    if (res.data.message === 'ok') {
-                        dispatch(actionSetMyRoutines(res.data.data))
-                    }
-                })
-        }
+const SideBarContainer = ({
+  currentPage,
+  setCurrentPage,
+}: ISideBarContainer): JSX.Element => {
+  const dispatch = useDispatch();
+  const userInfo = useSelector((state: RootState) => state.userInfo);
+  const currentRoutine = useSelector(
+    (state: RootState) => state.currentRoutine,
+  );
+  const isLogin = useSelector((state: RootState) => state.isLogin.isLogin);
+  const auth = userInfo.auth;
+
+  //completed
+  const getMyRoutines = async () => {
+    if (isLogin) {
+      let { token, expDate } = auth;
+      let isTokenValid = await actionRenewToken(token, expDate, dispatch);
+      if (isTokenValid) {
+        axios
+          .get<MyRoutinesResponse>(`${URI}/myroutine`, {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${userInfo.auth.token}`,
+            },
+          })
+          .then((res) => {
+            if (res.data.message === 'ok') {
+              dispatch(actionSetMyRoutines(res.data.data));
+            }
+          });
       }
     }
+  };
 
-    // completed
-    const getMyWorkouts = async () => {
-      if (isLogin) {
-        let { token, expDate } = auth
-        let isTokenValid = await actionRenewToken(token, expDate, dispatch)
-        if (isTokenValid) {
-            axios.get<MyWorkoutsResponse>(`${URI}/myroutine/myworkout`, {
-                headers:{
-                    'Content-Type':'application/json',
-                    'Authorization':`Bearer ${userInfo.auth.token}`
-                }})
-                .then(res => {
-                    if (res.data.message === 'ok') {
-                        dispatch(actionSetMyWorkouts(res.data.data))
-                    }
-                })
-        }
+  // completed
+  const getMyWorkouts = async () => {
+    if (isLogin) {
+      let { token, expDate } = auth;
+      let isTokenValid = await actionRenewToken(token, expDate, dispatch);
+      if (isTokenValid) {
+        axios
+          .get<MyWorkoutsResponse>(`${URI}/myroutine/myworkout`, {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${userInfo.auth.token}`,
+            },
+          })
+          .then((res) => {
+            if (res.data.message === 'ok') {
+              dispatch(actionSetMyWorkouts(res.data.data));
+            }
+          });
       }
     }
+  };
 
   return (
     <SideBar
       getMyRoutines={getMyRoutines}
       getMyWorkouts={getMyWorkouts}
+      currentPage={currentPage}
+      setCurrentPage={setCurrentPage}
     />
   );
 };
