@@ -16,14 +16,12 @@ const Signup = ({
   const [password, setPassword] = useState('');
   const [confirmPW, setConfirmPW] = useState('');
   const [alertMsg, setAlertMsg] = useState('');
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (e.target.name === 'email') setEmail(e.target.value);
     else if (e.target.name === 'userName') setUserName(e.target.value);
     else if (e.target.name === 'password') setPassword(e.target.value);
     else if (e.target.name === 'confirmPW') setConfirmPW(e.target.value);
   };
-
   const clickSignupHandler = () => {
     if (!email || !password || !userName || !confirmPW) {
       setAlertMsg('모든 항목은 필수입니다.');
@@ -47,7 +45,6 @@ const Signup = ({
       signupHandler({ email, userName, password });
     }
   };
-
   return (
     <>
       <SignUpMainContainer>
@@ -110,26 +107,20 @@ const SingnUpSectionBox = styled.div`
   flex-direction: row;
   height: 88%;
 `;
-
 const SignUpLogoBox = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
+    width : 100%;
+    display : flex;
 `;
 
 const SignUpLogo = styled.img`
-  position: absolute;
-  top: 30px;
-  left: 40px;
-  max-height: 100px;
+    max-height:100px;
+    margin: 25px 0 0 25px;
 `;
-
 const SignUpMainContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
 `;
-
 const SignUpInputSection = styled.section`
   width: 100%;
   align-items: center;
@@ -141,7 +132,6 @@ const SignUpInputSection = styled.section`
     margin-left: 0px;
   }
 `;
-
 const SignUpMainConteiner = styled.div`
   align-items: center;
   margin-bottom: 140px;
@@ -149,18 +139,15 @@ const SignUpMainConteiner = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
-
 const SignUpText = styled.h2`
   font-size: 50px;
   text-align: center;
   margin-bottom: 20px;
 `;
-
 const SignUpEmailText = styled.h3`
   font-size: 20px;
   width: 100%;
 `;
-
 const SignUpInput = styled.input`
   font-size: 16px;
   padding-left: 15px;
@@ -178,13 +165,11 @@ const SignUpInput = styled.input`
     outline: none;
   }
 `;
-
 const AlertMsg = styled.div`
   text-align: center;
   color: #de4463;
   padding: 10px 0;
 `;
-
 const SignUpButton = styled.input`
   width: 400px;
   height: 2.5rem;
@@ -195,7 +180,6 @@ const SignUpButton = styled.input`
   border-radius: 10px;
   font-size: 20px;
 `;
-
 const SignUpImgSection = styled.section`
   display: flex;
   align-items: center;
@@ -208,10 +192,8 @@ const SignUpImgSection = styled.section`
     display: none;
   }
 `;
-
 const SignUpImg = styled.img`
   margin-bottom: 150px;
   margin-right: 300px;
 `;
-
 export default Signup;

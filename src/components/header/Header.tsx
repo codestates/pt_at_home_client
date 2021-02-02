@@ -13,6 +13,7 @@ const Header = ({
     <Wrap>
       <HeaderWrap id="asd">
         <HeaderMiddle
+          userName={userName}
           title={title}
           isLogin={isLogin}
           logoutHandler={logoutHandler}

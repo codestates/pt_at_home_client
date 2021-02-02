@@ -133,10 +133,10 @@ const RoutineBox = ({
           <EachSummary>
             <Tag>예상 소요 시간</Tag>
             <Content>{`${
-              addedWorkout.reduce(
-                (acc, cur) => acc + (cur.image.length === 2 ? cur.myCount : 0),
+              Math.round(addedWorkout.reduce(
+                (acc, cur) => acc + (cur.image.length === 2 ? cur.myCount : cur.myCount*1.8),
                 0,
-              ) / 60
+              ) / 60)
             } Min`}</Content>
           </EachSummary>
           <EachSummary>

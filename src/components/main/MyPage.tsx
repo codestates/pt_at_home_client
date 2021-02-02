@@ -16,6 +16,7 @@ const MyPage = ({
   const [email, setEmail] = useState(userInfo.email);
   const [password, setPassword] = useState('');
   const [confirmPW, setConfirmPW] = useState('');
+  const [alertMsg, setAlertMsg] = useState('')
 
   const EditButton = () => {
     setEdit(!edit);
@@ -27,6 +28,21 @@ const MyPage = ({
     else if (e.target.name === 'password') setPassword(e.target.value);
     else if (e.target.name === 'confirmPW') setConfirmPW(e.target.value);
   };
+
+  const clickUpdateInfoHandler = () => {
+    if (!email || !password || !userName || !confirmPW) {
+      setAlertMsg("모든 항목은 필수입니다.")
+    } else if (password !== confirmPW) {
+      setAlertMsg("비밀번호가 맞지않습니다.")
+    } else if (!/^[0-9a-zA-Z]([-_\]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(email)) {
+      setAlertMsg("이메일 형식이 아닙니다.")
+    } else if (!/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&+=]).*$/.test(password)) {
+      setAlertMsg(`대/소문자, 특수문자, 숫자가 하나 이상씩 들어가야 합니다. 비밀번호가 8-15여야 합니다.`)
+    } else {
+      updateUserInfo({ userName, password })  
+    }
+}
+
 
   return (
     <Wrap>
@@ -40,12 +56,12 @@ const MyPage = ({
                 {!edit ? (
                   <EditRow>
                     <UserIngoBox>
-                      <NameRow>{`이메일 : ${email}`}</NameRow>
-                      <EmailRow>{`닉네임 : ${userName}`}</EmailRow>
+                      <NameRow>{`Email : ${email}`}</NameRow>
+                      <EmailRow>{`User Name : ${userName}`}</EmailRow>
                     </UserIngoBox>
                     <BtnBox>
                       <Btn onClick={EditButton}>
-                      {!edit ? '수정하기' : '수정취소'}
+                      {!edit ? 'MODIFY' : 'CANCEL'}
                       </Btn>
                     </BtnBox>
                   </EditRow>
@@ -53,7 +69,7 @@ const MyPage = ({
                   <EditRow>
                     <InfoRow>
                       <NameRow>
-                        {`변경할 닉네임 : `}
+                        {`New User Name : `}
                         <Editinput
                           type="text"
                           value={userName}
@@ -62,40 +78,41 @@ const MyPage = ({
                         />
                       </NameRow>
                       <PasswordRow>
-                        {`현재 비밀번호 : `}
+                        {`Current Password : `}
                         <Editinput
                           type="password"
-                          placeholder="password"
+                          placeholder="현재 비밀번호를 입력해주세요"
                           name="password"
                         />
                       </PasswordRow>
                       <PasswordRow>
-                        {`새 비밀번호 : `}
+                        {`New Password : `}
                         <Editinput
                           type="password"
-                          placeholder="password"
+                          placeholder="바꿀 새 비밀번호를 입력해주세요"
                           name="password"
                         />
                       </PasswordRow>
                       <PasswordRow>
-                        {`새 비밀번호 확인: `}
+                        {`Confirm New Password: `}
                         <Editinput
                           type="password"
-                          placeholder="password"
+                          placeholder="새 비밀번호를 한번 더 입력해주세요"
                           name="password"
                           onChange={handleChange}
                         />
                       </PasswordRow>
+                      <AlertMsg>{alertMsg}</AlertMsg>
                     </InfoRow>
                     <SaveBtnWrap>
                       <BtnBoxEdit>
                         <Btn onClick={EditButton}>
-                            {!edit ? '수정하기' : '수정취소'}
+                            {!edit ? 'MODIFY' : 'CANCEL'}
                         </Btn>
                         <Btn
-                          onClick={() => updateUserInfo({ userName, password })}
+                          onClick={clickUpdateInfoHandler}
                         >
-                          저장하기
+                          SAVE
                         </Btn>
                       </BtnBoxEdit>
                     </SaveBtnWrap>
@@ -115,7 +132,7 @@ const MyPage = ({
             </ImgBox>
             <ResignBtnBox>
               <Btn onClick={() => resignHandler(userInfo.email)}>
-                  회원 탈퇴
+                  Leave Website
               </Btn>
             </ResignBtnBox>
           </Main>
@@ -269,7 +286,7 @@ const EditRow = styled.div`
 `;
 const Btn = styled.button`
   font-size : 14px;
-  margin-bottom : 7px;
+  margin-bottom : 20px;
   outline: none;
   height: 30px;
   padding: 15px;
@@ -289,6 +306,13 @@ const Btn = styled.button`
     box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #ffffff;
   }
 `;
+
+const AlertMsg = styled.div`
+    text-align:center;
+    color:#de4463;
+    padding:10px 0;
+`
+
 const SaveBtnWrap = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -300,7 +324,7 @@ width : 100%;
 height : 2rem;
 margin : 5px;
 border : 1px solid transparent;
-background-color : #f3f3f4;
+background-color : #d9e4dd;
 border-radius : 10px;
 :: placeholder {
     font-size : 16px;

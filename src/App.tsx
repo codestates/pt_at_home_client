@@ -5,8 +5,10 @@ import {
   withRouter,
   RouteComponentProps,
 } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from './modules/reducers';
+import { actionSetUserInfo, actionLogin} from './modules/actions'
+import { UserInfo } from './modules/reducers/userInfo'
 import Landing from './components/Landing';
 import {
   DashboardContainer,
@@ -23,6 +25,7 @@ import {
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
+import { InfoPageNames } from './components/sidebar/SideBar';
 
 export interface IFilterOption {
   label: string;
@@ -32,13 +35,38 @@ export interface IFilterOption {
 }
 
 const App = ({ history, location }: RouteComponentProps): JSX.Element => {
+  const dispatch = useDispatch()
   const isExpired = useSelector((state: RootState) => state.isLogin.isExpired);
-
+  const [currentPage, setCurrentPage] = useState<InfoPageNames>(
+    InfoPageNames.Dashboard,
+  );
   useEffect(() => {
     if (isExpired) {
       history.push('/login');
     }
   }, [isExpired]);
+
+  useEffect(() => {
+    if (window.localStorage.getItem('isLogin')) {
+      console.log(window.localStorage.getItem('isLogin'))
+      let loginData = {
+        isLogin:true,
+        isExpired:false,
+        type:window.localStorage.getItem('type')
+      }
+      let userInfoData = {
+        id:Number(window.localStorage.getItem('userId')),
+        email:window.localStorage.getItem('userEmail'),
+        userName:window.localStorage.getItem('userName'),
+        auth:{
+          token:window.localStorage.getItem('token'),
+          expDate:window.localStorage.getItem('expDate')
+        }
+      }
+      dispatch(actionSetUserInfo(userInfoData))
+      dispatch(actionLogin(loginData))
+    }
+  }, [])
 
   const FeaturePage = (): JSX.Element => {
     const [open, setOpen] = useState<boolean>(true);
@@ -53,7 +81,10 @@ const App = ({ history, location }: RouteComponentProps): JSX.Element => {
           <CSSTransition in={open} timeout={0} classNames={'sidebar'}>
             <SideWrap className="sidebar">
               <Side className="side-bar">
-                <SideBarContainer />
+                <SideBarContainer
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                />
                 <TabBtn onClick={toggleBtn}>
                   {open ? <TabLeftIcon /> : <TabRightIcon />}
                 </TabBtn>

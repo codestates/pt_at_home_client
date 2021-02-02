@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { MyWorkoutCardProps } from '../modal/ModalRoutineDetail'
 
 const _WorkoutCard_2 = ({myWorkoutCard}:MyWorkoutCardProps) => {
-  const {title, mySetCount, myCount, tool, parts, category, image} = myWorkoutCard
+  const {title, mySetCount, myCount, parts, category, image} = myWorkoutCard
 
 
     return (
@@ -15,6 +15,7 @@ const _WorkoutCard_2 = ({myWorkoutCard}:MyWorkoutCardProps) => {
           <CardContents>
             <Title>{title.toUpperCase()}</Title>
             <ExplanationWrap>
+              <Explanation>{category}</Explanation>
               <Explanation>{myWorkoutCard.image.length === 1?`${myCount} sec`:`${myCount} 회`}</Explanation>
               <Explanation>{`${mySetCount} Sets`}</Explanation>
               <Explanation>{parts.map((el, idx) => {
@@ -70,7 +71,7 @@ const ExplanationWrap = styled.div`
 `;
 
 const Explanation = styled.div`
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: #f0f0f0;
   background-color: #30323d;
   margin: 0 0 4px 0px;

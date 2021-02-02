@@ -250,7 +250,7 @@ const ControlBar = ({
     setFilterArr([]);
   };
 
-  const handleClickStrechingBtn = () => {
+  const handleClickStretchingBtn = () => {
     filterHandler({ category: '스트레칭', part: [], tool: [] });
     setFilterArr([]);
   };
@@ -295,7 +295,7 @@ const ControlBar = ({
               </div>
             );
           })}
-          <CustomSelect onClick={handleClickStrechingBtn}>
+          <CustomSelect onClick={handleClickStretchingBtn}>
             STRETCHING
           </CustomSelect>
           {path === '/createroutine' ? (
@@ -352,7 +352,7 @@ const ControlBar = ({
               setCategory('');
             }}
           >
-            Clear
+            CLEAR
           </Clear>
         )}
       </TagWrap>
@@ -479,13 +479,13 @@ const FilterCard = styled.span`
   padding: 3px;
 `;
 const Clear = styled.button`
-  width: 50px;
-  background-color: #f2f3f7;
+  width: 60px;
+  // background-color: #f2f3f7;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   color: #000000;
-  border-radius: 5px;
+  border-radius: 20px;
   display: flex;
-  border: none;
+  border: 3px solid #b2c0f6;
   justify-content: center;
   margin: 0 10px 10px;
   padding: 3px 15x;
