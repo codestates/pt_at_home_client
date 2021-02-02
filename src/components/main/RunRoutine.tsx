@@ -332,7 +332,7 @@ const Btn = styled.input`
   margin:15px 0;
   padding: 15px 5px;
   width: 150px;
-  background-color: #e0ece4;
+  background-color: #d6e0f0;
   border-radius:20px;
   outline: none;
   border: 1px solid rgba(255, 255, 255, 0.2);

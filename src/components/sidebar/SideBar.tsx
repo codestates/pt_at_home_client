@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { SideBarProps } from '../../containers/SideBarContainer';
 // import Logo from '../../img/savemehomt_logo.png';
