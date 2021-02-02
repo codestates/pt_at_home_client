@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { SideBarProps } from '../../containers/SideBarContainer';
-import Logo from '../../img/savemehomt_final.png';
+// import Logo from '../../img/savemehomt_logo.png';
+import Logo from '../../img/new_logo.svg';
 import {
   BsLayoutTextWindowReverse,
   BsShiftFill,
@@ -98,10 +99,10 @@ const Wrap = styled.div`
 `;
 
 const SaveLogo = styled.img`
-  width: 170px;
+  width: 120px;
   position: fixed;
   top: 10px;
-  left: 25px;
+  left: 50px;
 `;
 
 const LinkWrap = styled.div`

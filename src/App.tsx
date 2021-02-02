@@ -5,8 +5,10 @@ import {
   withRouter,
   RouteComponentProps,
 } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from './modules/reducers';
+import { actionSetUserInfo, actionLogin} from './modules/actions'
+import { UserInfo } from './modules/reducers/userInfo'
 import Landing from './components/Landing';
 import {
   DashboardContainer,
@@ -33,6 +35,7 @@ export interface IFilterOption {
 }
 
 const App = ({ history, location }: RouteComponentProps): JSX.Element => {
+  const dispatch = useDispatch()
   const isExpired = useSelector((state: RootState) => state.isLogin.isExpired);
   const [currentPage, setCurrentPage] = useState<InfoPageNames>(
     InfoPageNames.Dashboard,
@@ -42,6 +45,28 @@ const App = ({ history, location }: RouteComponentProps): JSX.Element => {
       history.push('/login');
     }
   }, [isExpired]);
+
+  useEffect(() => {
+    if (window.localStorage.getItem('isLogin')) {
+      console.log(window.localStorage.getItem('isLogin'))
+      let loginData = {
+        isLogin:true,
+        isExpired:false,
+        type:window.localStorage.getItem('type')
+      }
+      let userInfoData = {
+        id:Number(window.localStorage.getItem('userId')),
+        email:window.localStorage.getItem('userEmail'),
+        userName:window.localStorage.getItem('userName'),
+        auth:{
+          token:window.localStorage.getItem('token'),
+          expDate:window.localStorage.getItem('expDate')
+        }
+      }
+      dispatch(actionSetUserInfo(userInfoData))
+      dispatch(actionLogin(loginData))
+    }
+  }, [])
 
   const FeaturePage = (): JSX.Element => {
     const [open, setOpen] = useState<boolean>(true);

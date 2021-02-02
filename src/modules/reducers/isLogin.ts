@@ -33,7 +33,7 @@ export interface IsLogin {
     type:string;
 }
 
-export const actionLogin = (payload:IsLogin):ActionIsLogin => ({
+export const actionLogin = (payload:any):ActionIsLogin => ({
     type:LOGIN,
     payload
 })

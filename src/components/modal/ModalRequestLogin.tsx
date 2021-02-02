@@ -10,7 +10,7 @@ const ModalRequestLogin = ({offLoginModal}:ModalRequestLoginProps):JSX.Element =
     return (
         <Frame>
             <Wrap>
-                <CloseBtn><input type="button" value="X" onClick={offLoginModal}/></CloseBtn>
+                <CloseBtn><XBtn type="button" value="X" onClick={offLoginModal}/></CloseBtn>
                 <LoginMsg>Please Login first, if you want to save this routine!</LoginMsg>
                 <ControlBtn>
                     <StyledLink to='/login'>LOG IN</StyledLink>
@@ -22,12 +22,13 @@ const ModalRequestLogin = ({offLoginModal}:ModalRequestLoginProps):JSX.Element =
 };
 
 const Frame = styled.div`
-  height: 200px;
-  width: 400px;
+  height: 230px;
+  width: 450px;
   box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
   display: inline-block;
-  background-color: white;
-  border-radius: 4px;
+  background-color: #f2f3f7;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   transition: 400ms ease;
   position: absolute;
 //   margin-left:30%;
@@ -49,6 +50,26 @@ const CloseBtn = styled.div`
     padding-right:2%;
     text-align:right;
 `
+const XBtn = styled.input`
+color:red;
+font-weight:bold;
+outline: none;
+width: 27px;
+height: 27;
+background-color: #f2f3f7;
+border: 1px solid rgba(255, 255, 255, 0.2);
+border-radius: 20px;
+box-shadow: -3px -8px 7px #fff, 5px 5px 20px #9d9ea1;
+transition: all 0.2s ease-in-out;
+cursor: pointer;
+&:hover {
+    box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+}
+&:active {
+    box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #e0e5ec;
+}
+`
+
 const LoginMsg =styled.div`
     display:flex;
     align-items:center;
@@ -63,14 +84,29 @@ const ControlBtn = styled.div`
     flex-flow:row nowrap;
     justify-content: space-evenly;
     margin-bottom:10%;
+    border-radius:20px;
+
 `
 
 const StyledLink = styled(Link)`
-    border-radius:5px;
+    font-weight:700;
+    border-radius:20px;
     text-decoration: none;
     color: #f0f0f0;
     padding:3% 5%;
-    background-color:#636e72;
+    color: #555555;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    outline: none;
+    background-color: #f2f3f7;
+    box-shadow: -3px -8px 7px #fff, 5px 5px 20px #9d9ea1;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    &:hover {
+        box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+      }
+      &:active {
+        box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #e0e5ec;
+      }
 
 `;
 

@@ -107,7 +107,6 @@ const DashboardContainer = (): JSX.Element => {
     const url = new URL(window.location.href);
     const authorizationCode = url.searchParams.get('code');
     if (authorizationCode) {
-      console.log(authorizationCode, authorizationCode.length);
       let source: string = '';
       if (authorizationCode.length === 20) source = 'github';
       else if (authorizationCode.length === 73) source = 'google';
@@ -125,7 +124,6 @@ const DashboardContainer = (): JSX.Element => {
               actionLogin({ isLogin: true, isExpired: false, type: source }),
             );
           } else {
-            console.log('guest');
             history.push('/signup');
             dispatch(actionSetLoginType({ type: 'guest' }));
           }
@@ -163,21 +161,21 @@ const DashboardContainer = (): JSX.Element => {
   //   getWorkoutList();
   // }, [isLogin.isLogin]);
 
-  const getWorkoutList = async () => {
-    axios
-      .get<WorkoutListResponse>(`${URI}/main`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${auth.token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        // if (res.data.message === 'ok') {
-        dispatch(actionSetWorkoutList(res.data.data));
-        // }
-      });
-  };
+  // const getWorkoutList = async () => {
+  //   axios
+  //     .get<WorkoutListResponse>(`${URI}/main`, {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: `Bearer ${auth.token}`,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       console.log(res);
+  //       // if (res.data.message === 'ok') {
+  //       dispatch(actionSetWorkoutList(res.data.data));
+  //       // }
+  //     });
+  // };
 
   const clickWorkoutCard = (id: number): void => {
     let currentWorkout: Workout = workoutList.filter((el) => el.id === id)[0];

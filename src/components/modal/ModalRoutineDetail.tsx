@@ -31,7 +31,7 @@ const ModalRoutineDetail = ({
             </CloseBtn>
           </CloseBtnWrap>
         </ModalTop>
-        <Title>{routineDetail?.title}</Title>
+        <Title>{routineDetail?.title.toUpperCase()}</Title>
         <Main>
           <CardList>
             {routineDetail?.workout?.map((el) => (
@@ -57,8 +57,7 @@ const ModalRoutineDetail = ({
                   0,
                 ),
               )} kcal`}</Explanation>
-              <Explanation>hello</Explanation>
-              <Explanation>hello</Explanation>
+              <Explanation>{`총 ${routineDetail?.workout.length} 개의 운동`}</Explanation>
             </Summary>
             <ControlBtn>
               <SaveBtn
@@ -92,7 +91,7 @@ const Frame = styled.div`
   box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
-  background-color: #e0e5ec;
+  background-color: #f2f3f7;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   transition: 400ms ease;
@@ -191,6 +190,7 @@ const ControlBtn = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 15px;
+  
 `;
 const SaveBtn = styled.input`
   outline: none;
@@ -217,7 +217,7 @@ const SaveBtn = styled.input`
 const Explanation = styled.div`
   font-size: 1.3rem;
   color: #555555;
-  background-color: #f6f5f5;
+  background-color: #e0ece4;
   margin: 0px 5px 20px 0px;
   padding: 5px 15px 5px;
   border-radius: 5px;
