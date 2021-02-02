@@ -23,6 +23,7 @@ import {
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
+import { InfoPageNames } from './components/sidebar/SideBar';
 
 export interface IFilterOption {
   label: string;
@@ -33,7 +34,9 @@ export interface IFilterOption {
 
 const App = ({ history, location }: RouteComponentProps): JSX.Element => {
   const isExpired = useSelector((state: RootState) => state.isLogin.isExpired);
-
+  const [currentPage, setCurrentPage] = useState<InfoPageNames>(
+    InfoPageNames.Dashboard,
+  );
   useEffect(() => {
     if (isExpired) {
       history.push('/login');
@@ -53,7 +56,10 @@ const App = ({ history, location }: RouteComponentProps): JSX.Element => {
           <CSSTransition in={open} timeout={0} classNames={'sidebar'}>
             <SideWrap className="sidebar">
               <Side className="side-bar">
-                <SideBarContainer />
+                <SideBarContainer
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                />
                 <TabBtn onClick={toggleBtn}>
                   {open ? <TabLeftIcon /> : <TabRightIcon />}
                 </TabBtn>
