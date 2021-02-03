@@ -34,7 +34,7 @@ const SideBar = ({
   // const toggle = () => {};
   return (
     <Wrap>
-      <SaveLogo src={Logo} />
+      <Link to='/'><SaveLogo src={Logo} /></Link>
       <LinkWrap
         onClick={(e) => {
           changePage(InfoPageNames.Dashboard);
