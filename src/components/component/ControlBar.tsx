@@ -91,7 +91,7 @@ const filterModels: IFilter[] = [
         category: 'tool',
       },
       {
-        label: '맨손',
+        label: '맨몸',
         value: 'none',
         category: 'tool',
       },
@@ -208,13 +208,13 @@ const ControlBar = ({
         let temp = filterArr.filter((item) => item.category !== 'tool');
         setFilterArr([...temp, op]);
         setCategory('기구');
-      } else if (op.label === '맨손') {
+      } else if (op.label === '맨몸') {
         let temp = filterArr.filter((item) => item.category !== 'tool');
         setFilterArr([...temp, op]);
-        setCategory('맨손');
+        setCategory('맨몸');
       } else if (op.label !== '기구' && op.category === 'tool') {
         let temp = filterArr.filter(
-          (item) => item.label !== '맨손' && item.label !== '기구',
+          (item) => item.label !== '맨몸' && item.label !== '기구',
         );
         setFilterArr([...temp, op]);
         setTool([...tool, op.label]);

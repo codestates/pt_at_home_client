@@ -139,7 +139,7 @@ const Landing = (): JSX.Element => {
 const Wrap = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #e0e5ec;
+  background-color: #fff3e6;
   display: flex;
 `;
 const NavWrap = styled.div`
@@ -148,7 +148,7 @@ const NavWrap = styled.div`
   flex-direction: column;
   padding: 0 20px;
   width: 130px;
-  background-color: #e0e5ec;
+  background-color: #fff3e6;
 `;
 const Pages = styled.div`
   flex: 1;

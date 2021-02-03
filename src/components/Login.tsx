@@ -66,7 +66,7 @@ const Login = ({
 };
 
 const LoginLogoBox = styled.div`
-    margin-bottom : 160px;
+    margin-bottom : 240px;
     width : 100%;
     display : flex;
     justify-content : flex-end;
