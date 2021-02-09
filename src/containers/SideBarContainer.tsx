@@ -33,6 +33,7 @@ export interface SideBarProps {
   getMyWorkouts(): void;
   currentPage: InfoPageNames;
   setCurrentPage: React.Dispatch<React.SetStateAction<InfoPageNames>>;
+  isLogin:boolean;
 }
 
 interface ISideBarContainer {
@@ -102,6 +103,7 @@ const SideBarContainer = ({
       getMyWorkouts={getMyWorkouts}
       currentPage={currentPage}
       setCurrentPage={setCurrentPage}
+      isLogin={isLogin}
     />
   );
 };
