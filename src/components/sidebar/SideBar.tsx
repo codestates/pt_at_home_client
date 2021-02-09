@@ -25,6 +25,7 @@ const SideBar = ({
   getMyWorkouts,
   currentPage,
   setCurrentPage,
+  isLogin
 }: SideBarProps): JSX.Element => {
   const history = useHistory();
   // const [toggle, setToggle] = useState<boolean>(false);
@@ -66,27 +67,31 @@ const SideBar = ({
         <RunIcon />
         Run Routine
       </LinkWrap>
-      <LinkWrap
-        isActive={currentPage === InfoPageNames.UsersRoutine}
-        onClick={(e) => {
-          changePage(InfoPageNames.UsersRoutine);
-          getMyRoutines();
-          history.push('/usersroutine');
-        }}
-      >
-        <MyRoutineIcon />
-        My Routines
-      </LinkWrap>
-      <LinkWrap
-        isActive={currentPage === InfoPageNames.MyPage}
-        onClick={(e) => {
-          changePage(InfoPageNames.MyPage);
-          history.push('/mypage');
-        }}
-      >
-        <MyPageIcon />
-        My Page
-      </LinkWrap>
+      {isLogin? 
+      <>
+        <LinkWrap
+          isActive={currentPage === InfoPageNames.UsersRoutine}
+          onClick={(e) => {
+            changePage(InfoPageNames.UsersRoutine);
+            getMyRoutines();
+            history.push('/usersroutine');
+          }}
+        >
+          <MyRoutineIcon />
+          My Routines
+        </LinkWrap>
+        <LinkWrap
+          isActive={currentPage === InfoPageNames.MyPage}
+          onClick={(e) => {
+            changePage(InfoPageNames.MyPage);
+            history.push('/mypage');
+          }}
+        >
+          <MyPageIcon />
+          My Page
+        </LinkWrap>
+      </>
+      :'' }
     </Wrap>
   );
 };
