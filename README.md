@@ -4,50 +4,35 @@
 <img src="https://user-images.githubusercontent.com/66928718/107609446-4854d700-6c82-11eb-9034-7f4b48b52265.png" />
 <br>
 <br>
+평소에 운동을 좋아하지만 코로나로 인한 집콕생활로 인해 헬스장을 갈 수 없는 당신,<br><br>
+매일 긴 시간동안 의자에 앉아서 일만 하는 당신,<br><br>
+또는 당신이 집에서 혼자 운동하면서 심심하고 무료함을 느꼈던 경험이 있다면 저희 서비스를 이용해보세요.<br><br>
+저희 **PT at Home**을 통해 다양한 운동들을 필요와 목적에 맞게 나만의 루틴을 생성하고 그대로 같이 따라하면서 재밌게 운동을 하실 수 있습니다. 
+<br><br>
 
-# Getting Started with Create React App
+# Tech Stacks
+## CLIENT
+![Client Stacks](https://user-images.githubusercontent.com/66337488/107733364-79ec9300-6cc0-11eb-8a71-763e3b363f84.png)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## SERVER & DB
+![Server & DB](https://user-images.githubusercontent.com/66337488/107733376-81ac3780-6cc0-11eb-836a-09b41131a24d.png)
 
-## Available Scripts
+## DEPLOY
+![Deploy](https://user-images.githubusercontent.com/66337488/107733391-8b359f80-6cc0-11eb-8170-0d67808eb598.png)
 
-In the project directory, you can run:d
+# API
+![user table](https://ifh.cc/g/52kxnG.png)
+![main table](https://ifh.cc/g/VBKkks.png)
+![main table](https://ifh.cc/g/2NY2YH.png)
 
-### `npm start`
+# Website View
+### Dashboard Page
+![Dashboard](https://user-images.githubusercontent.com/66337488/107733030-95a36980-6cbf-11eb-9a5e-f6cef2e417f8.gif)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Create Routine Page
+![Create Routine](https://user-images.githubusercontent.com/66337488/107733040-989e5a00-6cbf-11eb-9400-290f0bb33ab4.gif)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Run Routine Page
+![Run Routine](https://user-images.githubusercontent.com/66337488/107733048-9c31e100-6cbf-11eb-92c1-7f20b27f7782.gif)
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+[Go To WIKI](https://github.com/codestates/pt_at_home_client/wiki)
