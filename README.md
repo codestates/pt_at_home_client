@@ -35,4 +35,6 @@
 ### Run Routine Page
 ![Run Routine](https://user-images.githubusercontent.com/66337488/107733048-9c31e100-6cbf-11eb-92c1-7f20b27f7782.gif)
 
+
+# To see more detail ⬇️
 [Go To WIKI](https://github.com/codestates/pt_at_home_client/wiki)
