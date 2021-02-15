@@ -129,6 +129,9 @@ const DashboardContainer = (): JSX.Element => {
           }
         });
     }
+  }, []);
+
+  useEffect(() => {
     if (isLogin.isLogin) {
       axios
         .get<MyWorkoutsResponse>(`${URI}/myroutine/myworkout`, {
@@ -155,7 +158,8 @@ const DashboardContainer = (): JSX.Element => {
           }
         });
     }
-  }, [isLogin]);
+  }, [isLogin])
+
 
   // useEffect(() => {
   //   getWorkoutList();

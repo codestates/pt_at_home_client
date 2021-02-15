@@ -7,8 +7,6 @@ import {
   actionSetWorkoutList,
   actionSetRoutineList,
   actionToggleDashboardType,
-  actionRenewToken,
-  actionExpired,
 } from '../modules/actions';
 import { Workout } from '../modules/reducers/workoutList';
 import { Routine } from '../modules/reducers/routineList';
@@ -101,26 +99,25 @@ const ControlBarContainer = ({
   };
 
   const clickRoutineHandler = async () => {
-    let { token, expDate } = auth;
-    let isTokenValid = await actionRenewToken(token, expDate, dispatch);
-    if (isTokenValid) {
-      axios
-        .get<RoutineResponse>(`${URI}/main/routine`, {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${auth.token}`,
-          },
-        })
-        .then((res) => {
-          if (res.data.message === 'ok') {
-            dispatch(actionSetRoutineList(res.data.data));
-            dispatch(actionToggleDashboardType(true));
-          }
-        });
-    } else {
-      dispatch(actionExpired({ isExpired: true }));
-    }
+    axios
+      .get<RoutineResponse>(`${URI}/main/routine`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${auth.token}`,
+        },
+      })
+      .then((res) => {
+        if (res.data.message === 'ok') {
+          dispatch(actionSetRoutineList(res.data.data));
+          dispatch(actionToggleDashboardType(true));
+        }
+      });
+      dispatch(actionToggleDashboardType(true));
   };
+
+  const toggleDashboardType = ():void => {
+    dispatch(actionToggleDashboardType(false))
+  }
 
   return (
     <Wrap className="sssss">
@@ -130,6 +127,8 @@ const ControlBarContainer = ({
         filterHandler={filterHandler}
         filterArr={filterArr}
         setFilterArr={setFilterArr}
+        isDashboardRoutine={isDashboardRoutine}
+        toggleDashboardType={toggleDashboardType}
       />
     </Wrap>
   );
