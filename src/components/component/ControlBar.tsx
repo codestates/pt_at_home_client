@@ -130,6 +130,8 @@ export interface ControlBarProps {
   filterHandler(filterData: FilterData): void;
   filterArr: IFilterOption[];
   setFilterArr: React.Dispatch<React.SetStateAction<IFilterOption[]>>;
+  isDashboardRoutine:boolean;
+  toggleDashboardType():void;
 }
 
 const ControlBar = ({
@@ -138,6 +140,8 @@ const ControlBar = ({
   filterHandler,
   filterArr,
   setFilterArr,
+  isDashboardRoutine,
+  toggleDashboardType
 }: ControlBarProps): JSX.Element => {
   const path = useLocation().pathname;
   const dropdownRefs = [useRef(), useRef()];
@@ -155,8 +159,10 @@ const ControlBar = ({
   });
 
   useEffect(() => {
-    filterHandler({ category, tool, part });
-  }, [filterArr]);
+    if (!isDashboardRoutine) {
+      filterHandler({ category, tool, part }); 
+    }
+  }, [category, tool, part]);
 
   const allClose = () => {
     setDropdownModels(
@@ -199,25 +205,30 @@ const ControlBar = ({
   });
 
   const onChangeSelect = (id: number, op: IFilterOption) => {
-    console.log(id, op);
+    if (isDashboardRoutine) {
+      toggleDashboardType()
+    }
     toggleDropdwon(id);
-
+    console.log(id, op)
     const hasLabel = filterArr.some((item) => item.label === op.label);
     if (!hasLabel) {
       if (op.label === '기구') {
         let temp = filterArr.filter((item) => item.category !== 'tool');
         setFilterArr([...temp, op]);
         setCategory('기구');
+        setTool([])
       } else if (op.label === '맨몸') {
         let temp = filterArr.filter((item) => item.category !== 'tool');
         setFilterArr([...temp, op]);
         setCategory('맨몸');
+        setTool([])
       } else if (op.label !== '기구' && op.category === 'tool') {
         let temp = filterArr.filter(
           (item) => item.label !== '맨몸' && item.label !== '기구',
         );
         setFilterArr([...temp, op]);
         setTool([...tool, op.label]);
+        setCategory('')
       } else if (op.category === 'part') {
         setPart([...part, op.label]);
         setFilterArr([...filterArr, op]);
@@ -246,12 +257,20 @@ const ControlBar = ({
   };
 
   const handleClickRoutineBtn = () => {
-    clickRoutineHandler();
+    setPart([])
+    setTool([])
+    setCategory('')
     setFilterArr([]);
+    clickRoutineHandler();
   };
 
   const handleClickStretchingBtn = () => {
-    filterHandler({ category: '스트레칭', part: [], tool: [] });
+    if (isDashboardRoutine) {
+      toggleDashboardType()
+    }
+    setPart([])
+    setTool([])
+    setCategory('스트레칭')
     setFilterArr([]);
   };
 
@@ -339,6 +358,13 @@ const ControlBar = ({
                     (item) => item.label !== op.label,
                   );
                   setFilterArr(removeFilter);
+                  if (op.category === 'tool') {
+                    const removeTool = tool.filter(item => item !== op.label)
+                    setTool(removeTool)
+                  } else if (op.category === 'part') {
+                    const removePart = part.filter(item => item !== op.label)
+                    setPart(removePart)
+                  }
                 }}
               />
             </FilterCard>

@@ -19,7 +19,7 @@ const isDashboardRoutine = (
 ): boolean => {
   switch (action.type) {
     case DASHBOARD_TYPE_ROUTINE:
-      return action.payload;
+      return action.payload
     default:
       return state;
   }

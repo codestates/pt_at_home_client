@@ -8,6 +8,7 @@ import {
   actionSetMyWorkouts,
   actionSetMyRoutines,
   actionRenewToken,
+  actionExpired
 } from '../modules/actions';
 import { URI } from '../index';
 import axios from 'axios';
@@ -55,23 +56,23 @@ const SideBarContainer = ({
 
   //completed
   const getMyRoutines = async () => {
-    if (isLogin) {
-      let { token, expDate } = auth;
-      let isTokenValid = await actionRenewToken(token, expDate, dispatch);
-      if (isTokenValid) {
-        axios
-          .get<MyRoutinesResponse>(`${URI}/myroutine`, {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${userInfo.auth.token}`,
-            },
-          })
-          .then((res) => {
-            if (res.data.message === 'ok') {
-              dispatch(actionSetMyRoutines(res.data.data));
-            }
-          });
-      }
+    let { token, expDate } = auth;
+    let isTokenValid = await actionRenewToken(token, expDate, dispatch);
+    if (isTokenValid) {
+      axios
+        .get<MyRoutinesResponse>(`${URI}/myroutine`, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userInfo.auth.token}`,
+          },
+        })
+        .then((res) => {
+          if (res.data.message === 'ok') {
+            dispatch(actionSetMyRoutines(res.data.data));
+          }
+        });
+    } else {
+      dispatch(actionExpired({isExpired:true}))
     }
   };
 

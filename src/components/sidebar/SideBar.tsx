@@ -72,6 +72,7 @@ const SideBar = ({
         <LinkWrap
           isActive={currentPage === InfoPageNames.UsersRoutine}
           onClick={(e) => {
+            // e.preventDefault()
             changePage(InfoPageNames.UsersRoutine);
             getMyRoutines();
             history.push('/usersroutine');
