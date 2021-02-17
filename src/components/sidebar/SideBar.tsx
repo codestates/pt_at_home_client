@@ -113,6 +113,7 @@ const SaveLogo = styled.img`
 
 const LinkWrap = styled.div`
   outline: none;
+  letter-spacing:0.3px;
   text-align: left;
   color: ${(props: { isActive: boolean }) =>
     props.isActive ? '#fbf7a7' : '#000000'};
@@ -128,12 +129,13 @@ const LinkWrap = styled.div`
   padding: 10px;
   box-sizing: border-box;
   margin-bottom: 5px;
-  border-radius: 50px;
+  border-radius: 15px;
   cursor: pointer;
   background-color: ${(props: { isActive: boolean }) =>
-    props.isActive ? '#afafaf' : '#FFFFFF'};
+    props.isActive ? '#bbbbbb' : '#FFFFFF'};
   &:hover {
-    background-color: #ccc7c7;
+    background-color: #f1f3f8;
+    color:#000000;
   }
 `;
 const DashBoardIcon = styled(BsLayoutTextWindowReverse)`

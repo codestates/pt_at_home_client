@@ -56,7 +56,7 @@ const RightItem = styled(ItemsDiv)`
 
 const UserComment = styled.div`
   font-size:1.4rem;
-  color:#555555;
+  color:#363636;
   font-weight:900;
   margin-right:30px;
   letter-spacing:7px;
@@ -70,7 +70,7 @@ const LoginBtn = styled.button`
   align-items: center;
   border: none;
   border-radius: 20px;
-  background: #f2f3f7;
+  background: #f4f6ff;
   box-shadow: -3px -8px 7px #fff, 5px 5px 20px #9d9ea1;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
@@ -82,7 +82,9 @@ const LoginBtn = styled.button`
   }
 `;
 const LoginLink = styled(Link)`
-  color: #b2c0f6;
+  color: #55b3b1;
+  letter-spacing:3px;
+  font-size:0.9rem;
   font-weight: 700;
   text-decoration: none;
   width: 100%;
@@ -93,7 +95,7 @@ const MainTitle = styled.span`
   line-height: 32px;
   font-weight: 700;
   font-size: 32px;
-  color: #000000;
+  color: #363636;
 `;
 
 export default HeaderMiddle;

@@ -41,7 +41,7 @@ const filterModels: IFilter[] = [
         category: 'part',
       },
       {
-        label: '복부',
+        label: '복근',
         value: 'stomach',
         category: 'part',
       },
@@ -403,20 +403,26 @@ const FilterWrap = styled.div`
 `;
 
 const CustomSelect = styled.div`
-  background-color: #f2f3f7;
+  background-color: #f4f6ff;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border: none;
   outline: none;
   border-radius: 5px;
+  letter-spacing:2px;
+  font-weight:bold;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #000000;
+  color: #555555;
   padding: 8px 10px;
   margin-right: 50px;
   width: 170px;
   cursor: pointer;
   position: relative;
+  &:hover {
+    background-color:#d2d7e885;
+    // color:#faf4f4;
+  }
 `;
 const CustomOptionItem = styled.div`
   padding: 5px;
@@ -506,12 +512,12 @@ const FilterCard = styled.span`
 `;
 const Clear = styled.button`
   width: 60px;
-  // background-color: #f2f3f7;
+  background-color: #f2f3f7;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  color: #000000;
+  color: #363636;
   border-radius: 20px;
   display: flex;
-  border: 3px solid #b2c0f6;
+  border: 1.5px solid #55b3b1;
   justify-content: center;
   margin: 0 10px 10px;
   padding: 3px 15x;
@@ -533,6 +539,8 @@ const Close = styled(BiX)`
 const TagWrap = styled.div`
   display: flex;
 `;
-const Arrow = styled(BsFillCaretDownFill)``;
+const Arrow = styled(BsFillCaretDownFill)`
+  color:#55b3b1;
+`;
 
 export default ControlBar;
