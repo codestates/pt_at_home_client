@@ -36,6 +36,13 @@ const TextWrap = styled.div`
   height:400px;
   align-items:flex-start;
   padding-top:20px;
+  @media (max-width: 1700px) {
+    font-size : 2.3rem;
+    width : 500px;
+  }
+  @media (max-width: 1575px) {
+    display : none;
+  }
 `;
 
 const Gif = styled.img`
