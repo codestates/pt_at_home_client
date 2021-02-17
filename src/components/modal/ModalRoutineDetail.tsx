@@ -41,12 +41,12 @@ const ModalRoutineDetail = ({
           <Description>
             <Summary>
               <Explanation>{`${
-                routineDetail?.workout?.reduce(
+                Math.round(routineDetail?.workout?.reduce(
                   (acc, cur) =>
                     acc + (cur?.image?.length === 2 ? cur?.myCount : 0),
                   0,
                 ) / 60
-              } Min`}</Explanation>
+                )} Min`}</Explanation>
               <Explanation>{`${numberWithCommas(
                 routineDetail.workout.reduce(
                   (acc, cur) =>

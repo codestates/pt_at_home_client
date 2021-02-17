@@ -33,11 +33,10 @@ const Gif = styled.img`
 `;
 const TextWrap = styled.div`
   font-weight:500;
-  color:#ef4f4f;
+  color:#b68973;
   font-size:2.8rem;
   letter-spacing:3px;
   line-height:1.5;
-  text-shadow: 2px 2px #e8eae6;
   margin-bottom:70px;
   margin-right:500px;
 `;

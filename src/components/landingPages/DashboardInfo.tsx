@@ -31,7 +31,6 @@ const TextWrap = styled.div`
   font-weight:500;
   letter-spacing:1px;
   color:#94b5c0;
-  text-shadow: 2px 2px #d89216;
   display:flex;
   flex-flow:column;
   height:400px;

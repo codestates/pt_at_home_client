@@ -110,14 +110,14 @@ const LoginLink = styled(Link)`
   color: #555555;
   text-decoration: none;
   width: 100%;
-  font-size:1.5rem;
+  font-size:1.3rem;
   letter-spacing:3px;
 `;
 const DashBtn = styled.button`
-  font-size:1.5rem;
+  font-size:1.3rem;
   margin:20px 5px;
-  height:60px;
-  width:200px;
+  height:45px;
+  width:150px;
   letter-spacing:3px;
   outline: none;
   display: flex;
@@ -143,7 +143,6 @@ const DashLink = styled(Link)`
   width: 100%;
   padding: 0 20px;
   display: block;
-  font-size: 35px;
 `;
 
 export default HomeInfo;
