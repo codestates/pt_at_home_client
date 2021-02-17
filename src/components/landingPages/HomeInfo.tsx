@@ -60,7 +60,6 @@ const TextWrap = styled.div`
   flex-flow:column;
   // align-items:flex-start;
   justify-contents:center;
-  margin-right:50px;
   width: 700px;
   font-size:2.7rem;
   line-height:1.5;
@@ -68,7 +67,13 @@ const TextWrap = styled.div`
   font-weight:500;
   letter-spacing:2px;
   color:#94b5c0;
-  text-shadow: 2px 2px #ffdcdc;
+  @media (max-width: 1700px) {
+    font-size : 2.3rem;
+    width : 500px;
+  }
+  @media (max-width: 1575px) {
+    display : none;
+  }
 `;
 
 const Img = styled.div`
