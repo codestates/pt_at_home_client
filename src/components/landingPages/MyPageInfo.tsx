@@ -19,7 +19,7 @@ const MyPageInfo = () => {
   );
 };
 const Gif = styled.img`
-  width: 900px;
+  width: 850px;
   border-radius:30px;
   box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
 
@@ -44,9 +44,6 @@ const Comment = styled.div`
   font-size:2rem;
   font-weight:500;
   margin:20px 0;
-  text-shadow: 2px 2px #dddddd;
   color:#222831;
-
-  
 `;
 export default MyPageInfo;

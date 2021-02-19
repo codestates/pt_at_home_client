@@ -44,7 +44,7 @@ const routineList = (
 ): Routine[] => {
   switch (action.type) {
     case SET_ROUTINE_LIST:
-      return state.concat(action.payload);
+      return action.payload
     default:
       return state;
   }

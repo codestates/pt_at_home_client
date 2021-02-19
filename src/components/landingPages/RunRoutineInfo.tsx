@@ -27,7 +27,7 @@ const Wrap = styled.div`
 `;
 
 const Gif = styled.img`
-  width: 1000px;
+  width: 850px;
   margin-right:500px;
   margin-top:100px;
   border-radius:30px;
@@ -40,7 +40,6 @@ const TextWrap = styled.div`
   letter-spacing:3px;
   font-weight:500;
   color:#ee9595;
-  text-shadow: 2px 2px #ffc764;
   display:flex;
   flex-flow:column nowrap;
 `;

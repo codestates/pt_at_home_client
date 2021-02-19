@@ -46,8 +46,7 @@ const TextWrap = styled.div`
 `;
 
 const Gif = styled.img`
-  width: 900px;
-  height:450px;
+  width: 850px;
   border-radius:30px;
   margin-left:50px;
   box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc

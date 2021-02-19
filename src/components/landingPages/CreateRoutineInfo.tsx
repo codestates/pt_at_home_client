@@ -26,7 +26,7 @@ const Wrap = styled.div`
   justify-content: center;
 `;
 const Gif = styled.img`
-  width: 1000px;
+  width: 850px;
   border-radius:30px;
   box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
   margin-left:100px;
