@@ -20,7 +20,7 @@ const RunRoutineContainer = (): JSX.Element => {
   return (
     <Wrap>
       {currentRoutine.workout.length > 0? <RunRoutine currentRoutine={currentRoutine} />:
-      <NoneRoutine>Create Routine Page 에서 먼저 Routine 을 생성하여주세요</NoneRoutine>}
+      <NoneRoutine>Create Routine Page 에서 Routine을 먼저 생성해 주세요</NoneRoutine>}
       
     </Wrap>
   );

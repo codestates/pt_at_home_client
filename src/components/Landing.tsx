@@ -139,7 +139,7 @@ const Landing = (): JSX.Element => {
 const Wrap = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #fff3e6;
+  background-color: #ffffff;
   display: flex;
 `;
 const NavWrap = styled.div`
@@ -148,7 +148,7 @@ const NavWrap = styled.div`
   flex-direction: column;
   padding: 0 20px;
   width: 130px;
-  background-color: #fff3e6;
+  background-color: #ffffff;
 `;
 const Pages = styled.div`
   flex: 1;
@@ -158,8 +158,10 @@ const Pages = styled.div`
 const IconWrap = styled.button`
   border: none;
   outline: none;
-  color: #61677c;
-  background-color: #ebecf0;
+  // color: #61677c;
+  // background-color: #ebecf0;
+  color: #f5f5f5;
+  background-color: #30475e;
   font-weight: bold;
   box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
   transition: all 0.2s ease-in-out;

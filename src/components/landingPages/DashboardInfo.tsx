@@ -1,63 +1,76 @@
 import React from 'react';
 import styled from 'styled-components';
 import TransitionPageWrap from './TransitionPageWrap';
-import Back1 from '../../img/img51.png';
-import InfoGif from '../../img/dashboard.gif';
+import BackImg from '../../img/dashboard.png';
+import GifImg from '../../img/dashboard.gif';
 
 const DashboardInfo = () => {
   return (
-    <TransitionPageWrap backgroundColor={Back1}>
+    <TransitionPageWrap backgroundColor={BackImg}>
       <Wrap>
-        <TextWrap>
-            <DashBoardText>We have a lot of workouts for you</DashBoardText>
-            <DashBoardText>Just Pick What You Want.</DashBoardText>
-        </TextWrap>
-          <Gif src={InfoGif} />
+        <ContentsWrap>
+          <GifWrap src={GifImg} />
+          <TextWrap>
+            <Text1>먼저 <TextBold>Dashboard Page </TextBold>에서</Text1>
+            <Text2>루틴에 필요한 운동을 선택하여 저장하세요.</Text2>
+            <LineBlock></LineBlock>
+          </TextWrap>
+        </ContentsWrap>
       </Wrap>
     </TransitionPageWrap>
   );
 };
 
 const Wrap = styled.div`
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
-`;
-
-const TextWrap = styled.div`
-  line-height:1.5;
-  font-weight:500;
-  letter-spacing:1px;
-  color:#94b5c0;
+  height:100vh;
+  background-image:url(${BackImg})
+`
+const ContentsWrap = styled.div`
+  position:relative;
   display:flex;
-  flex-flow:column;
-  height:400px;
-  align-items:flex-start;
-  padding-top:20px;
-  @media (max-width: 1700px) {
-    font-size : 2.3rem;
-    width : 500px;
-  }
-  @media (max-width: 1575px) {
-    display : none;
-  }
-`;
+  flex-flow: column nowrap;
+  width:795px;
+  left:100px;
+  top:130px;
+`
+const TextWrap = styled.div`
+  transform:scale(1, 1.2) translateX(5%);
 
-const Gif = styled.img`
-  width: 900px;
-  height:450px;
+`
+const TextBold = styled.span`
+  color:rgba(250, 161, 58, 90%);
+  font-weight:bold;
+`
+const Text1 = styled.div`
+  color:#555555;
+  letter-spacing:3px;
+  font-size:2.3rem;
+  margin-top:50px;
+  margin-bottom:20px;
+`
+
+const Text2 = styled.div`
+  color:#555555;
+  letter-spacing:3px;
+  font-size:2.1rem;
+  margin-top:20px;
+  margin-bottom:20px;
+  padding-left:75px;
+`
+
+const LineBlock = styled.div`
+  border:2px solid rgba(250, 161, 58, 50%);
+  width:500px;
+  margin-left:235px;
+  border-radius:10px;
+  margin-bottom:40px;
+`
+
+const GifWrap = styled.img`
+  width:750px;
+  htight:395px;
   border-radius:30px;
-  margin-left:50px;
-  box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc
-`;
-
-const DashBoardText = styled.div`
-  margin:5px 0;
-  padding-left:20px;
-  color:#184d47;
-  font-size:2.7rem;
+  box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
 `
 
 
