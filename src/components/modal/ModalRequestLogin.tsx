@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 interface ModalRequestLoginProps {
-    offLoginModal():void;
+    offLoginModal?:() => void;
 }
 
 const ModalRequestLogin = ({offLoginModal}:ModalRequestLoginProps):JSX.Element => {
@@ -11,7 +11,7 @@ const ModalRequestLogin = ({offLoginModal}:ModalRequestLoginProps):JSX.Element =
         <Frame>
             <Wrap>
                 <CloseBtn><XBtn type="button" value="X" onClick={offLoginModal}/></CloseBtn>
-                <LoginMsg>Please Login first, if you want to save this routine!</LoginMsg>
+                <LoginMsg>나만의 루틴으로 저장하려면 로그인 또는 회원가입을 해주세요.</LoginMsg>
                 <ControlBtn>
                     <StyledLink to='/login'>LOG IN</StyledLink>
                     <StyledLink to='/signup'>SIGN UP</StyledLink>
@@ -31,9 +31,9 @@ const Frame = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.2);
   transition: 400ms ease;
   position: absolute;
-//   margin-left:30%;
   margin-top:200px;
-  left:150px;
+//   left:110px;
+  left:13%;
   padding: 5px;
   z-index:1;
 `;
@@ -76,7 +76,7 @@ const LoginMsg =styled.div`
     justify-content:center;
     height:50px;
     margin-top:3%;
-    font-size:1.1rem;
+    font-size:1rem;
 `
 
 const ControlBtn = styled.div`

@@ -1,9 +1,10 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, {useEffect} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { RunRoutine } from '../components/main';
 import { RootState } from '../modules/reducers';
 import { CurrentRoutine } from '../modules/reducers/currentRoutine';
+import { actionResetCurrentRoutine } from '../modules/actions'
 
 export interface CurrentRoutineProps {
   currentRoutine: CurrentRoutine;
@@ -13,9 +14,16 @@ export interface CurrentRoutineProps {
 // const initialInterve:SetInterval | any = null
 
 const RunRoutineContainer = (): JSX.Element => {
+  const dispatch = useDispatch()
   const currentRoutine = useSelector(
     (state: RootState) => state.currentRoutine,
   );
+
+  useEffect(() => {
+    return () => {
+      dispatch(actionResetCurrentRoutine())
+    }
+  })
 
   return (
     <Wrap>

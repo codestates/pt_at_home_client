@@ -4,7 +4,6 @@ import { Dashboard } from '../components/main';
 import {
   ModalWorkoutDetail,
   ModalRoutineDetail,
-  ModalRequestLogin,
 } from '../components/modal';
 import { Workout } from '../modules/reducers/workoutList';
 import { Routine } from '../modules/reducers/routineList';
@@ -23,6 +22,7 @@ import {
   actionLogin,
   actionSetLoginType,
   actionSetWorkoutList,
+  actionSetCurrentRoutine
 } from '../modules/actions';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
@@ -52,7 +52,6 @@ export interface DashboardProps {
   workoutDetail: Workout | Object;
   routineDetail: Routine | Object;
   workoutModal: boolean;
-  routineModal: boolean;
   clickWorkoutCard(id: number): void;
   clickRoutineCard(id: number): void;
   saveOrRemoveWorkout(id: number): void;
@@ -63,6 +62,9 @@ export interface ModalRoutineProps {
   routineDetail: Routine;
   offRoutineModal(): void;
   saveOrRemoveRoutine(id: number): void;
+  loginModal?:boolean;
+  offLoginModal?: () => void;
+  clickRunRoutine?:() => void;
 }
 
 export interface ModalWorkoutProps {
@@ -195,12 +197,14 @@ const DashboardContainer = (): JSX.Element => {
     let currentRoutine: Routine = routineList.filter(
       (el) => el.routineId === id,
     )[0];
+    console.log(currentRoutine)
     setRoutineDetail(currentRoutine);
     setRoutineModal(true);
   };
 
   const offRoutineModal = (): void => {
     setRoutineModal(false);
+    offLoginModal()
   };
 
   const offLoginModal = (): void => {
@@ -312,6 +316,11 @@ const DashboardContainer = (): JSX.Element => {
     }
   };
 
+  const clickRunRoutine = () => {
+    dispatch(actionSetCurrentRoutine(routineDetail))
+    history.push('/runroutine')
+  }
+
   return (
     <div>
       {workoutModal ? (
@@ -329,11 +338,14 @@ const DashboardContainer = (): JSX.Element => {
           routineDetail={routineDetail}
           offRoutineModal={offRoutineModal}
           saveOrRemoveRoutine={saveOrRemoveRoutine}
+          loginModal={loginModal}
+          offLoginModal={offLoginModal}
+          clickRunRoutine={clickRunRoutine}
         />
       ) : (
         ''
       )}
-      {loginModal ? <ModalRequestLogin offLoginModal={offLoginModal} /> : ''}
+      {/* {loginModal ? <ModalRequestLogin offLoginModal={offLoginModal} /> : ''} */}
       <Dashboard
         isLogin={isLogin.isLogin}
         workoutList={workoutList}
@@ -344,7 +356,6 @@ const DashboardContainer = (): JSX.Element => {
         workoutDetail={workoutDetail}
         routineDetail={routineDetail}
         workoutModal={workoutModal}
-        routineModal={routineModal}
         clickWorkoutCard={clickWorkoutCard}
         clickRoutineCard={clickRoutineCard}
         saveOrRemoveWorkout={saveOrRemoveWorkout}
