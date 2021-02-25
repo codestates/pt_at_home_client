@@ -14,7 +14,6 @@ const Dashboard = ({
   workoutDetail,
   routineDetail,
   workoutModal,
-  routineModal,
   clickWorkoutCard,
   clickRoutineCard,
   saveOrRemoveWorkout,
@@ -24,7 +23,7 @@ const Dashboard = ({
     <Wrap>
       <BodyWrap>
         <CardWrap>
-          {isDashboardRoutine && routineList
+          {isDashboardRoutine
             ? routineList.map((el) => (
                 <Cardli key={el.routineId}>
                   <RoutineCard

@@ -36,7 +36,7 @@ export interface IFilterOption {
 
 const App = ({ history, location }: RouteComponentProps): JSX.Element => {
   const dispatch = useDispatch()
-  const isExpired = useSelector((state: RootState) => state.isLogin.isExpired);
+  const {isExpired, isLogin} = useSelector((state: RootState) => state.isLogin);
   const [currentPage, setCurrentPage] = useState<InfoPageNames>(
     InfoPageNames.Dashboard,
   );
@@ -94,14 +94,14 @@ const App = ({ history, location }: RouteComponentProps): JSX.Element => {
           <HeaderStyle className="header" in={open}>
             <HeaderContainer />
             {location.pathname === '/dashboard' ||
-            location.pathname === '/createroutine' ? (
+            (location.pathname === '/createroutine' && isLogin) ? 
               <ControlBarContainer
                 filterArr={filterArr}
                 setFilterArr={setFilterArr}
               />
-            ) : (
+             : 
               ''
-            )}
+            }
           </HeaderStyle>
           <Bottom>
             <CSSTransition in={open} timeout={0} classNames={'main'}>

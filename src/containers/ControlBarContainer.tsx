@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ControlBar from '../components/component/ControlBar';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -56,6 +56,12 @@ const ControlBarContainer = ({
   const isDashboardRoutine = useSelector(
     (state: RootState) => state.isDashboardRoutine,
   );
+
+  useEffect(() => {
+    return () => {
+      dispatch(actionToggleDashboardType(false))
+    }
+  },[])
 
   //completed
   const searchHandler = async (keywordData: KeywordData) => {

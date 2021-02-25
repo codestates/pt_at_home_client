@@ -19,19 +19,19 @@ const RoutineCard = ({
       <Title>{title.toUpperCase()}</Title>
       <Wrap>
         <ExplanationWrap>
-          {workout.map((el) => (
+          {workout?.map((el) => (
             <Explanation key={el.id}>{el.title?.toUpperCase()}</Explanation>
           ))}
         </ExplanationWrap>
         <SubWrap>
           <Sub>{`${
-            Math.round(workout.reduce(
+            Math.round(workout?.reduce(
               (acc, cur) => acc + (cur.image?.length < 3 ? cur.myCount : cur.myCount*1.8),
               0,
             ) / 60)
           } min`}</Sub>
           <Sub>{`${numberWithCommas(
-            workout.reduce(
+            workout?.reduce(
               (acc, cur) =>
                 acc +
                 cur.calrorie *
@@ -40,7 +40,7 @@ const RoutineCard = ({
               0,
             ),
           )} kcal`}</Sub>
-          <Sub>{`${workout.length} workouts`}</Sub>
+          <Sub>{`${workout?.length} workouts`}</Sub>
         </SubWrap>
       </Wrap>
     </Card>
@@ -48,7 +48,7 @@ const RoutineCard = ({
 };
 
 function numberWithCommas(x: number): string {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return x?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
 const Card = styled.div`

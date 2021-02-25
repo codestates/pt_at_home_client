@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { GoHeart } from 'react-icons/go';
 import { Workout } from '../../modules/reducers/workoutList';
@@ -20,9 +20,11 @@ const WorkoutCard = ({
   const [color, setColor] = useState<boolean>(
     myWorkouts.filter((el) => el.id === workoutCard.id)[0] ? true : false,
   );
-  const ChangeColor = () => {
-    setColor(!color);
-  };
+
+  useEffect(() => {
+    myWorkouts.filter((el) => el.id === workoutCard.id)[0] ? setColor(true) : setColor(false)
+  }, [myWorkouts])
+
   return (
     <CardDiv onClick={() => clickWorkoutCard(workoutCard.id)}>
       <Card>
@@ -33,7 +35,6 @@ const WorkoutCard = ({
           <Marker
             onClick={(e) => {
               e.stopPropagation();
-              ChangeColor();
               saveOrRemoveWorkout(workoutCard.id);
             }}
             changeColor={color}

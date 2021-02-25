@@ -158,7 +158,7 @@ const Wrap = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 50px 100px 0 20px;
-  margin-top: 75px;
+  margin-top: 50px;
 `;
 
 const DropWrap = styled.div`

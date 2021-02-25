@@ -141,7 +141,7 @@ const ControlBar = ({
   filterArr,
   setFilterArr,
   isDashboardRoutine,
-  toggleDashboardType
+  toggleDashboardType,
 }: ControlBarProps): JSX.Element => {
   const path = useLocation().pathname;
   const dropdownRefs = [useRef(), useRef()];
@@ -209,7 +209,6 @@ const ControlBar = ({
       toggleDashboardType()
     }
     toggleDropdwon(id);
-    console.log(id, op)
     const hasLabel = filterArr.some((item) => item.label === op.label);
     if (!hasLabel) {
       if (op.label === '기구') {

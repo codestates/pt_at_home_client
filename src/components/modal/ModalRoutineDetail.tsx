@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { WorkoutOfRoutine } from '../../modules/reducers/routineList';
 import { ModalRoutineProps } from '../../containers/DashboardContainer';
 import _WorkoutCard from '../component/_WorkoutCard';
+import ModalRequestLogin from './ModalRequestLogin'
 import { BiX } from 'react-icons/bi';
 
 export interface MyWorkoutCardProps {
@@ -14,6 +15,9 @@ const ModalRoutineDetail = ({
   routineDetail,
   offRoutineModal,
   saveOrRemoveRoutine,
+  loginModal,
+  offLoginModal,
+  clickRunRoutine
 }: ModalRoutineProps): JSX.Element => {
   const location = useLocation();
   function numberWithCommas(x: number): string {
@@ -24,6 +28,7 @@ const ModalRoutineDetail = ({
     <>
       <Layer onClick={offRoutineModal} />
       <Frame>
+        {loginModal ? <ModalRequestLogin offLoginModal={offLoginModal} /> : ''}
         <ModalTop>
           <CloseBtnWrap>
             <CloseBtn onClick={offRoutineModal}>
@@ -43,7 +48,7 @@ const ModalRoutineDetail = ({
               <Explanation>{`${
                 Math.round(routineDetail?.workout?.reduce(
                   (acc, cur) =>
-                    acc + (cur?.image?.length === 2 ? cur?.myCount : 0),
+                    acc + (cur?.image?.length < 3 ? cur?.myCount : cur?.myCount * 1.8),
                   0,
                 ) / 60
                 )} Min`}</Explanation>
@@ -67,6 +72,11 @@ const ModalRoutineDetail = ({
                   saveOrRemoveRoutine(routineDetail.routineId);
                 }}
               />
+              <RunRoutineBtn 
+                type='button'
+                value='RUN ROUTINE'
+                onClick={clickRunRoutine}
+              />
             </ControlBtn>
           </Description>
         </Main>
@@ -86,8 +96,8 @@ const Layer = styled.div`
 `;
 
 const Frame = styled.div`
-  height: 600px;
-  width: 500px;
+  height: 650px;
+  width: 550px;
   box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
@@ -109,6 +119,7 @@ const Title = styled.div`
   text-align: center;
   padding-top: 3%;
   font-size: 2rem;
+  margin-bottom:20px;
 `;
 const ModalTop = styled.div`
   display: flex;
@@ -152,6 +163,7 @@ const Main = styled.div`
 
 const CardList = styled.div`
   background-color: #d9e8fd;
+  padding-top:15px;
   box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
   width: 260px;
   margin: 2%;
@@ -188,6 +200,8 @@ const Summary = styled.div``;
 
 const ControlBtn = styled.div`
   display: flex;
+  flex-flow: column nowrap;
+  align-items:space-between;
   justify-content: center;
   margin-bottom: 15px;
   
@@ -197,7 +211,7 @@ const SaveBtn = styled.input`
   padding: 5px 15px 5px 15px;
   font-size: 1.3rem;
   font-weight: 700;
-  margin: 10% 0;
+  margin: 5% 0;
   height: 35px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
@@ -213,6 +227,28 @@ const SaveBtn = styled.input`
     box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #e0e5ec;
   }
 `;
+
+const RunRoutineBtn = styled.input`
+  outline: none;
+  padding: 5px 15px 5px 15px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 5% 0;
+  height: 35px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  background-color: #d9e8fd;
+  color: #30475e;
+  box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+  }
+  &:active {
+    box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #e0e5ec;
+  }
+`
 
 const Explanation = styled.div`
   font-size: 1.3rem;
