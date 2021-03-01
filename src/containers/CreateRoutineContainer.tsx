@@ -147,7 +147,7 @@ const CreateRoutineContainer = (): JSX.Element => {
           }
         });
     } else {
-      actionExpired({ isExpired: true });
+      dispatch(actionExpired({ isExpired: true }));
     }
   };
 

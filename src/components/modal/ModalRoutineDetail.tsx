@@ -97,7 +97,7 @@ const Layer = styled.div`
 
 const Frame = styled.div`
   height: 650px;
-  width: 550px;
+  width: 600px;
   box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
@@ -127,8 +127,8 @@ const ModalTop = styled.div`
 `;
 
 const CloseBtnWrap = styled.div`
-  padding-top: 2%;
-  padding-right: 2%;
+  padding-top: 1%;
+  padding-right: 1.5%;
 `;
 const CloseBtn = styled.button`
   outline: none;
@@ -156,7 +156,7 @@ const Close = styled(BiX)`
 `;
 const Main = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: stretch;
   height: 78%;
 `;
@@ -165,7 +165,7 @@ const CardList = styled.div`
   background-color: #d9e8fd;
   padding-top:15px;
   box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
-  width: 260px;
+  width: 280px;
   margin: 2%;
   display: flex;
   flex-direction: column;
@@ -191,9 +191,18 @@ const Description = styled.div`
   display: flex;
   justify-content: space-between;
   flex-flow: column nowrap;
-  width: 200px;
+  width: 250px;
   padding: 5px;
   margin: 2%;
+`;
+
+const Explanation = styled.div`
+  font-size: 1.3rem;
+  color: #555555;
+  background-color: #e7eeea;
+  margin: 0px 5px 20px 0px;
+  padding: 5px 15px 5px;
+  border-radius: 5px;
 `;
 
 const Summary = styled.div``;
@@ -204,7 +213,7 @@ const ControlBtn = styled.div`
   align-items:space-between;
   justify-content: center;
   margin-bottom: 15px;
-  
+  padding:0 20px;
 `;
 const SaveBtn = styled.input`
   outline: none;
@@ -249,14 +258,5 @@ const RunRoutineBtn = styled.input`
     box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #e0e5ec;
   }
 `
-
-const Explanation = styled.div`
-  font-size: 1.3rem;
-  color: #555555;
-  background-color: #e0ece4;
-  margin: 0px 5px 20px 0px;
-  padding: 5px 15px 5px;
-  border-radius: 5px;
-`;
 
 export default ModalRoutineDetail;

@@ -23,7 +23,7 @@ const ModalRequestLogin = ({offLoginModal}:ModalRequestLoginProps):JSX.Element =
 
 const Frame = styled.div`
   height: 230px;
-  width: 450px;
+  width: 470px;
   box-shadow: 0 1px 30px rgba(0, 0, 0, 0.4);
   display: inline-block;
   background-color: #f2f3f7;
@@ -33,7 +33,7 @@ const Frame = styled.div`
   position: absolute;
   margin-top:200px;
 //   left:110px;
-  left:13%;
+  left:12%;
   padding: 5px;
   z-index:1;
 `;

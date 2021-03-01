@@ -40,8 +40,6 @@ const CreateRoutineCard = ({
               <CardImg src={workout ? image[1] : ''} />
             </CardImgWrap>
             <CardContents>
-              <CardTop>
-                <Title>{title?.toUpperCase()}</Title>
                 <GearBtn
                   onClick={(e) => {
                     e.stopPropagation();
@@ -50,6 +48,8 @@ const CreateRoutineCard = ({
                 >
                   {area === 'cards' ? <Close /> : <Info />}
                 </GearBtn>
+              <CardTop>
+                <Title>{title?.toUpperCase()}</Title>
               </CardTop>
 
               <ExplanationWrap>
@@ -93,7 +93,7 @@ const Card = styled.div`
   border: none;
   border-radius: 10px;
   height: 120px;
-  box-shadow: -3px -8px 7px #fff, 5px 5px 20px #9d9ea1;
+  box-shadow: -3px -5px 7px #fff, 5px 5px 20px #9d9ea1;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   &:hover {
@@ -116,7 +116,8 @@ const CardContents = styled.div`
   justify-content: center;
   width: 150px;
   height: 100%;
-  padding: 5px 10px 5px 0;
+  padding: 0 10px 5px 0;
+  transform:translateY(-10px)
 `;
 
 const CardTop = styled.div`
@@ -125,22 +126,24 @@ const CardTop = styled.div`
   margin: 0px 0px 10px 5px;
 `;
 const Title = styled.h1`
-  font-size: 18px;
+  font-size: 16px;
   color: #30475e;
   font-weight: 700;
 `;
 
 const GearBtn = styled.button`
+  position:relative;
+  left:130px;
   outline: none;
   width: 25px;
-  height: 20px;
+  height: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
+  border-radius: 50px;
   background-color: #f6f5f5;
-  box-shadow: -3px -8px 7px #fff, 5px 5px 20px #9d9ea1;
+  box-shadow: -3px -8px 15px #fff, 5px 5px 20px #9d9ea1;
   transition: all 0.2s ease-in-out;
   padding: 0;
   cursor: pointer;

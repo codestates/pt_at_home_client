@@ -75,6 +75,7 @@ const RoutineBox = ({
   const saveRoutineTitle = (title: string) => {
     saveMyRoutine(title);
     setModalRoutineTitle(false);
+    allClear()
   };
 
   return (
@@ -210,7 +211,7 @@ const CardWrap = styled.div`
 const ClearBtnWrap = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin: 1%;
+  margin: 3px 0 10px 0;
 `;
 
 const ClearBtn = styled.input`
@@ -221,7 +222,7 @@ const ClearBtn = styled.input`
   border: none;
   border-radius: 10px;
   background: #f2f3f7;
-  box-shadow: -3px -8px 7px #fff, 5px 5px 20px #9d9ea1;
+  box-shadow: -3px -5px 7px #fff, 5px 5px 20px #9d9ea1;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   &:hover {
