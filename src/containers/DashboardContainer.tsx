@@ -22,7 +22,8 @@ import {
   actionLogin,
   actionSetLoginType,
   actionSetWorkoutList,
-  actionSetCurrentRoutine
+  actionSetCurrentRoutine,
+  actionExpired
 } from '../modules/actions';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
@@ -64,7 +65,7 @@ export interface ModalRoutineProps {
   saveOrRemoveRoutine(id: number): void;
   loginModal?:boolean;
   offLoginModal?: () => void;
-  clickRunRoutine?:() => void;
+  clickRunRoutine:() => void;
 }
 
 export interface ModalWorkoutProps {
@@ -122,6 +123,13 @@ const DashboardContainer = (): JSX.Element => {
         .then((res) => {
           if (res.data.message === 'auth success') {
             dispatch(actionSetUserInfo(res.data.data));
+            window.localStorage.setItem('userId', String(res.data.data.id))
+            window.localStorage.setItem('userEmail', res.data.data.email)
+            window.localStorage.setItem('userName', res.data.data.userName)
+            window.localStorage.setItem('token', res.data.data.auth.token)
+            window.localStorage.setItem('expDate', res.data.data.auth.expDate)
+            window.localStorage.setItem('type', source)
+            window.localStorage.setItem('isLogin', 'true')
             dispatch(
               actionLogin({ isLogin: true, isExpired: false, type: source }),
             );
@@ -290,13 +298,15 @@ const DashboardContainer = (): JSX.Element => {
             .then((res) => {
               if (res.data.message === 'ok') {
                 dispatch(actionSetMyRoutines(res.data.data));
+                setRoutineModal(false)
               }
             });
         } else {
+          const routineToSave = routineList.filter(el => el.routineId === id)[0]
           axios
             .post<SaveOrRemoveRoutineResponse>(
               `${URI}/myroutine/createroutine`,
-              { routineId: id },
+              { title:routineToSave.title, workouts:routineToSave.workout },
               {
                 headers: {
                   'Content-Type': 'application/json',
@@ -307,9 +317,12 @@ const DashboardContainer = (): JSX.Element => {
             .then((res) => {
               if (res.data.message === 'ok') {
                 dispatch(actionSetMyRoutines(res.data.data));
+                setRoutineModal(false)
               }
             });
         }
+      } else {
+        dispatch(actionExpired({isExpired:true}))
       }
     } else {
       setLoginModal(true);

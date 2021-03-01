@@ -102,7 +102,7 @@ const Top = styled.div`
   margin: 0px 20px;
   padding: 5px 0px 5px 5px;
   border-bottom: 3px solid #00587a;
-  width: 93%;
+  width: 95%;
 `;
 const CloseBtn = styled.button`
   outline: none;
@@ -110,7 +110,6 @@ const CloseBtn = styled.button`
   width: 40px;
   height: 30px;
   display: flex;
-  margin: 10px 0;
   justify-content: center;
   align-items: center;
   border: 1px solid rgba(255, 255, 255, 0.2);

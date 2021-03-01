@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import { MyRoutines } from '../components/main'
 import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { RootState } from '../modules/reducers'
 import { Routine } from '../modules/reducers/routineList'
 import { ModalRoutineDetail } from '../components/modal'
-import { actionRenewToken, actionSetMyRoutines } from '../modules/actions'
+import { actionRenewToken, actionSetMyRoutines, actionSetCurrentRoutine, actionExpired } from '../modules/actions'
 import { URI } from '../index'
 import axios from 'axios'
 axios.defaults.withCredentials = true
@@ -21,6 +22,7 @@ export interface MyRoutinesProps {
 
 const MyRoutinesContainer = () => {
     const dispatch = useDispatch()
+    const history= useHistory()
     // const isLogin = useSelector((state:RootState) => isLogin.isLogin)
     const auth = useSelector((state:RootState) => state.userInfo.auth)
     const myRoutines = useSelector((state:RootState) => state.myRoutines)
@@ -45,14 +47,28 @@ const MyRoutinesContainer = () => {
             .then(res => {
                 if (res.data.message === 'ok') {
                   dispatch(actionSetMyRoutines(res.data.data))
+                  setRoutineModal(false)
                 }
             })
-          } 
+          } else {
+            dispatch(actionExpired({isExpired:true}))
+          }
       };
+
+      const clickRunRoutine = () => {
+        dispatch(actionSetCurrentRoutine(routineDetail))
+        history.push('/runroutine')
+      }
 
     return (
         <div>
-            {routineModal?<ModalRoutineDetail routineDetail={routineDetail} offRoutineModal={offRoutineModal} saveOrRemoveRoutine={saveOrRemoveRoutine}/>:''}
+            {routineModal?
+            <ModalRoutineDetail 
+              routineDetail={routineDetail} 
+              offRoutineModal={offRoutineModal} 
+              saveOrRemoveRoutine={saveOrRemoveRoutine}
+              clickRunRoutine={clickRunRoutine}
+              />:''}
             <MyRoutines myRoutines={myRoutines} clickRoutineCard={clickRoutineCard}/>
         </div>
     );
