@@ -21,7 +21,8 @@
 
 # API
 ![user table](https://ifh.cc/g/52kxnG.png)
-![main table](https://ifh.cc/g/VBKkks.png)
+![스크린샷 2021-04-05 오후 11 32 41](https://user-images.githubusercontent.com/66477332/113585473-3b8fa680-9667-11eb-8206-7d4e64a482dc.png)
+
 ![main table](https://ifh.cc/g/2NY2YH.png)
 
 # Website View
